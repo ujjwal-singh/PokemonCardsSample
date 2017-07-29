@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Use app:showsAsAction="never" to view it in menu -->
+
+    <item
+        android:id="@+id/signOut"
+        android:title="@string/signOut"
+        android:visible="true"
+        android:enabled="true"
+        app:showAsAction="never"
+        android:checkable="false" />
+
+    <item
+        android:id="@+id/deleteAccount"
+        android:title="@string/deleteAccount"
+        android:visible="true"
+        android:enabled="true"
+        app:showAsAction="never"
+        android:checkable="false" />
+
+</menu>

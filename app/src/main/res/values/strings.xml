@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">PokemonCardsSample</string>
+
+    <string name="signIn">Sign In</string>
+    <string name="username">Username</string>
+    <string name="signUp">Sign Up</string>
+    <string name="password">Password</string>
+    <string name="repeatPassword">Repeat password</string>
+    <string name="usernameEmpty">Username cannot be empty.</string>
+    <string name="passwordEmpty">Password cannot be empty.</string>
+    <string name="rePasswordWrong">Password and Re-password do not match.</string>
+    <string name="usernameExists">Username already exists. Please try a new one.</string>
+    <string name="userCreationSuccessful">User Creation Successful !!</string>
+    <string name="userDoesNotExist">Username not found. The given user does not exist. Please retry or SignUp if not done already.</string>
+    <string name="wrongPassword">Incorrect password. Please retry.</string>
+    <string name="signInSuccessful">Sign In Successful !!</string>
+    <string name="signOut">Sign Out</string>
+    <string name="signOutSuccessful">Sign out successful</string>
+    <string name="deleteAccount">Delete Account</string>
+    <string name="confirmAccountDelete">Confirm Account Deletion</string>
+    <string name="passwordConfirmationForAccountDelete">Please enter your password to delete your account.</string>
+    <string name="userDeletionSuccessful">User Deleted.</string>
+
+    <string name="cancel">Cancel</string>
+
+</resources>
