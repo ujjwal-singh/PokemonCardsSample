@@ -20,6 +20,7 @@
     <string name="confirmAccountDelete">Confirm Account Deletion</string>
     <string name="passwordConfirmationForAccountDelete">Please enter your password to delete your account.</string>
     <string name="userDeletionSuccessful">User Deleted.</string>
+    <string name="connectionProblem">Connection Problem. Please make sure that you are connected to the internet.</string>
 
     <string name="cancel">Cancel</string>
 

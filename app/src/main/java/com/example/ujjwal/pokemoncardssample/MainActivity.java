@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amazonaws.AmazonClientException;
 import com.example.ujjwal.pokemoncardssample.dao.SharedPreferencesHelper;
 import com.example.ujjwal.pokemoncardssample.dao.dynamodb.DDBClient;
 import com.example.ujjwal.pokemoncardssample.dao.dynamodb.UserAuthentication;
@@ -181,18 +182,28 @@ public class MainActivity extends AppCompatActivity {
          *  False means does not exist. */
         final BooleanHolder userExists = new BooleanHolder(false);
 
+        /** BooleanHolder object to indicate whether
+         *  connection was successful or not.
+         *  True means the connection was successful.
+         */
+        final BooleanHolder connectionSuccessful = new BooleanHolder(true);
+
         /** Thread to create/register new user. */
         Thread createUserThread = new Thread() {
             @Override
             public void run() {
 
-                /** Username already exists. */
-                if (ddbClient.retrieveUser(username) != null) {
-                    userExists.setValue(true);
-                } else {
-                    ddbClient.createUser(username,
-                            HashCalculator.getMD5Hash(password));
-                    sharedPreferencesHelper.writeUsername(username);
+                try {
+                    /** Username already exists. */
+                    if (ddbClient.retrieveUser(username) != null) {
+                        userExists.setValue(true);
+                    } else {
+                        ddbClient.createUser(username,
+                                HashCalculator.getMD5Hash(password));
+                        sharedPreferencesHelper.writeUsername(username);
+                    }
+                } catch (AmazonClientException e) {
+                    connectionSuccessful.setValue(false);
                 }
             }
         };
@@ -209,6 +220,14 @@ public class MainActivity extends AppCompatActivity {
         /** Enable buttons. */
         signUpButton.setEnabled(true);
         signInButton.setEnabled(true);
+
+        /** Check whether the connection was successful or not.
+         *  If unsuccessful, then report connection problem and return. */
+        if (!connectionSuccessful.isValue()) {
+            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
 
         /** If new user creation was successful (username did not clash),
          *  goto HomePage. */
@@ -267,26 +286,36 @@ public class MainActivity extends AppCompatActivity {
          * True means correct. */
         final BooleanHolder passwordCorrect = new BooleanHolder(true);
 
+        /** BooleanHolder object to indicate whether
+         *  connection was successful or not.
+         *  True means the connection was successful.
+         */
+        final BooleanHolder connectionSuccessful = new BooleanHolder(true);
+
         /** Thread to sign-in user. */
         Thread signInUserThread = new Thread() {
             @Override
             public void run() {
 
-                UserAuthentication userAuthentication = ddbClient.retrieveUser(
-                        username);
+                try {
+                    UserAuthentication userAuthentication = ddbClient
+                            .retrieveUser(username);
 
-                /** Username exists. */
-                if (userAuthentication != null) {
+                    /** Username exists. */
+                    if (userAuthentication != null) {
 
-                    /** Password is correct. */
-                    if ((userAuthentication.getPassword())
-                            .equals(HashCalculator.getMD5Hash(password))) {
-                        sharedPreferencesHelper.writeUsername(username);
+                        /** Password is correct. */
+                        if ((userAuthentication.getPassword())
+                                .equals(HashCalculator.getMD5Hash(password))) {
+                            sharedPreferencesHelper.writeUsername(username);
+                        } else {
+                            passwordCorrect.setValue(false);
+                        }
                     } else {
-                        passwordCorrect.setValue(false);
+                        userExists.setValue(false);
                     }
-                } else {
-                    userExists.setValue(false);
+                } catch (AmazonClientException e) {
+                    connectionSuccessful.setValue(false);
                 }
             }
         };
@@ -303,6 +332,14 @@ public class MainActivity extends AppCompatActivity {
         /** Enable buttons. */
         signUpButton.setEnabled(true);
         signInButton.setEnabled(true);
+
+        /** Check whether the connection was successful or not.
+         *  If unsuccessful, then report connection problem and return. */
+        if (!connectionSuccessful.isValue()) {
+            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
 
         /** Username does not exist. */
         if (!(userExists.isValue())) {

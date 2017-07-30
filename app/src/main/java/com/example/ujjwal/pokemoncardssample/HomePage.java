@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.amazonaws.AmazonClientException;
 import com.example.ujjwal.pokemoncardssample.dao.SharedPreferencesHelper;
 import com.example.ujjwal.pokemoncardssample.dao.dynamodb.DDBClient;
 import com.example.ujjwal.pokemoncardssample.dao.dynamodb.UserAuthentication;
@@ -82,63 +83,107 @@ public class HomePage extends AppCompatActivity {
              * Sign out option chosen by the user.
              */
             case R.id.signOut:
-                Thread signOutThread = new Thread() {
-                    @Override
-                    public void run() {
 
-                        ddbClient.setUserOnlineAvailability(
-                                sharedPreferencesHelper.getUsername(), false);
-                        sharedPreferencesHelper.removeUsername();
-                    }
-                };
-
-                signOutThread.start();
-                try {
-                    /** Wait for the thread to finish. */
-                    signOutThread.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                Toast.makeText(this, R.string.signOutSuccessful,
-                        Toast.LENGTH_SHORT)
-                        .show();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                return true;
+                return (this.signOut());
 
             /**
              *  Delete account option chosen by the user.
              */
             case R.id.deleteAccount:
 
-                /** Delete account dialog box builder. */
-                AlertDialog.Builder deleteAccountDialogBuilder = new
-                        AlertDialog.Builder(this);
-                deleteAccountDialogBuilder.setTitle(
-                        R.string.confirmAccountDelete);
+                return (this.deleteAccount());
 
-                String message = "Are you sure you want to delete user "
-                        + sharedPreferencesHelper.getUsername()
-                        + " ? The account will be deleted permanently "
-                        + "from our databases."
-                        + " Enter the password of user to continue.";
-                deleteAccountDialogBuilder.setMessage(message);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
-                /** EditText set up to receive password confirmation. */
-                final EditText passwordEditText = new EditText(this);
-                /** Specifying type of input expected as Password. */
-                passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT
-                        | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                deleteAccountDialogBuilder.setView(passwordEditText);
+    /**
+     *  This method is used to sign-out the user.
+     *  @return Boolean
+     */
+    private boolean signOut() {
 
-                /** context will be needed to display toasts. */
-                final Context context = this;
+        /** BooleanHolder object to indicate whether
+         *  connection was successful or not.
+         *  True means the connection was successful.
+         */
+        final BooleanHolder connectionSuccessful = new
+                BooleanHolder(true);
 
-                /** Handler for positive button click. */
-                deleteAccountDialogBuilder.setPositiveButton(
-                        R.string.deleteAccount,
-                        new DialogInterface.OnClickListener() {
+        Thread signOutThread = new Thread() {
+            @Override
+            public void run() {
+
+                try {
+                    ddbClient.setUserOnlineAvailability(
+                            sharedPreferencesHelper.getUsername(),
+                            false);
+                    sharedPreferencesHelper.removeUsername();
+                } catch (AmazonClientException e) {
+                    connectionSuccessful.setValue(false);
+                }
+            }
+        };
+
+        signOutThread.start();
+        try {
+            /** Wait for the thread to finish. */
+            signOutThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        /** Check whether the connection was successful or not.
+         *  If unsuccessful, then report connection problem
+         *  and return. */
+        if (!connectionSuccessful.isValue()) {
+            Toast.makeText(this, R.string.connectionProblem,
+                    Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        Toast.makeText(this, R.string.signOutSuccessful,
+                Toast.LENGTH_SHORT)
+                .show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        return true;
+    }
+
+    /**
+     *  This method is used to delete user account.
+     *  @return Boolean
+     */
+    private boolean deleteAccount() {
+
+        /** Delete account dialog box builder. */
+        AlertDialog.Builder deleteAccountDialogBuilder = new
+                AlertDialog.Builder(this);
+        deleteAccountDialogBuilder.setTitle(
+                R.string.confirmAccountDelete);
+
+        String message = "Are you sure you want to delete user "
+                + sharedPreferencesHelper.getUsername()
+                + " ? The account will be deleted permanently "
+                + "from our databases."
+                + " Enter the password of user to continue.";
+        deleteAccountDialogBuilder.setMessage(message);
+
+        /** EditText set up to receive password confirmation. */
+        final EditText passwordEditText = new EditText(this);
+        /** Specifying type of input expected as Password. */
+        passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT
+                | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        deleteAccountDialogBuilder.setView(passwordEditText);
+
+        /** context will be needed to display toasts. */
+        final Context context = this;
+
+        /** Handler for positive button click. */
+        deleteAccountDialogBuilder.setPositiveButton(
+                R.string.deleteAccount,
+                new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog,
                                         final int which) {
@@ -149,27 +194,39 @@ public class HomePage extends AppCompatActivity {
                         final BooleanHolder userDeletedSuccessfully = new
                                 BooleanHolder(true);
 
+                        /** BooleanHolder object to indicate whether
+                         *  connection was successful or not.
+                         *  True means the connection was successful.
+                         */
+                        final BooleanHolder connectionSuccessful = new
+                                BooleanHolder(true);
+
                         /** New thread to carry out user deletion activities. */
                         Thread deleteUserThread = new Thread() {
                             @Override
                             public void run() {
 
-                                String username = sharedPreferencesHelper
-                                        .getUsername();
-                                String password = passwordEditText
-                                        .getText().toString();
+                                try {
+                                    String username = sharedPreferencesHelper
+                                            .getUsername();
+                                    String password = passwordEditText
+                                            .getText().toString();
 
-                                UserAuthentication userAuthentication =
-                                        ddbClient.retrieveUser(username);
+                                    UserAuthentication userAuthentication =
+                                            ddbClient.retrieveUser(username);
 
-                                /** Validate password. */
-                                if ((userAuthentication.getPassword()).
-                                        equals(HashCalculator
-                                                .getMD5Hash(password))) {
-                                    sharedPreferencesHelper.removeUsername();
-                                    ddbClient.deleteUser(username);
-                                } else {
-                                    userDeletedSuccessfully.setValue(false);
+                                    /** Validate password. */
+                                    if ((userAuthentication.getPassword()).
+                                            equals(HashCalculator
+                                                    .getMD5Hash(password))) {
+                                        sharedPreferencesHelper
+                                                .removeUsername();
+                                        ddbClient.deleteUser(username);
+                                    } else {
+                                        userDeletedSuccessfully.setValue(false);
+                                    }
+                                } catch (AmazonClientException e) {
+                                    connectionSuccessful.setValue(false);
                                 }
                             }
                         };
@@ -180,6 +237,16 @@ public class HomePage extends AppCompatActivity {
                             deleteUserThread.join();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
+                        }
+
+                        /** Check whether the connection was successful or not.
+                         *  If unsuccessful, then report connection problem
+                         *  and return. */
+                        if (!connectionSuccessful.isValue()) {
+                            Toast.makeText(context, R.string.connectionProblem,
+                                    Toast.LENGTH_SHORT)
+                                    .show();
+                            return;
                         }
 
                         /** Check if user deletion was successful.
@@ -199,23 +266,19 @@ public class HomePage extends AppCompatActivity {
                     }
                 });
 
-                /** Handler for negative button click. */
-                deleteAccountDialogBuilder
-                        .setNegativeButton(R.string.cancel,
-                                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialog,
-                                        final int which) {
-                        dialog.cancel();
-                    }
-                });
+        /** Handler for negative button click. */
+        deleteAccountDialogBuilder
+                .setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog,
+                                                final int which) {
+                                dialog.cancel();
+                            }
+                        });
 
-                deleteAccountDialogBuilder.show();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        deleteAccountDialogBuilder.show();
+        return true;
     }
 
     /**
