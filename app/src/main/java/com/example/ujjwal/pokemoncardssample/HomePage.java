@@ -313,7 +313,7 @@ public class HomePage extends AppCompatActivity {
             public void run() {
 
                 try {
-                    onlineUserList.setValue(ddbClient.getOnlineUserList(
+                    onlineUserList.setValue(ddbClient.getAvailableUsersList(
                             sharedPreferencesHelper.getUsername()));
                 } catch (AmazonClientException e) {
                     connectionSuccessful.setValue(false);
@@ -338,25 +338,25 @@ public class HomePage extends AppCompatActivity {
             return true;
         }
 
-        showOnlineUsersDialog((ArrayList<String>) onlineUserList.getValue());
+        showAvailableUsersDialog((ArrayList<String>) onlineUserList.getValue());
 
         return true;
     }
 
     /**
      *  This method builds a DialogBox showing the list of
-     *  online users, and lets the user select one option (user)
+     *  available users, and lets the user select one option (user)
      *  to start the game with.
      *  @param onlineUserList List<String>
      */
-    private void showOnlineUsersDialog(final List<String> onlineUserList) {
+    private void showAvailableUsersDialog(final List<String> onlineUserList) {
 
         /** Array to store user names. */
         String[] onlineUserArray = onlineUserList.toArray(new
                 String[onlineUserList.size()]);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.onlineUsers)
+        builder.setTitle(R.string.availableUsers)
                 /** -1 indicates that no option is selected by default. */
                 .setSingleChoiceItems(onlineUserArray, -1,
                         new DialogInterface.OnClickListener() {

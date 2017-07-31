@@ -267,8 +267,11 @@ public final class DDBClient {
     }
 
     /**
-     *  This method fetches the list of online users,
+     *  This method fetches the list of users available for game,
      *  and returns it as a list of strings.
+     *  Availability condition is : (a) The user should be online,
+     *  and (b) The user should not be involved in a game, i.e.,
+     *  inGame should be equal to 0.
      *  The current username (user who is executing the query)
      *  is excluded from the list.
      *  @param username String, determines which user is executing the query.
@@ -276,21 +279,36 @@ public final class DDBClient {
      *  @throws AmazonClientException Throws this exception in case
      *          of network problems.
      */
-    public static List<String> getOnlineUserList(final String username)
+    public static List<String> getAvailableUsersList(final String username)
             throws AmazonClientException {
 
         try {
             HashMap<String, Condition> scanFilter = new
                     HashMap<String, Condition>();
-            Condition condition = new Condition()
+
+            /** Filtering for Online users.
+             * 1 indicates that the user is online. */
+            Condition onlineAvailabilityCondition = new Condition()
                     .withComparisonOperator(ComparisonOperator.EQ)
                     .withAttributeValueList(new AttributeValue().withN("1"));
+
+            /** Filtering for non-playing users. 0 indicates that the
+             *  user is not involved in any game currently. */
+            Condition nonPlayingCondition = new Condition()
+                    .withComparisonOperator(ComparisonOperator.EQ)
+                    .withAttributeValueList(new AttributeValue().withN("0"));
+
             scanFilter.put(
                     Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_ONLINE,
-                    condition);
+                    onlineAvailabilityCondition);
+            scanFilter.put(
+                    Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_IN_GAME,
+                    nonPlayingCondition);
+
             ScanRequest scanRequest = new ScanRequest(
                     Constants.DDB_USER_AVAILABILITY_TABLE_NAME)
                     .withScanFilter(scanFilter);
+
             ScanResult scanResult = ddbClient.scan(scanRequest);
             List<Map<String, AttributeValue>> itemList = scanResult.getItems();
 

@@ -10,7 +10,7 @@
         android:visible="true"
         android:enabled="true"
         app:showAsAction="always"
-        android:icon="@drawable/wifi_icon"
+        android:icon="@drawable/search_icon"
         android:checkable="false" />
 
     <item
