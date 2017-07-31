@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         signOutButton.setVisible(false);
         MenuItem deleteAccountButton = menu.findItem(R.id.deleteAccount);
         deleteAccountButton.setVisible(false);
+        MenuItem searchPlayersButton = menu.findItem(R.id.searchPlayers);
+        searchPlayersButton.setVisible(false);
 
         return true;
     }

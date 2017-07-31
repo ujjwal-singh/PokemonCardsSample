@@ -5,6 +5,15 @@
     <!-- Use app:showsAsAction="never" to view it in menu -->
 
     <item
+        android:id="@+id/searchPlayers"
+        android:title="@string/searchPlayers"
+        android:visible="true"
+        android:enabled="true"
+        app:showAsAction="always"
+        android:icon="@drawable/wifi_icon"
+        android:checkable="false" />
+
+    <item
         android:id="@+id/signOut"
         android:title="@string/signOut"
         android:visible="true"

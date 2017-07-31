@@ -20,6 +20,10 @@ import com.example.ujjwal.pokemoncardssample.dao.dynamodb.UserAuthentication;
 import com.example.ujjwal.pokemoncardssample.services.ExitService;
 import com.example.ujjwal.pokemoncardssample.utils.BooleanHolder;
 import com.example.ujjwal.pokemoncardssample.utils.HashCalculator;
+import com.example.ujjwal.pokemoncardssample.utils.Holder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  This class is the activity class for Home Page of the app.
@@ -92,6 +96,13 @@ public class HomePage extends AppCompatActivity {
             case R.id.deleteAccount:
 
                 return (this.deleteAccount());
+
+            /*
+             *  Search players who are currently online.
+             */
+            case R.id.searchPlayers:
+
+                return (this.searchPlayers());
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -279,6 +290,100 @@ public class HomePage extends AppCompatActivity {
 
         deleteAccountDialogBuilder.show();
         return true;
+    }
+
+    /**
+     *  This method is called when the user selects
+     *  SearchPlayers option from the Menu.
+     *  @return Boolean.
+     */
+    private boolean searchPlayers() {
+
+        /** Holder object to store ArrayList<String> of users. */
+        final Holder onlineUserList = new Holder(new ArrayList<String>());
+
+        /** BooleanHolder object to indicate whether
+         *  connection was successful or not.
+         *  True means the connection was successful.
+         */
+        final BooleanHolder connectionSuccessful = new BooleanHolder(true);
+
+        Thread searchPlayersThread = new Thread() {
+            @Override
+            public void run() {
+
+                try {
+                    onlineUserList.setValue(ddbClient.getOnlineUserList(
+                            sharedPreferencesHelper.getUsername()));
+                } catch (AmazonClientException e) {
+                    connectionSuccessful.setValue(false);
+                }
+            }
+        };
+
+        searchPlayersThread.start();
+        try {
+            /** Wait for the thread to finish. */
+            searchPlayersThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        /** Check whether the connection was successful or not.
+         *  If unsuccessful, then report connection problem
+         *  and return. */
+        if (!connectionSuccessful.isValue()) {
+            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
+                    .show();
+            return true;
+        }
+
+        showOnlineUsersDialog((ArrayList<String>) onlineUserList.getValue());
+
+        return true;
+    }
+
+    /**
+     *  This method builds a DialogBox showing the list of
+     *  online users, and lets the user select one option (user)
+     *  to start the game with.
+     *  @param onlineUserList List<String>
+     */
+    private void showOnlineUsersDialog(final List<String> onlineUserList) {
+
+        /** Array to store user names. */
+        String[] onlineUserArray = onlineUserList.toArray(new
+                String[onlineUserList.size()]);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.onlineUsers)
+                /** -1 indicates that no option is selected by default. */
+                .setSingleChoiceItems(onlineUserArray, -1,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog,
+                                                final int which) {
+
+                            }
+                        })
+                .setPositiveButton(R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog,
+                                        final int which) {
+
+                    }
+                })
+                .setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog,
+                                        final int which) {
+
+                    }
+                });
+
+        builder.show();
     }
 
     /**

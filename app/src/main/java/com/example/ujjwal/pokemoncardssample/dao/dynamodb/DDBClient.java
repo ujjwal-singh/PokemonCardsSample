@@ -8,7 +8,17 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
+import com.amazonaws.services.dynamodbv2.model.ScanRequest;
+import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.example.ujjwal.pokemoncardssample.Constants;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ujjwal on 19/7/17.
@@ -251,6 +261,53 @@ public final class DDBClient {
                     retrieveUserAvailability(username);
             userAvailability.setOnline(isOnline);
             saveItem(userAvailability);
+        } catch (AmazonClientException e) {
+            throw e;
+        }
+    }
+
+    /**
+     *  This method fetches the list of online users,
+     *  and returns it as a list of strings.
+     *  The current username (user who is executing the query)
+     *  is excluded from the list.
+     *  @param username String, determines which user is executing the query.
+     *  @return List,   List of String which contains the online users.
+     *  @throws AmazonClientException Throws this exception in case
+     *          of network problems.
+     */
+    public static List<String> getOnlineUserList(final String username)
+            throws AmazonClientException {
+
+        try {
+            HashMap<String, Condition> scanFilter = new
+                    HashMap<String, Condition>();
+            Condition condition = new Condition()
+                    .withComparisonOperator(ComparisonOperator.EQ)
+                    .withAttributeValueList(new AttributeValue().withN("1"));
+            scanFilter.put(
+                    Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_ONLINE,
+                    condition);
+            ScanRequest scanRequest = new ScanRequest(
+                    Constants.DDB_USER_AVAILABILITY_TABLE_NAME)
+                    .withScanFilter(scanFilter);
+            ScanResult scanResult = ddbClient.scan(scanRequest);
+            List<Map<String, AttributeValue>> itemList = scanResult.getItems();
+
+            List<String> onlineUsernameList = new ArrayList<String>();
+
+            for (Map<String, AttributeValue> currentItem : itemList) {
+                String onlineUsername = (currentItem.get(
+                        Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_USERNAME))
+                        .getS();
+
+                if (!onlineUsername.equals(username)) {
+                    onlineUsernameList.add(onlineUsername);
+                }
+            }
+
+            return onlineUsernameList;
+
         } catch (AmazonClientException e) {
             throw e;
         }
