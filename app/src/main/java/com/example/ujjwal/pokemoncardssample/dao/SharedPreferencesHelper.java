@@ -55,7 +55,7 @@ public final class SharedPreferencesHelper {
     private SharedPreferencesHelper(final Context context) {
 
         /**
-         *  FindBugs will throws the folowing warning --
+         *  FindBugs will throws the following warning --
          *  This instance method writes to a static field.
          *  This is tricky to get correct if multiple instances
          *  are being manipulated, and generally bad practice.

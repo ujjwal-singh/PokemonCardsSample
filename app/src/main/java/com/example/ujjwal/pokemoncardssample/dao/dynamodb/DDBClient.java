@@ -76,7 +76,7 @@ public final class DDBClient {
     private DDBClient(final Context passedContext) {
 
         /**
-         *  FindBugs will throws the folowing warning --
+         *  FindBugs will throws the following warning --
          *  This instance method writes to a static field.
          *  This is tricky to get correct if multiple instances
          *  are being manipulated, and generally bad practice.
@@ -111,11 +111,7 @@ public final class DDBClient {
      */
     public static void saveItem(final Object obj) throws AmazonClientException {
 
-        try {
-            ddbMapper.save(obj);
-        } catch (AmazonClientException e) {
-            throw e;
-        }
+        ddbMapper.save(obj);
     }
 
     /**
@@ -134,27 +130,23 @@ public final class DDBClient {
                                   final String password)
                                 throws AmazonClientException {
 
-        try {
-            UserAuthentication newUser = new UserAuthentication();
-            newUser.setUsername(username);
-            newUser.setPassword(password);
-            saveItem(newUser);
+        UserAuthentication newUser = new UserAuthentication();
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+        saveItem(newUser);
 
-            UserAvailability newUserAvailability = new UserAvailability();
-            newUserAvailability.setUsername(username);
-            newUserAvailability.setOnline(true);
-            newUserAvailability.setInGame(false);
-            saveItem(newUserAvailability);
+        UserAvailability newUserAvailability = new UserAvailability();
+        newUserAvailability.setUsername(username);
+        newUserAvailability.setOnline(true);
+        newUserAvailability.setInGame(false);
+        saveItem(newUserAvailability);
 
-            UserHistory newUserHistory = new UserHistory();
-            newUserHistory.setUsername(username);
-            newUserHistory.setGamesPlayed(0);
-            newUserHistory.setGamesWon(0);
-            newUserHistory.setGamesLost(0);
-            saveItem(newUserHistory);
-        } catch (AmazonClientException e) {
-            throw e;
-        }
+        UserHistory newUserHistory = new UserHistory();
+        newUserHistory.setUsername(username);
+        newUserHistory.setGamesPlayed(0);
+        newUserHistory.setGamesWon(0);
+        newUserHistory.setGamesLost(0);
+        saveItem(newUserHistory);
     }
 
     /**
@@ -169,11 +161,7 @@ public final class DDBClient {
     public static UserAuthentication retrieveUser(final String username)
             throws AmazonClientException {
 
-        try {
-            return ddbMapper.load(UserAuthentication.class, username);
-        } catch (AmazonClientException e) {
-            throw e;
-        }
+        return ddbMapper.load(UserAuthentication.class, username);
     }
 
     /**
@@ -187,11 +175,7 @@ public final class DDBClient {
     public static UserAvailability retrieveUserAvailability(
             final String username) throws AmazonClientException {
 
-        try {
-            return ddbMapper.load(UserAvailability.class, username);
-        } catch (AmazonClientException e) {
-            throw e;
-        }
+        return ddbMapper.load(UserAvailability.class, username);
     }
 
     /**
@@ -204,11 +188,7 @@ public final class DDBClient {
     public static UserHistory retrieveUserHistory(final String username)
             throws AmazonClientException {
 
-        try {
-            return ddbMapper.load(UserHistory.class, username);
-        } catch (AmazonClientException e) {
-            throw e;
-        }
+        return ddbMapper.load(UserHistory.class, username);
     }
 
     /**
@@ -219,11 +199,7 @@ public final class DDBClient {
      */
     public static void deleteItem(final Object obj) {
 
-        try {
-            ddbMapper.delete(obj);
-        } catch (AmazonClientException e) {
-            throw e;
-        }
+        ddbMapper.delete(obj);
     }
 
     /**
@@ -236,13 +212,9 @@ public final class DDBClient {
     public static void deleteUser(final String username)
             throws AmazonClientException {
 
-        try {
-            deleteItem(retrieveUser(username));
-            deleteItem(retrieveUserAvailability(username));
-            deleteItem(retrieveUserHistory(username));
-        } catch (AmazonClientException e) {
-            throw e;
-        }
+        deleteItem(retrieveUser(username));
+        deleteItem(retrieveUserAvailability(username));
+        deleteItem(retrieveUserHistory(username));
     }
 
     /**
@@ -256,14 +228,10 @@ public final class DDBClient {
                                                  final boolean isOnline)
                                                 throws AmazonClientException {
 
-        try {
-            UserAvailability userAvailability =
-                    retrieveUserAvailability(username);
-            userAvailability.setOnline(isOnline);
-            saveItem(userAvailability);
-        } catch (AmazonClientException e) {
-            throw e;
-        }
+        UserAvailability userAvailability =
+                retrieveUserAvailability(username);
+        userAvailability.setOnline(isOnline);
+        saveItem(userAvailability);
     }
 
     /**
@@ -282,52 +250,47 @@ public final class DDBClient {
     public static List<String> getAvailableUsersList(final String username)
             throws AmazonClientException {
 
-        try {
-            HashMap<String, Condition> scanFilter = new
-                    HashMap<String, Condition>();
+        HashMap<String, Condition> scanFilter = new
+                HashMap<String, Condition>();
 
-            /** Filtering for Online users.
-             * 1 indicates that the user is online. */
-            Condition onlineAvailabilityCondition = new Condition()
-                    .withComparisonOperator(ComparisonOperator.EQ)
-                    .withAttributeValueList(new AttributeValue().withN("1"));
+        /** Filtering for Online users.
+         * 1 indicates that the user is online. */
+        Condition onlineAvailabilityCondition = new Condition()
+                .withComparisonOperator(ComparisonOperator.EQ)
+                .withAttributeValueList(new AttributeValue().withN("1"));
 
-            /** Filtering for non-playing users. 0 indicates that the
-             *  user is not involved in any game currently. */
-            Condition nonPlayingCondition = new Condition()
-                    .withComparisonOperator(ComparisonOperator.EQ)
-                    .withAttributeValueList(new AttributeValue().withN("0"));
+        /** Filtering for non-playing users. 0 indicates that the
+         *  user is not involved in any game currently. */
+        Condition nonPlayingCondition = new Condition()
+                .withComparisonOperator(ComparisonOperator.EQ)
+                .withAttributeValueList(new AttributeValue().withN("0"));
 
-            scanFilter.put(
-                    Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_ONLINE,
-                    onlineAvailabilityCondition);
-            scanFilter.put(
-                    Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_IN_GAME,
-                    nonPlayingCondition);
+        scanFilter.put(
+                Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_ONLINE,
+                onlineAvailabilityCondition);
+        scanFilter.put(
+                Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_IN_GAME,
+                nonPlayingCondition);
 
-            ScanRequest scanRequest = new ScanRequest(
-                    Constants.DDB_USER_AVAILABILITY_TABLE_NAME)
-                    .withScanFilter(scanFilter);
+        ScanRequest scanRequest = new ScanRequest(
+                Constants.DDB_USER_AVAILABILITY_TABLE_NAME)
+                .withScanFilter(scanFilter);
 
-            ScanResult scanResult = ddbClient.scan(scanRequest);
-            List<Map<String, AttributeValue>> itemList = scanResult.getItems();
+        ScanResult scanResult = ddbClient.scan(scanRequest);
+        List<Map<String, AttributeValue>> itemList = scanResult.getItems();
 
-            List<String> onlineUsernameList = new ArrayList<String>();
+        List<String> onlineUsernameList = new ArrayList<String>();
 
-            for (Map<String, AttributeValue> currentItem : itemList) {
-                String onlineUsername = (currentItem.get(
-                        Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_USERNAME))
-                        .getS();
+        for (Map<String, AttributeValue> currentItem : itemList) {
+            String onlineUsername = (currentItem.get(
+                    Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_USERNAME))
+                    .getS();
 
-                if (!onlineUsername.equals(username)) {
-                    onlineUsernameList.add(onlineUsername);
-                }
+            if (!onlineUsername.equals(username)) {
+                onlineUsernameList.add(onlineUsername);
             }
-
-            return onlineUsernameList;
-
-        } catch (AmazonClientException e) {
-            throw e;
         }
+
+        return onlineUsernameList;
     }
 }

@@ -15,6 +15,7 @@ import com.amazonaws.AmazonClientException;
 import com.example.ujjwal.pokemoncardssample.dao.SharedPreferencesHelper;
 import com.example.ujjwal.pokemoncardssample.dao.dynamodb.DDBClient;
 import com.example.ujjwal.pokemoncardssample.dao.dynamodb.UserAuthentication;
+import com.example.ujjwal.pokemoncardssample.dao.sqs.SQSClient;
 import com.example.ujjwal.pokemoncardssample.utils.HashCalculator;
 import com.example.ujjwal.pokemoncardssample.utils.BooleanHolder;
 
@@ -26,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
 
     /** DDBClient for this class. */
     private DDBClient ddbClient;
+
+    /** SQSClient for this class. */
+    private SQSClient sqsClient;
+
     /** SharedPreferencesHelper object for this class. */
     private SharedPreferencesHelper sharedPreferencesHelper;
 
@@ -74,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferencesHelper = SharedPreferencesHelper.getInstance(this);
         ddbClient = DDBClient.getInstance(this);
+        sqsClient = SQSClient.getInstance(this);
 
         initCheck();
     }
@@ -202,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         ddbClient.createUser(username,
                                 HashCalculator.getMD5Hash(password));
+                        sqsClient.createQueue(username);
                         sharedPreferencesHelper.writeUsername(username);
                     }
                 } catch (AmazonClientException e) {

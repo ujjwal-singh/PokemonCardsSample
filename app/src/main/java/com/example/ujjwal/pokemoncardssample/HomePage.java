@@ -17,6 +17,7 @@ import com.amazonaws.AmazonClientException;
 import com.example.ujjwal.pokemoncardssample.dao.SharedPreferencesHelper;
 import com.example.ujjwal.pokemoncardssample.dao.dynamodb.DDBClient;
 import com.example.ujjwal.pokemoncardssample.dao.dynamodb.UserAuthentication;
+import com.example.ujjwal.pokemoncardssample.dao.sqs.SQSClient;
 import com.example.ujjwal.pokemoncardssample.services.ExitService;
 import com.example.ujjwal.pokemoncardssample.utils.BooleanHolder;
 import com.example.ujjwal.pokemoncardssample.utils.HashCalculator;
@@ -38,6 +39,9 @@ public class HomePage extends AppCompatActivity {
     /** Reference to the only object of the DDBClient singleton class. */
     private DDBClient ddbClient;
 
+    /** Reference to the only object of the SQSClient singleton class. */
+    private SQSClient sqsClient;
+
     /**
      *  Overriding onCreate method.
      *  @param savedInstanceState Bundle savedInstanceState
@@ -51,6 +55,7 @@ public class HomePage extends AppCompatActivity {
 
         sharedPreferencesHelper = SharedPreferencesHelper.getInstance();
         ddbClient = DDBClient.getInstance();
+        sqsClient = SQSClient.getInstance();
     }
 
     /**
@@ -230,9 +235,10 @@ public class HomePage extends AppCompatActivity {
                                     if ((userAuthentication.getPassword()).
                                             equals(HashCalculator
                                                     .getMD5Hash(password))) {
+                                        ddbClient.deleteUser(username);
+                                        sqsClient.deleteQueue(username);
                                         sharedPreferencesHelper
                                                 .removeUsername();
-                                        ddbClient.deleteUser(username);
                                     } else {
                                         userDeletedSuccessfully.setValue(false);
                                     }
