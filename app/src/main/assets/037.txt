@@ -1,0 +1,17 @@
+{
+    "weight": 9.9, 
+    "name": "Vulpix", 
+    "chain": [
+        {
+            "number": 37, 
+            "name": "Vulpix"
+        }
+    ], 
+    "flavor": "Vulpix is a small, quadruped, fox-like Pokemon. It has red-brown pelt, brown, pupil-less eyes, large, pointed ears with dark brown insides, and six orange tails with curled tips. The tails grow hot as evolution approaches for this Pokemon. Vulpix also has curled locks of orange fur with bangs on top of its head. At birth, Vulpix has only one white tail, which apparently splits and grows more beautiful and warmer as it grows older. Vulpix has a cream underbelly, and brown feet with lighter brown paw pads. Vulpix has a flame inside its body that never goes out, and is capable of manipulating fire to such precision as to create floating wisps of flame. When the temperature outside increases, it will expel flames from its mouths to prevent its body from overheating. Vulpix is known to feign injury to escape from opponents too powerful for it to defeat. Vulpix can be found most commonly in grassy plains. In the Alola region, Vulpix has adapted to snowy mountain peaks. Its fur has become snowy white. It has pale blue paws, blue eyes, and dark blue insides its ears. The locks of hair on its head and its six tails are curlier with a wispy appearance. Alolan Vulpix is believed to have arrived in the region at the same time as humans, but moved to the snow-capped mountain to avoid other Pokemon. It can be found in small pack with two to five individuals. Alolan Vulpix can expel breath as cold as -58(degree)F (-50(degree)C), which is capable of freezing anything. While it is not suited to warmer environments, its tail can produce ice to lower the surrounding temperature if needed.[1] ", 
+    "genus": "Fox", 
+    "number": 37, 
+    "types": [
+        "fire"
+    ], 
+    "height": 0.6
+}

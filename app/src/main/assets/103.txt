@@ -1,0 +1,18 @@
+{
+    "weight": 120.0, 
+    "name": "Exeggutor", 
+    "chain": [
+        {
+            "number": 102, 
+            "name": "Exeggcute"
+        }
+    ], 
+    "flavor": "Exeggutor is a tall, bipedal Pokemon that strongly resembles a coconut or pineapple tree. Its legs and body resemble a tree trunk, and its legs are thick with two-toed feet and a light yellow paw pad on each foot's underside. It has leaves sprouting from the top of its body, and Exeggutor has three to six round, light yellow heads that resemble coconuts, each with differing facial expressions. Each head thinks independently of the others, so it makes a lot of noise as each head speaks its mind. If one of these heads grows too large, it falls off and groups back together to become an Exeggcute. In the anime, Exeggutor also has been seen in groups of its own kind, meaning that it is not a solitary Pokemon. It lives in forests and jungles. Due to the abundance of sunlight in the Alola region, Exeggutor grows over five times taller than in other regions. Its neck is thinner and much longer, causing it to resemble a palm tree. This variant of Exeggutor has a long, tapering tail with two leaves and a fourth head on the tip. This extra head can act on its own and defend the rear. Its long neck can be used like a whip to attack enemies with its hard head. However, its neck can also be a weak point. The people of Alola claim that Alolan Exeggutor is this Pokemons true form. [1] Exeggutor and its pre-evolved form are the only known Pokemon that can learn Barrage. ", 
+    "genus": "Coconut", 
+    "number": 103, 
+    "types": [
+        "grass", 
+        "psychic"
+    ], 
+    "height": 2.0
+}

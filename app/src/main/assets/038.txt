@@ -1,0 +1,17 @@
+{
+    "weight": 19.9, 
+    "name": "Ninetales", 
+    "chain": [
+        {
+            "number": 37, 
+            "name": "Vulpix"
+        }
+    ], 
+    "flavor": "This fox-like, quadruped Pokemon is covered with a thick, luxurious golden-white fur. It has nine, long tails, each tipped with pale orange. There is a fluffy crest atop its head, and a small mane around its neck. Ninetales has gleaming red eyes that are said to give it the ability to control minds. Its ears are pointed, and it has long, slender legs with three-toed paws. Ninetales is a very vengeful Pokemon that has been known to curse those who mistreat it. This intelligent Pokemon is able to understand human speech easily. It can live for 1,000 years, due to the energy within its nine tails, each of which is said to have a different mystical power. The anime has shown that it can swim. It can be found living in grasslands. In the Alola region, Ninetales has a different appearance. Its coat is pale blue with white at the tips of its tails, crests, and covering most of its legs. Additionally, it now has blue eyes and its fur is more flowing and curled. Alolan Ninetales can produce ice crystals from its fur, which it can use for both offense and defense. The ice crystals can act as shield or form balls that can be fired like bullets with enough force to shatter rock. It lives on a snowy mountain peak in the Alola region that is considered by some to be holy ground. As such, it is revered as a sacred messenger. Alolan Ninetales has a gentle temperament, and is known to aid humans in distress. However, it is territorial and will punish any threat to its domain. [1] ", 
+    "genus": "Fox", 
+    "number": 38, 
+    "types": [
+        "fire"
+    ], 
+    "height": 1.1
+}

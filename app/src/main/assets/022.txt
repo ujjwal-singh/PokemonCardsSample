@@ -1,0 +1,18 @@
+{
+    "weight": 38.0, 
+    "name": "Fearow", 
+    "chain": [
+        {
+            "number": 21, 
+            "name": "Spearow"
+        }
+    ], 
+    "flavor": "Fearow is a large, mostly brown avian Pokemon with a vulturine neck and broad, powerful wings. It has a long, pointed, pink beak, and a decorative red coxcomb on top of its head. Its narrow eyes have very small pupils, and do not appear to have colored irises. It has shaggy, feathers on the base of its neck and covering the upper portion of its wings. These feathers are cream-colored, as are the tips of its flight feathers. Its sharp-clawed talons are pink, with three toes pointing forward and one pointing backward. Fearow's large wings and stamina allow it to fly for an entire day without landing. It will shoot upward, and then dive down to catch prey. Its long neck and beak allow it to pluck prey from both land and water, and it will even catch tiny insects that hide underground. Fearow is found in wastelands and desolate fields. ", 
+    "genus": "Beak", 
+    "number": 22, 
+    "types": [
+        "normal", 
+        "flying"
+    ], 
+    "height": 1.2
+}

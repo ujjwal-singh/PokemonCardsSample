@@ -1,0 +1,17 @@
+{
+    "weight": 66.6, 
+    "name": "Electrode", 
+    "chain": [
+        {
+            "number": 100, 
+            "name": "Voltorb"
+        }
+    ], 
+    "flavor": "Electrode is a round Pokemon resembling a reverse-colored Poke Ball with a mouth and eyes. Its top half is white, while its lower half is red. For this reason, many Trainers try to pick it up, mistaking it for an item. The Pocket Monsters Carddass Trading Cards depict Electrode as hollow. Many know it by the nickname 'Bomb Ball.' Electrode tends to live in power plants where fresh electricity is being generated, which it consumes. As a result, it often causes blackouts. The more electric energy Electrode consumes, the faster it moves. Electrode explodes in response to even the smallest stimulation, simply to entertain itself, or because it has taken in too much electricity. When full of stored electricity, it has been known to drift with the wind. ", 
+    "genus": "Ball", 
+    "number": 101, 
+    "types": [
+        "electric"
+    ], 
+    "height": 1.2
+}

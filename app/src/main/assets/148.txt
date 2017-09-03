@@ -1,0 +1,17 @@
+{
+    "weight": 16.5, 
+    "name": "Dragonair", 
+    "chain": [
+        {
+            "number": 147, 
+            "name": "Dratini"
+        }
+    ], 
+    "flavor": "Dragonair is a long, serpentine Pokemon with sky blue scales and a white underside. Its violet eyes are dark and glossy. It has a smooth, rounded snout and a small, white horn on its forehead. Its head is flanked by two small, stylized wings, which are white and curve into a swirl at the base. Three blue, crystal orbs, one on its neck and two on its tail, adorn its body. Dragonair emits a gentle aura that gives it a mystical appearance. As seen in the anime, it can make its wings grow larger in order to fly, but otherwise moves through the air unaided. Dragonair hosts a large amount of energy within its body, which it can discharge through the crystal orbs on its neck and tail. This causes its body to brighten and give off a different aura that changes the weather in its vicinity. Dragonair is a rare Pokemon that inhabits seas and lakes. ", 
+    "genus": "Dragon", 
+    "number": 148, 
+    "types": [
+        "dragon"
+    ], 
+    "height": 4.0
+}

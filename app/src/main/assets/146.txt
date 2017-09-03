@@ -1,0 +1,18 @@
+{
+    "weight": 60.0, 
+    "name": "Moltres", 
+    "chain": [
+        {
+            "number": 146, 
+            "name": "Moltres"
+        }
+    ], 
+    "flavor": "Moltres is a large, avian Pokemon with orange or golden plumage. It has a long, flowing head crest and a billowing tail, both made of flames. Additionally, its wings are also shrouded in fiery plumage. Its straight, pointed beak is brown, as are its anisodactyl feet. It has short talons. Moltres sheds embers with every flap of its wings, creating a brilliant flash of flames. By dipping itself into the magma of an active volcano, this Pokemon can heal itself. It migrates to the south with the coming of spring, and is said to bring an early springtime to cold lands. Moltres is rarely seen by Trainers. ", 
+    "genus": "Flame", 
+    "number": 146, 
+    "types": [
+        "fire", 
+        "flying"
+    ], 
+    "height": 2.0
+}

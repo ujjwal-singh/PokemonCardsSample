@@ -1,0 +1,18 @@
+{
+    "weight": 3.2, 
+    "name": "Weedle", 
+    "chain": [
+        {
+            "number": 13, 
+            "name": "Weedle"
+        }
+    ], 
+    "flavor": "Weedle is a small larva Pokemon with a segmented body ranging in color from yellow to reddish-brown. Combined with its red nose and feet, Weedle's bright coloration wards off its enemies. Weedle has a conical, two-inch (five centimeter) venomous stinger on its head and a barbed one on its tail, but its other body parts are spherical. Weedle can retaliate against attackers and those who step on it with its strong toxin. It can distinguish its favorite kinds of leaves using its acute sense of smell. As a young Bug Pokemon, its daily appetite for leaves matches its weight. Weedle can be found in forests and usually hides in grass, bushes, and under the leaves it eats. ", 
+    "genus": "Hairy Bug", 
+    "number": 13, 
+    "types": [
+        "bug", 
+        "poison"
+    ], 
+    "height": 0.3
+}

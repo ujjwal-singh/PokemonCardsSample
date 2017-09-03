@@ -9,12 +9,21 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.CreateQueueRequest;
 import com.amazonaws.services.sqs.model.DeleteQueueRequest;
+import com.amazonaws.services.sqs.model.Message;
+import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
+import com.amazonaws.services.sqs.model.SendMessageRequest;
 import com.example.ujjwal.pokemoncardssample.Constants;
 
-/**
- * Created by ujjwal on 2/8/17.
- */
+import org.json.JSONObject;
 
+import java.util.List;
+
+/**
+ *  This class is a Singleton class.
+ *  Provides SQS Client to the app.
+ *  Created by ujjwal on 2/8/17.
+ *  @author ujjwal
+ */
 public final class SQSClient {
 
     /** Context passed by calling activity. */
@@ -118,6 +127,7 @@ public final class SQSClient {
 
     /**
      *  This method deletes a SQS queue, based on the queue name.
+     *  (Regardless of whether the queue is empty or not.)
      *  @param queueName String the name of the queue to be deleted.
      *  @throws AmazonClientException Throws this exception in case
      *          of network problems.
@@ -127,5 +137,71 @@ public final class SQSClient {
 
         sqsClient.deleteQueue(new
                 DeleteQueueRequest(getQueueUrl(queueName)));
+    }
+
+    /**
+     *  This method sends a message to a SQS queue, identified
+     *  by the queue URL.
+     *  @param queueUrl The URL of the queue.
+     *  @param message  Message to be sent (JSON object).
+     *  @throws AmazonClientException Throws this exception in case
+     *          of network problems.
+     */
+    public static void sendMessage(final String queueUrl,
+                                   final JSONObject message)
+            throws AmazonClientException {
+
+        sqsClient.sendMessage(new SendMessageRequest(queueUrl,
+                message.toString()));
+    }
+
+    /**
+     *  This method sends a message to a SQS queue, identified
+     *  by the queue name.
+     *  @param queueName    The name of the queue.
+     *  @param message  Message to be sent (JSON object).
+     *  @param dummy    Useless, just to support method
+     *                  overloading.
+     *  @throws AmazonClientException Throws this exception in case
+     *          of network problems.
+     */
+    public static void sendMessage(final String queueName,
+                                   final JSONObject message, final int dummy)
+            throws AmazonClientException {
+
+        sendMessage(getQueueUrl(queueName), message);
+    }
+
+    /**
+     *  This method fetches all the messages in a SQS queue,
+     *  identified by its URL.
+     *  @param queueUrl    URL of the queue.
+     *  @return List of Messages.
+     *  @throws AmazonClientException Throws this exception in case
+     *          of network problems.
+     */
+    public static List<Message> getMessages(final String queueUrl)
+            throws AmazonClientException {
+
+        ReceiveMessageRequest receiveMessageRequest = new
+                ReceiveMessageRequest(queueUrl);
+
+        return (sqsClient.receiveMessage(receiveMessageRequest).getMessages());
+    }
+
+    /**
+     *  This method deletes a particular message from a queue,
+     *  identified by the URL of the queue and the recipient
+     *  handle of the message.
+     *  @param queueUrl URL of the queue.
+     *  @param recipientHandle  Recipient handle of the message.
+     *  @throws AmazonClientException Throws this exception in case
+     *          of network problems.
+     */
+    public static void deleteMessage(final String queueUrl,
+                                     final String recipientHandle)
+            throws AmazonClientException {
+
+        sqsClient.deleteMessage(queueUrl, recipientHandle);
     }
 }

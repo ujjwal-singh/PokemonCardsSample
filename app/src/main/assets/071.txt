@@ -1,0 +1,18 @@
+{
+    "weight": 15.5, 
+    "name": "Victreebel", 
+    "chain": [
+        {
+            "number": 69, 
+            "name": "Bellsprout"
+        }
+    ], 
+    "flavor": "Victreebel has a bell-shaped body with a gaping mouth that has two sharp teeth. Its semicircular eyes appear directly under its mouth and it has several dark green spots on its body. Covering Victreebel's mouth is a leaf with a long, brown, yellow-tipped vine growing out of it. The vine is flicked to mimic an animal in order to attract prey. Victreebel also produces a sweet scent to further aid in luring its victims. Acid that has dissolved numerous prey animals becomes sweeter and even more effective at attracting prey. It can be found in small groups and is territorial. In the manga, Victreebel has been shown to hoard food, usually small birds and rodents, and collect Leaf Stones to perform evolution rituals at night to help Weepinbell become more Victreebel. Victreebel lives in forests. ", 
+    "genus": "Flycatcher", 
+    "number": 71, 
+    "types": [
+        "grass", 
+        "poison"
+    ], 
+    "height": 1.7
+}

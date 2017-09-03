@@ -21,8 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by ujjwal on 19/7/17.
- * This is a Singleton class to manage DDB calls.
+ *  Created by ujjwal on 19/7/17.
+ *  This is a Singleton class to manage DDB calls.
+ *  @author ujjwal
  */
 
 public final class DDBClient {
@@ -218,19 +219,26 @@ public final class DDBClient {
     }
 
     /**
-     *  This method sets user online status, as per given username and status.
+     *  This method sets user availability status,
+     *  as per given username and status.
      *  @param username String username, user whose status is to be set.
-     *  @param isOnline boolean isOnline, online status to be set.
+     *  @param isOnline boolean isOnline, whether the user is online or not.
+     *                  True means the user is online.
+     *  @param isInGame boolean isInGame, whether the user is currently
+     *                  in a game or not.
+     *                  True means the user is in a Game currently.
      *  @throws AmazonClientException Throws this exception in case
      *          of network problems.
      */
-    public static void setUserOnlineAvailability(final String username,
-                                                 final boolean isOnline)
-                                                throws AmazonClientException {
+    public static void setUserAvailability(final String username,
+                                           final boolean isOnline,
+                                           final boolean isInGame)
+            throws AmazonClientException {
 
         UserAvailability userAvailability =
                 retrieveUserAvailability(username);
         userAvailability.setOnline(isOnline);
+        userAvailability.setInGame(isInGame);
         saveItem(userAvailability);
     }
 

@@ -1,0 +1,17 @@
+{
+    "weight": 10.4, 
+    "name": "Voltorb", 
+    "chain": [
+        {
+            "number": 100, 
+            "name": "Voltorb"
+        }
+    ], 
+    "flavor": "Voltorb is a spherical Pokemon that looks like a Poke Ball with a face, minus the button. The top half is red, while the bottom half is white. Because of its resemblance to Poke Balls, it is thought that it was created when one was exposed to an energy pulse. It was first seen in the plant where modern Poke Balls were invented. Voltorb is generally found in power plants and other areas with electric fields. It has a volatile temperament, and will explode if bumped or agitated. ", 
+    "genus": "Ball", 
+    "number": 100, 
+    "types": [
+        "electric"
+    ], 
+    "height": 0.5
+}

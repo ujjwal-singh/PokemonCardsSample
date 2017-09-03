@@ -1,0 +1,18 @@
+{
+    "weight": 29.5, 
+    "name": "Parasect", 
+    "chain": [
+        {
+            "number": 46, 
+            "name": "Paras"
+        }
+    ], 
+    "flavor": "Parasect is an orange, insectoid Pokemon that has been completely overtaken by the parasitic mushroom on its back. It has a small head with pure white eyes and a segmented body that is mostly hidden by the mushroom. It has three pairs of legs, with the foremost pair forming large pincers. The fungus growing on its back has a large red cap with yellow spots throughout. The insect has been drained of nutrients and is now under the control of the fully-grown tochukaso. Parasect can thrive in dank forests with a suitable amount of humidity for growing fungi. Swarms of this Pokemon have been known to infest trees. The swarm will drain the tree of nutrients until it dies, and will then move on to a new tree. Its former signature move is Spore. ", 
+    "genus": "Mushroom", 
+    "number": 47, 
+    "types": [
+        "bug", 
+        "grass"
+    ], 
+    "height": 1.0
+}

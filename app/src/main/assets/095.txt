@@ -1,0 +1,18 @@
+{
+    "weight": 210.0, 
+    "name": "Onix", 
+    "chain": [
+        {
+            "number": 95, 
+            "name": "Onix"
+        }
+    ], 
+    "flavor": "Onix resembles a giant chain of gray boulders that become smaller towards the tail. It has a rocky spine on its head and a pair of black eyes right beneath it. This Pokemon has a magnet in its brain that serves as an internal compass. Its body absorbs many hard objects, making its body very solid. As it grows older, it becomes more rounded and smoother, eventually becoming similar to black diamonds. Onix tunnels under the ground at over 50 miles (80 kilometers) per hour, which causes tremors and a terrifying roar that echoes a long way. The massive, winding tunnels it leaves behind are used as homes by Diglett. Onix loves to eat the large boulders it encounters while burrowing underground. As seen in the Pokemon Stadium series, Onix is capable of rotating its head, or any part of its body, in a full 360 degrees. It is a very aggressive Pokemon that will constantly attack humans and other Pokemon when in pain, as seen in the anime. Onix can be found in mountains and caves, though it prefers underground tunnels with little light. ", 
+    "genus": "Rock Snake", 
+    "number": 95, 
+    "types": [
+        "rock", 
+        "ground"
+    ], 
+    "height": 8.8
+}

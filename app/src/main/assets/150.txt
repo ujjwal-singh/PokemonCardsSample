@@ -1,0 +1,17 @@
+{
+    "weight": 122.0, 
+    "name": "Mewtwo", 
+    "chain": [
+        {
+            "number": 150, 
+            "name": "Mewtwo"
+        }
+    ], 
+    "flavor": "Mewtwo is a Pokemon created by science. It is a bipedal, humanoid creature with some feline features. It is primarily gray with a long, purple tail. On top of its head are two short, blunt horns, and it has purple eyes. A tube extends from the back of its skull to the top of its spine, bypassing its neck. It has a defined chest and shoulders, which resemble a breastplate. The three digits on each hand and foot have spherical tips. Its tail is thick at the base, but thins before ending in a small bulb. Mewtwo was created after years of horrific gene splicing and DNA engineering experiments based on Mew. It is said to have the most savage heart among all Pokemon, lack compassion, and strike fear into its enemy with cold, glowing eyes. Because it was engineered to be the ultimate in battle, it can only think of defeating its foes. In the first movie, Mewtwo exemplified these vicious characteristics and was shown to be capable of levitation, telepathy and mind control. However, it was later shown to be caring, protective, and even altruistic. Another Mewtwo in the anime shared its aversion to contact with others, but was much less belligerent. Mewtwo conserves energy by remaining motionless in order to unleash its full power in battle. It is also capable of materializing psychic waves in the form of its signature move, Psystrike. Though rarely seen in the wild, it is said to be resting in a dark cave somewhere. ", 
+    "genus": "Genetic", 
+    "number": 150, 
+    "types": [
+        "psychic"
+    ], 
+    "height": 2.0
+}

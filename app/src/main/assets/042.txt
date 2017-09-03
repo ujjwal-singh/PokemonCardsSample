@@ -1,0 +1,18 @@
+{
+    "weight": 55.0, 
+    "name": "Golbat", 
+    "chain": [
+        {
+            "number": 41, 
+            "name": "Zubat"
+        }
+    ], 
+    "flavor": "Golbat is a large, blue bat-like Pokemon with purple wing membranes. It has small eyes with slit pupils and a massive mouth containing four fangs; females have smaller fangs than males. While its mouth seems to be otherwise empty, Golbat occasionally displays a long, purple tongue. Its pointed ears are tiny, and it has short legs with long, thin feet. It feeds on the blood of both Pokemon and humans, and is capable of drinking over 10 ounces (300 mL) of blood in one sitting. Golbat drinks so much blood that its blood type will change to that of its victim following a feed. It is also gluttonous, occasionally gorging itself to the extent that it becomes too heavy to fly. Golbat is nocturnal, and can be found quite easily in caves. ", 
+    "genus": "Bat", 
+    "number": 42, 
+    "types": [
+        "poison", 
+        "flying"
+    ], 
+    "height": 1.6
+}

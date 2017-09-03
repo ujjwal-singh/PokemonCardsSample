@@ -1,0 +1,17 @@
+{
+    "weight": 33.3, 
+    "name": "Dugtrio", 
+    "chain": [
+        {
+            "number": 50, 
+            "name": "Diglett"
+        }
+    ], 
+    "flavor": "Dugtrio is a set of Diglett triplets sharing a single body. Each head has brown skin, black eyes, and a large, round, pink nose. Dugtrio's three heads think the same thoughts and act cooperatively. In order to make burrowing easier, each head will bob up and down to loosen the soil. Dugtrio can tunnel under the earth at 60 mph (100 km/h) to a depth of 60 miles (100 km), triggering tremors and earthquakes. It is capable of burrowing endlessly. For a brief time, Fissure was its signature move. Dugtrio lives in tunnels and caves under the earth. As shown in the anime, it sometimes lives in hollow trees in forests. It maintains the soil and plants trees to revitalize wooded areas. ", 
+    "genus": "Mole", 
+    "number": 51, 
+    "types": [
+        "ground"
+    ], 
+    "height": 0.7
+}

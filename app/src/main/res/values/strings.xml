@@ -23,6 +23,7 @@
     <string name="connectionProblem">Connection Problem. Please make sure that you are connected to the internet.</string>
     <string name="searchPlayers">Search Players</string>
     <string name="availableUsers">Available Users</string>
+    <string name="invitationHeading">Invitation Received</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>

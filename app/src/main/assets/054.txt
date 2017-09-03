@@ -1,0 +1,17 @@
+{
+    "weight": 19.6, 
+    "name": "Psyduck", 
+    "chain": [
+        {
+            "number": 54, 
+            "name": "Psyduck"
+        }
+    ], 
+    "flavor": "Psyduck is a yellow Pokemon that resembles a duck or bipedal platypus. Three tufts of black hair grow on top of its head, and it has a wide, flat, cream-colored beak and vacant eyes. Its legs, arms, and tail are stubby and its webbed feet are cream-colored. There are three claws on both of its hands. Psyduck is constantly stunned by its headache and is unable to think very clearly. It usually stands immobile, trying to calm its headache. However, when its headache becomes too severe, it releases tension in the form of strong psychic powers. The use of these powers produces brain waves identical to those seen in sleepers, and the Pokemon is unable to recall these episodes. Psyduck lives in freshwater lakes and small ponds, but can be seen in rivers in tropical areas as shown in Pokemon Snap. ", 
+    "genus": "Duck", 
+    "number": 54, 
+    "types": [
+        "water"
+    ], 
+    "height": 0.8
+}

@@ -1,0 +1,17 @@
+{
+    "weight": 40.0, 
+    "name": "Clefable", 
+    "chain": [
+        {
+            "number": 173, 
+            "name": "Cleffa"
+        }
+    ], 
+    "flavor": "Clefable is tall, pink Pokemon with a vaguely star-shaped body. It has long, pointed ears with dark brown tips and black, oval eyes with wrinkles on either side. A curled lock of fur hangs over its forehead, much like its long, tightly curled tail. There are dark pink wings on its back, and each wing has three points. Its hands have three fingers each, and its feet have two clawed toes and dark pink soles. Clefable is a timid creature that flees when it senses people approaching, and is one of the world's rarest Pokemon. Its sensitive ears can distinctly hear a pin drop from half a mile (one kilometer) away. Because of its acute hearing, it prefers to live in quiet, mountainous areas of which it is protective. Using a bouncy gait, it is able to walk on water and sometimes appears to be flying using its small wings. ", 
+    "genus": "Fairy", 
+    "number": 36, 
+    "types": [
+        "fairy"
+    ], 
+    "height": 1.3
+}

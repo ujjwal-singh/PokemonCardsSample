@@ -1,0 +1,17 @@
+{
+    "weight": 3.5, 
+    "name": "Rattata", 
+    "chain": [
+        {
+            "number": 19, 
+            "name": "Rattata"
+        }
+    ], 
+    "flavor": "Rattata is a small, quadruped rodent Pokemon. Its most notable feature is its large teeth. Like most rodents, its teeth grow continuously throughout its life and must be worn down by gnawing. The top half of its body is light purple, while the lower half is cream-colored. It has a pair of thin, cream-colored whiskers and a long tail that curls at the tip. Rattata has purple fur on its back, and cream fur on its stomach. Females have shorter whiskers and lighter fur color. Rattata can live wherever it can find food, which it searches for most of the day. Thanks to its sharp fangs, it is able to eat nearly anything. When it is threatened, Rattata can deliver a powerful bite. Its large teeth are also useful when using its former signature moves, Hyper Fang and Super Fang. Its hardiness lets it live in many environments, although it mainly lives on plains and savannas. Because it reproduces so quickly, a pair of Rattata can quickly colonize an area. The Rattata population in Alola was booming until Yungoos was imported as a control measure. In order to avoid these new predators, Rattata altered its habits. It moved to more urban areas, became nocturnal, and formed large nests led by Raticate. Alolan Rattata search out fresh food by smell, and ignore anything spoiled. [1] It has dark gray fur and grayish-purple ear insides. There are two tufts of fur on each ear and near the tip of its tail. Its long, thin whiskers are replaced by shorter, thicker tufts of fur as well. The line where its cream underbelly meets its gray fur is ragged instead of smooth. ", 
+    "genus": "Mouse", 
+    "number": 19, 
+    "types": [
+        "normal"
+    ], 
+    "height": 0.3
+}

@@ -1,0 +1,17 @@
+{
+    "weight": 19.0, 
+    "name": "Charmeleon", 
+    "chain": [
+        {
+            "number": 4, 
+            "name": "Charmander"
+        }
+    ], 
+    "flavor": "Charmeleon is a bipedal, reptilian creature. It has crimson scales and a cream underside. There is a horn-like protrusion on the back of its head, and it has narrow green eyes and a long snout. It has relatively long arms with three sharp claws. Its short legs have feet with three claws and cream-colored soles. The tip of its long, powerful tail has a flame burning on it. The temperature rises to unbearable levels if Charmeleon swings its tail.  Charmeleon has a vicious nature and will constantly seek out opponents. Strong opponents excite this Pok\u00e9mon, causing it to spout bluish-white flames that torch its surroundings. However, it will relax once it has won. It is rare in the wild, but it can be found in mountainous areas. It has razor sharp claws and its tail is exceptionally strong. ", 
+    "genus": "Flame", 
+    "number": 5, 
+    "types": [
+        "fire"
+    ], 
+    "height": 1.1
+}

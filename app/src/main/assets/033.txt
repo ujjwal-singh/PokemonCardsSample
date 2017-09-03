@@ -1,0 +1,17 @@
+{
+    "weight": 19.5, 
+    "name": "Nidorino", 
+    "chain": [
+        {
+            "number": 32, 
+            "name": "Nidoran\u2642"
+        }
+    ], 
+    "flavor": "Nidorino is a light purple, quadruped Pokemon. It has several darker purple spots across its body. It has large, spiny ears with teal insides, narrow black eyes, and a long snout with two pointed teeth protruding from the upper jaw. It has a ridge of toxic spines on its back, and a long, pointed horn on its forehead. The horn is harder than a diamond and capable of secreting poison on impact. Its short legs have three claws on each foot. This is a male only species; the female counterpart is Nidorina. Nidorino is independent and fierce, often described as violent and easily angered. It uses its ears to check its surroundings. If it senses a hostile presence, all the barbs on its back bristle up at once, and it challenges the foe with all its might. Nidorino live in hot savannas and plains. ", 
+    "genus": "Poison Pin", 
+    "number": 33, 
+    "types": [
+        "poison"
+    ], 
+    "height": 0.9
+}

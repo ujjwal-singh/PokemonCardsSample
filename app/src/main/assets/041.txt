@@ -1,0 +1,18 @@
+{
+    "weight": 7.5, 
+    "name": "Zubat", 
+    "chain": [
+        {
+            "number": 41, 
+            "name": "Zubat"
+        }
+    ], 
+    "flavor": "Zubat is a blue, bat-like Pokemon. While it lacks eyes, it has pointed ears with purple insides and a mouth with four pointed teeth. There are two teeth on both the upper and lower jaws, and a male will have larger fangs than the female. It has purple wing membranes support by two, elongated fingers, and two long, thin, tails. Zubat lives in abundance in caves. It has evolved to have neither eyes nor nostrils, instead navigating through dark environments with echolocation. As demonstrated in the anime, it will leave its abode at night with a mass of other Zubat in order to seek prey. During the daytime, Zubat sleeps hanging upside down in caves, forests, or under the eaves of old buildings, avoiding sunlight at all costs. Daylight causes Zubat to become unhealthy, and prolonged exposure can even burn its skin. However, captured and trained Zubat have been recorded as being much more tenacious in the daytime, even when directly exposed to sunbeams. ", 
+    "genus": "Bat", 
+    "number": 41, 
+    "types": [
+        "poison", 
+        "flying"
+    ], 
+    "height": 0.8
+}

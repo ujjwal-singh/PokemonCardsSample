@@ -1,0 +1,18 @@
+{
+    "weight": 39.2, 
+    "name": "Doduo", 
+    "chain": [
+        {
+            "number": 84, 
+            "name": "Doduo"
+        }
+    ], 
+    "flavor": "Doduo is a two-headed, bipedal avian Pokemon. Each head has a long sharp beak and two beady black eyes with no discernible sclerae. It has a soft but bristly, down-like covering of brown feathers on its body and both heads. The males of the species have black flexible necks, whereas females have brown necks; both genders have brown coloring on their legs. It has two feet, each with four digits ending in a sharp claw. Even when sleeping or nourishing itself with food and water, one head is always awake and alert and keeps a keen eye out for enemies. Both heads have an identical brain. However, it is believed that on occasion they may possess different sets of brains. It is also theorized that the two heads communicate with some form of telepathy to be coordinated with one another. Due to its almost non-existent wings, it cannot fly very well but has developed its legs to be a very powerful runner. Reaching speeds of 60 mph (96.5 km/h), it energetically strides across the plains leaving large, 4' (10.6 cm) deep foot prints behind it. Doduo lives in wide open plains, grasslands, and savannahs. ", 
+    "genus": "Twin Bird", 
+    "number": 84, 
+    "types": [
+        "normal", 
+        "flying"
+    ], 
+    "height": 1.4
+}

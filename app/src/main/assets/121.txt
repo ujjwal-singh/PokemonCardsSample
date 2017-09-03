@@ -1,0 +1,18 @@
+{
+    "weight": 80.0, 
+    "name": "Starmie", 
+    "chain": [
+        {
+            "number": 120, 
+            "name": "Staryu"
+        }
+    ], 
+    "flavor": "Starmie is a violet sea star-like Pokemon with a gold formation on its front. Starmie's jewel core, which can glow in seven colors, has developed to resemble a cut precious stone. There is second set of semi-attached arms on its back, which are able to spin 360(degree). Starmie can emit electrical waves from the core that are powerful enough to reach the furthest parts of the universe. It can sometimes launch itself out of the water and fly through the air for short periods, as seen in Pokemon Snap. The multi-color glowing of its core is also believed to be a method of communication inside the species. However, Starmies core is most commonly seen as red in color. As seen in the anime, the core will go dark if Starmie is knocked unconscious, and will sometimes flicker if Starmie is low on health. Because of its body shape and habit of sending transmissions skyward, some people believe this Pokemon to be extraterrestrial. Starmie is rarely seen in the wild, but can be found in the deepest parts of the ocean. ", 
+    "genus": "Mysterious", 
+    "number": 121, 
+    "types": [
+        "water", 
+        "psychic"
+    ], 
+    "height": 1.1
+}

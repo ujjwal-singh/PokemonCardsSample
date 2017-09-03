@@ -1,0 +1,17 @@
+{
+    "weight": 32.0, 
+    "name": "Persian", 
+    "chain": [
+        {
+            "number": 52, 
+            "name": "Meowth"
+        }
+    ], 
+    "flavor": "Persian is a large, quadruped, feline Pokemon. Its fur is pale tan with the exception of its black-rimmed ears. It has a short muzzle with a small, black nose, red eyes with slit pupils, rounded ears, a pair of pointed teeth in its upper jaw, and three whiskers on either side of its face. Its thick whiskers are very sensitive to changes in air movements, enabling it to detect its prey by movement alone. In the center of its forehead is a red jewel. Its long tail has a distinctive curl at the end. Persian communicates with body language, and holds its tail upright to signal its intention to pounce. It has long legs and three-toed paws with retractible claws. Persian's lithe muscles also enable it to walk without making a sound. Persian normally lives in towns and cities. Although popular for its elegance, it is extremely difficult to raise as a pet due to its fickle and temperamental personality. It will scratch anyone, including its Trainer, with little or no provocation, and has been observed ripping its prey apart for no discernible reason. However, when a Persian is yanked by its whiskers, it becomes temporarily docile for unknown reasons. In the past, Pay Day was its signature move. ", 
+    "genus": "Classy Cat", 
+    "number": 53, 
+    "types": [
+        "normal"
+    ], 
+    "height": 1.0
+}

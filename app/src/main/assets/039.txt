@@ -1,0 +1,18 @@
+{
+    "weight": 5.5, 
+    "name": "Jigglypuff", 
+    "chain": [
+        {
+            "number": 174, 
+            "name": "Igglybuff"
+        }
+    ], 
+    "flavor": "Jigglypuff is a round, pink ball with pointed ears and large, blue eyes. It has rubbery, balloon-like skin and small, stubby arms and somewhat long feet. On top of its head is a curled tuft of fur. As seen in Pokemon Stadium, it is filled with air, as a defeated Jigglypuff, deflates until it is flat. By drawing extra air into its body, it is able to float as demonstrated in Super Smash Bros. Jigglypuff uses its eyes to mesmerize opponents. Once it achieves this, it will inflate its lungs and begin to sing a soothing lullaby. If the opponent resists falling asleep, Jigglypuff will endanger its own life by continuing to sing until its lungs run out of air. It is able to adjust the wavelength of its voice to match the brain waves of someone in a deep sleep. This helps ensure drowsiness in its opponents. Jigglypuff can mostly be found in lush green plains and grassy meadows. ", 
+    "genus": "Balloon", 
+    "number": 39, 
+    "types": [
+        "normal", 
+        "fairy"
+    ], 
+    "height": 0.5
+}

@@ -18,10 +18,16 @@ import com.example.ujjwal.pokemoncardssample.dao.SharedPreferencesHelper;
 import com.example.ujjwal.pokemoncardssample.dao.dynamodb.DDBClient;
 import com.example.ujjwal.pokemoncardssample.dao.dynamodb.UserAuthentication;
 import com.example.ujjwal.pokemoncardssample.dao.sqs.SQSClient;
+import com.example.ujjwal.pokemoncardssample.dao.sqs.SQSListener;
 import com.example.ujjwal.pokemoncardssample.services.ExitService;
 import com.example.ujjwal.pokemoncardssample.utils.BooleanHolder;
 import com.example.ujjwal.pokemoncardssample.utils.HashCalculator;
 import com.example.ujjwal.pokemoncardssample.utils.Holder;
+import com.example.ujjwal.pokemoncardssample.utils.JsonKey;
+import com.example.ujjwal.pokemoncardssample.utils.JsonValue;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +48,9 @@ public class HomePage extends AppCompatActivity {
     /** Reference to the only object of the SQSClient singleton class. */
     private SQSClient sqsClient;
 
+    /** SQSListener object for the user queue. */
+    private SQSListener sqsListener;
+
     /**
      *  Overriding onCreate method.
      *  @param savedInstanceState Bundle savedInstanceState
@@ -56,6 +65,10 @@ public class HomePage extends AppCompatActivity {
         sharedPreferencesHelper = SharedPreferencesHelper.getInstance();
         ddbClient = DDBClient.getInstance();
         sqsClient = SQSClient.getInstance();
+
+        sqsListener = new SQSListener(this, sqsClient,
+                sharedPreferencesHelper.getUsername());
+        sqsListener.run();
     }
 
     /**
@@ -132,9 +145,9 @@ public class HomePage extends AppCompatActivity {
             public void run() {
 
                 try {
-                    ddbClient.setUserOnlineAvailability(
+                    ddbClient.setUserAvailability(
                             sharedPreferencesHelper.getUsername(),
-                            false);
+                            false, false);
                     sharedPreferencesHelper.removeUsername();
                 } catch (AmazonClientException e) {
                     connectionSuccessful.setValue(false);
@@ -358,8 +371,12 @@ public class HomePage extends AppCompatActivity {
     private void showAvailableUsersDialog(final List<String> onlineUserList) {
 
         /** Array to store user names. */
-        String[] onlineUserArray = onlineUserList.toArray(new
+        final String[] onlineUserArray = onlineUserList.toArray(new
                 String[onlineUserList.size()]);
+
+        /** Integer to store index of selected user in the above array.
+         *  -1 indicates that no user is selected by default. */
+        final Holder whichUser = new Holder(-1);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.availableUsers)
@@ -370,6 +387,7 @@ public class HomePage extends AppCompatActivity {
                             public void onClick(final DialogInterface dialog,
                                                 final int which) {
 
+                                whichUser.setValue(which);
                             }
                         })
                 .setPositiveButton(R.string.ok,
@@ -378,6 +396,11 @@ public class HomePage extends AppCompatActivity {
                     public void onClick(final DialogInterface dialog,
                                         final int which) {
 
+                        if ((Integer) whichUser.getValue() != -1) {
+
+                            sendGameStartRequest(onlineUserArray[(Integer)
+                                    whichUser.getValue()]);
+                        }
                     }
                 })
                 .setNegativeButton(R.string.cancel,
@@ -390,6 +413,217 @@ public class HomePage extends AppCompatActivity {
                 });
 
         builder.show();
+    }
+
+    /**
+     *  This method sends request for a new game to
+     *  the selected user.
+     *  @param username The username of the selected user.
+     */
+    private void sendGameStartRequest(final String username) {
+
+        /** BooleanHolder object to indicate whether
+         *  connection was successful or not.
+         *  True means the connection was successful.
+         */
+        final BooleanHolder connectionSuccessful = new BooleanHolder(true);
+
+        Thread sendRequestThread = new Thread() {
+            @Override
+            public void run() {
+
+                try {
+                    /* "1" is a dummy variable. */
+                    sqsClient.sendMessage(username, buildGameStartRequest(), 1);
+                } catch (AmazonClientException e) {
+                    connectionSuccessful.setValue(false);
+                }
+            }
+        };
+
+        sendRequestThread.start();
+        try {
+            /** Wait for the thread to finish. */
+            sendRequestThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        /** Check whether the connection was successful or not.
+         *  If unsuccessful, then report connection problem
+         *  and return. */
+        if (!connectionSuccessful.isValue()) {
+            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
+                    .show();
+        }
+
+    }
+
+    /**
+     *  This method builds a JSON object for GameStartRequest.
+     *  Format of the JSON object is as follows :-
+     *  {"MESSAGE_TYPE" : "GameStartRequest" , "username" : USER_NAME}
+     *  @return JSON object.
+     */
+    private JSONObject buildGameStartRequest() {
+
+        try {
+            JSONObject gameStartRequest = new JSONObject();
+
+            gameStartRequest.put(JsonKey.MESSAGE_TYPE.getKey(),
+                    JsonValue.GAME_START_REQUEST.getValue());
+            gameStartRequest.put(JsonKey.USERNAME.getKey(),
+                    sharedPreferencesHelper.getUsername());
+
+            return gameStartRequest;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     *  This method shows the received invitation sent by
+     *  other user, so that the current user can select whether
+     *  he wants to play with him/her or not.
+     *  @param otherUsername Username of the user who has sent the
+     *                  invitation.
+     */
+    public void showInvitationDialog(final String otherUsername) {
+
+        String msg = "Received invitation from user : "
+                + otherUsername + "\n" + "Would you like to accept "
+                + "and start the game ?";
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.invitationHeading)
+                .setMessage(msg)
+                .setPositiveButton(R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog,
+                                                final int which) {
+
+                                sendRequestResponse(otherUsername, true);
+                            }
+                        })
+                .setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog,
+                                                final int which) {
+
+                                sendRequestResponse(otherUsername, false);
+
+                                /* User has declined the game request.
+                                 * Start listening again for new request. */
+                                startSqsListener();
+                            }
+                        })
+                .setCancelable(false);
+
+        builder.show();
+    }
+
+    /**
+     *  This method builds a JSON object for GameStartResponse.
+     *  Format of the JSON object is as follows :-
+     *  {"MESSAGE_TYPE" : "GameStartResponse" , "username" : USER_NAME}
+     *  @param response boolean response,
+     *                  True, if the current user accepts the request.
+     *                  False, otherwise.
+     *  @return JSON object.
+     */
+    private JSONObject buildGameStartResponse(final boolean response) {
+
+        try {
+            JSONObject gameStartResponse = new JSONObject();
+
+            gameStartResponse.put(JsonKey.MESSAGE_TYPE.getKey(),
+                    JsonValue.GAME_START_RESPONSE.getValue());
+            gameStartResponse.put(JsonKey.USERNAME.getKey(),
+                    sharedPreferencesHelper.getUsername());
+            gameStartResponse.put(JsonKey.RESPONSE.getKey(),
+                    response);
+
+            return gameStartResponse;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     *  This method sends appropriate response to the
+     *  GameStartRequest, as selected by the user.
+     *  @param otherUsername Username of the user who has sent the
+     *                  invitation.
+     *  @param response boolean response,
+     *                  True, if the current user accepts the request.
+     *                  False, otherwise.
+     */
+    private void sendRequestResponse(final String otherUsername,
+                                     final boolean response) {
+
+        /** BooleanHolder object to indicate whether
+         *  connection was successful or not.
+         *  True means the connection was successful.
+         */
+        final BooleanHolder connectionSuccessful = new BooleanHolder(true);
+
+        Thread sendRequestResponseThread = new Thread() {
+            @Override
+            public void run() {
+
+                try {
+                    sqsClient.sendMessage(otherUsername,
+                            buildGameStartResponse(response));
+                } catch (AmazonClientException e) {
+                    connectionSuccessful.setValue(false);
+                }
+            }
+        };
+
+        sendRequestResponseThread.start();
+        try {
+            /** Wait for the thread to finish. */
+            sendRequestResponseThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        /** Check whether the connection was successful or not.
+         *  If unsuccessful, then report connection problem
+         *  and return. */
+        if (!connectionSuccessful.isValue()) {
+            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
+    /**
+     *  This method creates a new SQS listener object
+     *  and starts it. The older object is automatically
+     *  destroyed.
+     */
+    public void startSqsListener() {
+
+        sqsListener = new SQSListener(this, sqsClient,
+                sharedPreferencesHelper.getUsername());
+        sqsListener.run();
+    }
+
+    /**
+     *  This method can be used by other class' objects
+     *  to display toasts on the Home Page.
+     *  @param message  String message.
+     *  @param duration int duration,
+     *                  generally Toast.LENGTH_SHORT or
+     *                  Toast.LENGTH_LONG .
+     */
+    public void showToast(final String message, final int duration) {
+
+        Toast.makeText(this, message, duration).show();
     }
 
     /**
@@ -427,8 +661,8 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void run() {
 
-                ddbClient.setUserOnlineAvailability(
-                        sharedPreferencesHelper.getUsername(), true);
+                ddbClient.setUserAvailability(
+                        sharedPreferencesHelper.getUsername(), true, false);
             }
         }.start();
     }

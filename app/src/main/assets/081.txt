@@ -1,0 +1,18 @@
+{
+    "weight": 6.0, 
+    "name": "Magnemite", 
+    "chain": [
+        {
+            "number": 81, 
+            "name": "Magnemite"
+        }
+    ], 
+    "flavor": "Magnemite is a seemingly robotic life form that has a gray, spherical metal body with horseshoe magnets on each side and a single, large eye. It has three Phillips head screws on its body: two near the bottom of its body, and the other on top of its head and looks similar to an antenna. The two bottom screws serve no noticeable purpose, although they may be its feet as the Pokedex identifies a footprint similar to that of the screw's head. Even though Magnemite and its evolved forms are mechanical creatures, the anime has shown that it has emotions and a way of reproducing. It has even exhibited the need to eat, although its main form of nutrients is electrical currents. It is commonly found in locations such as power plants or caves with a strong magnetic field. Despite its modern, artificial appearance, Magnemite has been depicted in carvings discovered at the Ruins of Alph, and has been present in AZ's retelling of the Kalos war, indicating it has existed for at least 3,000 years. The magnetic units on Magnemite's body create electromagnetic waves that allow it to defy gravity and can potentially disrupt electrical equipment. Magnemite is not known to be unnecessarily aggressive, but may approach Trainers with little notice. It can be attracted to anything emitting electricity or a magnetic field, including gadgets such as a Poketch. It has even been shown to be attracted to electric Pokemon producing such fields. In the care of a Trainer, it can be a devoted fighter. However, it has been demonstrated that it may be deterred unless a strong bond is formed with its Trainer. If a wild Magnemite is approached, it may simply flee on rare occasions, as Magnemite do not care for interaction. However, if attacked, it will start retaliation with non-damaging moves. ", 
+    "genus": "Magnet", 
+    "number": 81, 
+    "types": [
+        "electric", 
+        "steel"
+    ], 
+    "height": 0.3
+}

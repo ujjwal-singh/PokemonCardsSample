@@ -1,0 +1,17 @@
+{
+    "weight": 460.0, 
+    "name": "Snorlax", 
+    "chain": [
+        {
+            "number": 446, 
+            "name": "Munchlax"
+        }
+    ], 
+    "flavor": "Snorlax is a huge, bipedal, dark blue-green Pokemon with a cream-colored face, belly, and feet. Its body is composed of mostly its belly, where most of its fat reserves accumulate. Its head is large, with small, pointed ears and two pointed teeth protruding from its lower jaw. It has large, hind feet with three claws and a circular brown paw pad, and its arms and five foreclaws are short. Snorlax is often found in mountains and forests. It wakes up only to eat and seldom for exercises. It is not a picky eater, as its strong stomach allows it to eat even moldy food without feeling any ill effects. When hungry, it is not satisfied until it consumes 900 lbs. (400 kg) of food. Snorlax is docile enough to let children and small Pokemon bounce on its large stomach. ", 
+    "genus": "Sleeping", 
+    "number": 143, 
+    "types": [
+        "normal"
+    ], 
+    "height": 2.1
+}

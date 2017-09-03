@@ -1,0 +1,18 @@
+{
+    "weight": 7.5, 
+    "name": "Omanyte", 
+    "chain": [
+        {
+            "number": 138, 
+            "name": "Omanyte"
+        }
+    ], 
+    "flavor": "Omanyte is a small, sky-blue ammonite Pokemon. It has ten tentacles and a pale yellow, helix spiraled shell on its back. The shell's hem has two circular indents, from which Omanyte's large saucer-like eyes protrude. Several gas-filled chambers exist within Omanyte's shell, which it uses to regulate its buoyancy within the water. By evacuating or filling the chambers, it rises and falls while twisting its tentacles to swim. Living on and swimming about the sea floor, it feeds on plankton. If attacked or endangered, it quickly withdraws into its hard shell. Omanyte is considered extinct, although it can be revived from Fossils. ", 
+    "genus": "Spiral", 
+    "number": 138, 
+    "types": [
+        "rock", 
+        "water"
+    ], 
+    "height": 0.4
+}

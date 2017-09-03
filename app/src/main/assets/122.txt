@@ -1,0 +1,18 @@
+{
+    "weight": 54.5, 
+    "name": "Mr. Mime", 
+    "chain": [
+        {
+            "number": 439, 
+            "name": "Mime Jr."
+        }
+    ], 
+    "flavor": "Mr. Mime is a bipedal, humanoid Pokemon with a round, white body with a magenta spot in the middle. Its light pink arms and legs are connected to its body by magenta spheres. Its knees have small, white coverings. There are magenta pads on the tips of its white fingers, and its dark blue feet curl upward at the tips. Blue growths resembling clown hair extend from the sides of its pale pink head, and there are magenta circles on its cheeks. Its jaw is curved inward, resembling the mouth of a wooden dummy.  From birth, this Pokemon is an excellent pantomime. As it matures, it gains the ability to solidify air molecules by vibrating its fingertips. This ability allows it to create invisible objects with its gestures. It punishes those who interrupt its act by slapping them. Mr. Mime is usually very rare, but can be found in suburban areas. ", 
+    "genus": "Barrier", 
+    "number": 122, 
+    "types": [
+        "psychic", 
+        "fairy"
+    ], 
+    "height": 1.3
+}

@@ -1,0 +1,17 @@
+{
+    "weight": 7.0, 
+    "name": "Nidoran\u2640", 
+    "chain": [
+        {
+            "number": 29, 
+            "name": "Nidoran\u2640"
+        }
+    ], 
+    "flavor": "Nidoran-f is a small, quadruped, rodent-like Pokemon. It has large, spiny ears, oversized front teeth, red eyes, and a pair of whiskers on each cheek. It is light blue with several darker blue spots. There are two white claws on each of its paws. Its back is covered with small toxic spines, and it has a small forehead horn. The poison secreted by the spines and horn is extremely potent, and even a scratch from its horn or a drop of poison from its barbs can be deadly. However, this docile Pokemon only uses its poison when it feels threatened. Nidoran-f lives in open spaces, such as savannas and plains. Nidoran-f is an exclusively female Pokemon, Nidoran-m being its male counterpart. ", 
+    "genus": "Poison Pin", 
+    "number": 29, 
+    "types": [
+        "poison"
+    ], 
+    "height": 0.4
+}

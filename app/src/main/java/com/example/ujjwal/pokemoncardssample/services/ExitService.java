@@ -70,8 +70,8 @@ public class ExitService extends IntentService {
         if (!(appProcessInfo.importance == IMPORTANCE_FOREGROUND
                 || appProcessInfo.importance == IMPORTANCE_VISIBLE)) {
 
-            ddbClient.setUserOnlineAvailability(
-                    sharedPreferencesHelper.getUsername(), false);
+            ddbClient.setUserAvailability(
+                    sharedPreferencesHelper.getUsername(), false, false);
         }
 
         stopForeground(true);
@@ -94,7 +94,8 @@ public class ExitService extends IntentService {
         Notification notification = new NotificationCompat.Builder(this)
                 .setContentIntent(pendingIntent).build();
 
-        int notificationId = (new Random()).nextInt(1000);
+        int notificationId = (new Random()).nextInt(Constants.
+                NOTIFICATION_ID_MODULUS);
 
         startForeground(notificationId, notification);
     }

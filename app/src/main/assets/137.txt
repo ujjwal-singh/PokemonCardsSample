@@ -1,0 +1,17 @@
+{
+    "weight": 36.5, 
+    "name": "Porygon", 
+    "chain": [
+        {
+            "number": 137, 
+            "name": "Porygon"
+        }
+    ], 
+    "flavor": "Porygon is a Pokemon made completely out of programming code. It has a pink polyhedral body with a blue stomach, blue triangular prism feet, and a blue rectangular prism tail. It has a pink, polyhedral head that ends in a blue beak and has hexagonal eyes. Built into this code is Silph Co. copy protection DRM, preventing duplication through electronic means. Due to its man-made origins, Porygon does not need to breathe or eat, though it can still accept food if given. Porygon has two signature moves at its disposal. It can change type into one of its own moves* with Conversion or to resist the last move that hit it with Conversion 2. It is also capable of changing its appearance using Sharpen, which is a former signature move. Additionally, Porygon has demonstrated the abilty to change color for camouflage. Because it is man-made, it is generally found in computers or in labs and other buildings where people work. In 3D games, such as Pokemon Stadium, it can detach its limbs and head from its torso. ", 
+    "genus": "Virtual", 
+    "number": 137, 
+    "types": [
+        "normal"
+    ], 
+    "height": 0.8
+}

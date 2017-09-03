@@ -1,0 +1,17 @@
+{
+    "weight": 3.3, 
+    "name": "Dratini", 
+    "chain": [
+        {
+            "number": 147, 
+            "name": "Dratini"
+        }
+    ], 
+    "flavor": "Dratini is a serpentine Pokemon with a blue body and a white underside. It has white, three-pronged fins on the sides of its head and a white bump on its forehead. Above its large, round, white snout are oval, purple eyes. As Dratini is filled with life energy, it is constantly growing, and can thus reach lengths of over six feet. As it grows, it sheds its skin regularly. Whenever Dratini undergoes shedding, it hides behind a large waterfall. Although this Pokemon was originally thought to be nothing more than a myth, it has been found in colonies living underwater. ", 
+    "genus": "Dragon", 
+    "number": 147, 
+    "types": [
+        "dragon"
+    ], 
+    "height": 1.8
+}

@@ -1,0 +1,18 @@
+{
+    "weight": 2.0, 
+    "name": "Spearow", 
+    "chain": [
+        {
+            "number": 21, 
+            "name": "Spearow"
+        }
+    ], 
+    "flavor": "Spearow is an avian Pokemon that is very small. It has rough, brown plumage on its head and three brown tail feathers. It has narrow, dark brown eyes with white pupils and a short, hooked beak. The feathers covering its wings are pinkish red with lighter tips, and it has a beige underside with two thin, horizontal stripes. Its light pink feet have two toes in front and one in the back. Black feathers cover its back. Although inept at other aspects of its flying, such as height and distance, Spearow is still capable of flying quickly to protect its territory. However, it must flap its wings at high speeds to stay aloft. Spearow's loud shrieks can be heard over half a mile (one kilometer) away, and are used to warn other of its kind of danger. The anime has shown that Spearow sees in black and white and will chase its foes in a large flock. Spearow is usually found in desolate wastelands and fields, where it hunts for insects. ", 
+    "genus": "Tiny Bird", 
+    "number": 21, 
+    "types": [
+        "normal", 
+        "flying"
+    ], 
+    "height": 0.3
+}

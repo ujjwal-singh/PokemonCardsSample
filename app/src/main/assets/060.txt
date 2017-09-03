@@ -1,0 +1,17 @@
+{
+    "weight": 12.4, 
+    "name": "Poliwag", 
+    "chain": [
+        {
+            "number": 60, 
+            "name": "Poliwag"
+        }
+    ], 
+    "flavor": "Poliwag resembles a blue, spherical tadpole. It has large eyes and pink lips. There is a black and white swirl on its abdomen, which are actually its internal organs showing through its semitransparent skin. The swirl looks clearer after it eats, and the skin is very elastic so that it will not break if the Pokemon is bitten. The direction of the belly spiral differs by area, with the equator being thought to have an effect on this. It has newly developed legs that are poor at walking, and no arms. Its long, mostly transparent tail makes it a powerful swimmer. Because of its ineptitude on land, Poliwag is more likely to be found swimming in small freshwater ponds and lakes. In the anime, Poliwag feeds on salveyo weed, which can only be found on clear lake bottoms. ", 
+    "genus": "Tadpole", 
+    "number": 60, 
+    "types": [
+        "water"
+    ], 
+    "height": 0.6
+}

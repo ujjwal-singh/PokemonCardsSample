@@ -1,0 +1,17 @@
+{
+    "weight": 30.0, 
+    "name": "Grimer", 
+    "chain": [
+        {
+            "number": 88, 
+            "name": "Grimer"
+        }
+    ], 
+    "flavor": "Grimer is a slimy, amorphous blob-like Pokemon, made of living purple sludge. Its body contains a variety of pungent bacteria, which are so potent that it renders soil barren and incapable of supporting plant life. It has two large eyes with beady pupils, and a gaping mouth with a grey tongue. While it lacks any visible legs, it does have two arms with three digits on each hand. It is constantly oozing; endlessly leaking a bacteria-rich fluid from all parts of its body. Pieces of it often breaks off during travel, and from these pieces new Grimer will begin to grow. When combined with another Grimer, it produces new poisonous compounds. Due to its lack of a solid form, it is capable of squeezing into any space or crevices with relative ease. It uses this to penetrate sewage pipes so that it may feed off of the filthy waste water inside. It happily consumes and thrives off nearly any form of waste or refuse. It can be found in polluted lakes and streams, as well as within cities and factories where trash and industrial waste can be found. ", 
+    "genus": "Sludge", 
+    "number": 88, 
+    "types": [
+        "poison"
+    ], 
+    "height": 0.9
+}

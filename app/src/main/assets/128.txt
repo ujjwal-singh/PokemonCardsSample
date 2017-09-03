@@ -1,0 +1,17 @@
+{
+    "weight": 88.4, 
+    "name": "Tauros", 
+    "chain": [
+        {
+            "number": 128, 
+            "name": "Tauros"
+        }
+    ], 
+    "flavor": "Tauros is a quadruped, bovine Pokemon. It is covered in light brown fur with a thick, darker brown mane around the neck. It has a rounded muzzle with a dark brown nose, and three gray bumps running vertically down its forehead. A pair of curved, gray horns grows from atop its head. Each of its three black tails has a tuft of fur on the end, and there is a single gray hoof on each foot. Tauros is a male-only species with no true female counterpart. Tauros is a violent, rowdy Pokemon that whips itself into a frenzy using its three tails. Once it starts charging, it is unable to stop or change course until it hits something. It lives and travels in herds on plains and grasslands. It will lock horns with others of its kind, and the herd's protector takes pride in its battle-scarred horns. ", 
+    "genus": "Wild Bull", 
+    "number": 128, 
+    "types": [
+        "normal"
+    ], 
+    "height": 1.4
+}

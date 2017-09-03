@@ -1,0 +1,18 @@
+{
+    "weight": 220.0, 
+    "name": "Lapras", 
+    "chain": [
+        {
+            "number": 131, 
+            "name": "Lapras"
+        }
+    ], 
+    "flavor": "Lapras is a large sea creature that resembles a plesiosaur. It has a spotted, blue hide with a cream underside. Its neck is long, and it has large black eyes. There is a short horn in the middle of its forehead and curled ears placed farther back on its head. Instead of legs, it has four flippers with the foremost pair being larger than the hind. On its back is a heavy, gray shell covered in blunt knobs. Lapras is a gentle, helpful Pokemon that enjoys ferrying people across bodies of water. However, this docility has made it an easy target for hunters, who have nearly driven it to extinction. An intelligent Pokemon, it is able to understand human speech. It has been known to travel the seas in large pods. To keep in touch with other of its kind, it sings enchanting melodies. In the anime it was shown that Lapras is able to develop psychic abilities such as telepathy. Lapras is native to the seas. ", 
+    "genus": "Transport", 
+    "number": 131, 
+    "types": [
+        "water", 
+        "ice"
+    ], 
+    "height": 2.5
+}

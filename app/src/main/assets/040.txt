@@ -1,0 +1,18 @@
+{
+    "weight": 12.0, 
+    "name": "Wigglytuff", 
+    "chain": [
+        {
+            "number": 174, 
+            "name": "Igglybuff"
+        }
+    ], 
+    "flavor": "Wigglytuff resembles a pink blob with stubby arms and legs. There is a fluffy, curled tuft of fur on its head, and it has long, rabbit-like ears and large, blue eyes. A layer of tears covers its eyes, quickly washing away any debris. It is covered in pink fur with a white underbelly and ear tips. This fine layer of fur is so soft that those who touch it, including other Wigglytuff, will not want to stop. Its body is soft and rubbery, allowing it to inflate by inhaling. While it is inflated, it is able to move by bouncing or floating. Wigglytuff can be found in vivid green plains and grassy fields. Some Wigglytuff love eating Perfect Apples, as shown in Pokemon Mystery Dungeon: Explorers of Time and Explorers of Darkness.  ", 
+    "genus": "Balloon", 
+    "number": 40, 
+    "types": [
+        "normal", 
+        "fairy"
+    ], 
+    "height": 1.0
+}

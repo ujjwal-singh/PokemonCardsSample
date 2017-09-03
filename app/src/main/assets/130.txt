@@ -1,0 +1,18 @@
+{
+    "weight": 235.0, 
+    "name": "Gyarados", 
+    "chain": [
+        {
+            "number": 129, 
+            "name": "Magikarp"
+        }
+    ], 
+    "flavor": "Gyarados is a serpentine Chinese dragon-like Pokemon. It is mostly blue, with a yellow underbelly and yellow spots along its body. It has a three-pointed, dark blue crest on its head and four white, dorsal fins. Its mouth is very large and gaping, bearing four canine teeth. It has one barbel on each side of its face. The barbels are white on a female and the same color as the main body on a male. Gyarados's tailfin is similar in structure to the crest on its head, except with a thin, white fin spread between the points. Mega Gyarados is bulkier than its previous form. The fins on its face, its barbels, and its crest are now considerably longer. A large spike extends downward underneath its chin, and it now has a black underside. The yellow spots along its body are replaced by raised red scales that run down its side with a single red stripe below them. Two large white fins appear on its back, similar to those on its face. Most of the other fins along its back disappear, except for the one near the tail. Instead, it now has four white, pointed fins near is tail: two on its back and two on its underside. Both Gyarados and its Mega form have demonstrated in the anime that it can leap huge distances both from the water and from the ground, usually several times its own body length. Its fangs can crush stones and its scales are harder than steel. Gyarados is infamously known for its fierce temper and wanton destructive tendencies, and is attracted to violence. In addition, Gyarados is also notoriously difficult to tame even after it is captured by the Trainer, usually requiring an exceptional amount of work in taming it until it can obey its Trainer. Gyarados usually lives in large bodies of water, such as lakes and ponds or even seas and oceans. ", 
+    "genus": "Atrocious", 
+    "number": 130, 
+    "types": [
+        "water", 
+        "flying"
+    ], 
+    "height": 6.5
+}

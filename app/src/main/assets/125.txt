@@ -1,0 +1,17 @@
+{
+    "weight": 30.0, 
+    "name": "Electabuzz", 
+    "chain": [
+        {
+            "number": 239, 
+            "name": "Elekid"
+        }
+    ], 
+    "flavor": "Electabuzz is a slightly humanoid creature with a few feline traits. It is covered in yellow fur with black stripes; a large stripe on its chest is shaped like a lightning bolt. It has a long tail. There are three, clawed toes on its feet; two in front and one in back, while it has five fingers on each hand. Electabuzz has two sharp fangs and a pair of antennae with bulbous ends. In the dark, Electabuzz will glow a light blue with the electrical charge stored inside of it. Electabuzz is capable of storing huge amounts of electrical energy inside of its body over long periods. During torrential thunderstorms, Electabuzz will compete to determine which is capable of attaining the highest ground, so as to be most likely struck by a bolt of lightning. If struck, Electabuzz will absorb the electricity and will not be harmed. It is in this same manner that captured Electabuzz are sometimes used in small towns as an alternative to lightning rods. As demonstrated in the anime, Electabuzz is enraged by the color red. If this Pokemon sees the color red, it will become violent and raze the area around it. In battle, Electabuzz windmills its arms, apparently to add momentum to it punches. This method of battle seems ineffective, as its opponent has been known to escape in the meantime. It is also capable of entirely nonverbal communication via electrical currents when in close proximity to one another. Electabuzz typically resides in or around power plants, and can also be found in grasslands. It has been known to wander into cities and cause blackouts. ", 
+    "genus": "Electric", 
+    "number": 125, 
+    "types": [
+        "electric"
+    ], 
+    "height": 1.1
+}

@@ -1,0 +1,17 @@
+{
+    "weight": 34.5, 
+    "name": "Staryu", 
+    "chain": [
+        {
+            "number": 120, 
+            "name": "Staryu"
+        }
+    ], 
+    "flavor": "Staryu is a golden-brown sea star-like Pokemon with five appendages. These appendages surround an exterior organ called the core, which is held in place by a golden ring looped around Staryu's left 'leg'. If any of Staryu's appendages are lost, it can grow them back with ease provided the core is still intact. The core resembles a red jewel and is similar to a madreporite. When the sun goes down, the core glows its brightest. Many will float from the seafloor to the surface and align themselves with stars of the night sky as their core flickers, displaying a connection with the celestial bodies of space. The anime has shown that if Staryu becomes weak, its core will grow faint and flash slowly. Staryu can be found at the very bottom of the ocean on the seafloors. There are times, however, when Staryu finds itself in rivers that lead into the ocean as seen in Pokemon Snap. ", 
+    "genus": "Star Shape", 
+    "number": 120, 
+    "types": [
+        "water"
+    ], 
+    "height": 0.8
+}

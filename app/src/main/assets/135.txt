@@ -1,0 +1,17 @@
+{
+    "weight": 24.5, 
+    "name": "Jolteon", 
+    "chain": [
+        {
+            "number": 133, 
+            "name": "Eevee"
+        }
+    ], 
+    "flavor": "Jolteon is a quadruped, mammalian Pokemon. It is covered in yellow fur with a spiky fringe around its tail and a white ruff around its neck. Its ears are large and pointed, and its eyes and small nose are black. It has slender legs and small paws, each with three toes and a pink paw pad. In addition to the ability to become sharp like needles, Jolteon's fur also amplifies the electrical charges produced by its cells. It can also store and generate negative ions in its fur, which create a sparking noise. This Pokemon is most often found in cities and towns under the ownership of Trainers. ", 
+    "genus": "Lightning", 
+    "number": 135, 
+    "types": [
+        "electric"
+    ], 
+    "height": 0.8
+}

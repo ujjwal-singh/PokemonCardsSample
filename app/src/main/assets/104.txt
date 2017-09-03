@@ -1,0 +1,17 @@
+{
+    "weight": 6.5, 
+    "name": "Cubone", 
+    "chain": [
+        {
+            "number": 104, 
+            "name": "Cubone"
+        }
+    ], 
+    "flavor": "Cubone is a small, bipedal Pokemon with a golden brown hide that covers most of its body, including both dorsal spikes. Its belly is a very light brown. Two small claws, one on each hand, serve as its thumbs, and one large nail on each foot make up its toes. On its head, Cubone wears the skull of its dead mother as a helmet. Because of this, much of its actual face has never been seen, except for its triangular, black eyes and a small area surrounding them. The skull has two rounded horns on the top of its head and a tooth-like point on the lower sides. Under the skull, Cubone has a brown snout. The small Cubone survives only through the immense skill it possesses in wielding the bone it carries as a weapon. The bone allows it to learn Bone Club and Bonemerang, two moves exclusive to Cubone and its evolution Marowak. It is called the Lonely Pokemon because of its tendency to keep to itself and avoid social situations, as it was apparently traumatized by the death of its mother. Cubone will often weep at night in mourning of its mother. When Cubone cries, the skull that it wears on its head vibrates and emits 'a plaintive and mournful sound.' On the night of a full moon, the cries are said to be especially terrible. Cubone seems to recognize its mother in the moon, and so it howls with a particular sadness. It lives in rocky areas, usually on mountains or in caves. It also once inhabited the Pokemon Tower in Lavender Town where deceased Pokemon were buried and mourned. ", 
+    "genus": "Lonely", 
+    "number": 104, 
+    "types": [
+        "ground"
+    ], 
+    "height": 0.4
+}

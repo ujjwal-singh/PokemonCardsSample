@@ -1,0 +1,17 @@
+{
+    "weight": 76.6, 
+    "name": "Golduck", 
+    "chain": [
+        {
+            "number": 54, 
+            "name": "Psyduck"
+        }
+    ], 
+    "flavor": "Golduck is a blue, bipedal, duck-like Pokemon. It has red eyes, a cream-colored beak, and four spikes on the back of its head. There is a small, red gem on its forehead. It has webbed hands and feet, which it uses to swim in rivers and lakes. Its body is especially adapted to have a hydrodynamic shape, and it has a long tail that it uses as a rudder to steer. Golduck is a fast swimmer, out-swimming even the most athletic of humans because of its webbed hands and feet. Even rough seas do not hamper this Pokemons swimming abilities, and it will sometimes rescue people from shipwrecks. The gem on its foreheads glows when it uses its psychic powers, and occasionally when it swims at full speed. As shown in the manga, it has the ability to give knowledge to its Trainer and fellow Pokemon through telepathy. Golduck is sometimes mistaken for the Japanese monster, and physical inspiration for Golduck, the Kappa due to its bluish color, general body shape, and webbed hands and feet. Golduck lives in freshwater lakes and in rivers. ", 
+    "genus": "Duck", 
+    "number": 55, 
+    "types": [
+        "water"
+    ], 
+    "height": 1.7
+}

@@ -1,0 +1,18 @@
+{
+    "weight": 55.0, 
+    "name": "Tentacruel", 
+    "chain": [
+        {
+            "number": 72, 
+            "name": "Tentacool"
+        }
+    ], 
+    "flavor": "Tentacruel is a large, primarily blue jellyfish-like Pokemon. It has two large, red crystal spheres encrusted in its upper body that can refract sunlight and store energy. The round lower body, from which Tentacruels eyes are visible, appears black. It can extend up to 80 tentacles out of its body. Most of these tentacles are hidden, leaving up to 14 exposed. It has two blue beak-like appendages. Tentacruels tentacles can be freely elongated and shortened, and can absorb water to stretch to some length. The tentacles are normally kept short, but on hunts, they are extended to ensnare and immobilize prey. It weakens the prey by dosing it with a harsh toxin. Its red orbs glow when it grows excited or agitated, and it may alert others to danger by stridently flashing them. Tentacruel can be found throughout the ocean. ", 
+    "genus": "Jellyfish", 
+    "number": 73, 
+    "types": [
+        "water", 
+        "poison"
+    ], 
+    "height": 1.6
+}

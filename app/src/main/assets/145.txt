@@ -1,0 +1,18 @@
+{
+    "weight": 52.6, 
+    "name": "Zapdos", 
+    "chain": [
+        {
+            "number": 145, 
+            "name": "Zapdos"
+        }
+    ], 
+    "flavor": "Zapdos is an avian Pokemon with predominantly yellow plumage. Black rings encircle its eyes, and it has a long, thin, light orange beak. Its wings and tail are a mass of spiky feathers, with black feathers covering the back of its wings and inner tail feathers. A large crest of spiked feathers surrounds its head. Its thighs are a khaki color, and it has anisodactyl feet ending in talons. When Zapdos flaps its glittering wings, it releases electricity that can potentially cause thunderstorms. It produces massive crackling and snapping sounds when it flies; these are attributed to the lightning bolts it sheds when airborne. When stricken by lightning, it gains power. Zapdos reportedly appears only during thunderstorms, and is said to live among thunderclouds. However, it is rarely seen. ", 
+    "genus": "Electric", 
+    "number": 145, 
+    "types": [
+        "electric", 
+        "flying"
+    ], 
+    "height": 1.6
+}

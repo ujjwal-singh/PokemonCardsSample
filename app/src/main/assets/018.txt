@@ -1,0 +1,18 @@
+{
+    "weight": 39.5, 
+    "name": "Pidgeot", 
+    "chain": [
+        {
+            "number": 16, 
+            "name": "Pidgey"
+        }
+    ], 
+    "flavor": "Pidgeot is an avian Pokemon with large wings, sharp talons, and a short, hooked beak. Its glossy plumage is mostly brown with cream-colored underparts and flight feathers. Its head is decorated crest that is nearly as long as its body. The center feathers of its crest are yellow, while the outer feathers are red. The fan-like feathers of its tail are red or brown. Its beak and legs are pink, and there three forward-facing toes and one backward-facing toe on each foot. Behind each eye is an angular black marking. Pidgeot grows noticeably when it Mega Evolves, with a larger body and longer, broader wings. Its wingtips and tailfeathers are tipped with blue, and it's cream coloring is now white. Its eyes turn red, and its pupils turn white. Mega Pidgeot has an even more elaborate crest on its head, with a streamer-like red plume extending from a mane of yellow feathers. A red feather projects from the front of its crest and a there is a single red highlight on the left side. The crest is sensitive to air currents, acting like a large antenna and stabilizing Mega Pidgeot's flight. Additionally, its increased wing power allows it to produce gust capable of destroying huge trees. [1] Its powerful wings are capable of stirring up windstorms in just a few flaps, and it may spread its wings to intimidate enemies. This Pokemon is capable of flying faster than the speed of sound. Its plumage is often described as beautiful, making it a popular choice for skilled Trainers. Gust and Feather Dance are its former signature moves. Pidgeot typically dwells in forests with thick growth and large trees. It is known to prey on Magikarp, which it can spot from great heights. ", 
+    "genus": "Bird", 
+    "number": 18, 
+    "types": [
+        "normal", 
+        "flying"
+    ], 
+    "height": 1.5
+}

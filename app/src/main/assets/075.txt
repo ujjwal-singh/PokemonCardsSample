@@ -1,0 +1,18 @@
+{
+    "weight": 105.0, 
+    "name": "Graveler", 
+    "chain": [
+        {
+            "number": 74, 
+            "name": "Geodude"
+        }
+    ], 
+    "flavor": "Graveler is a living, bipedal boulder. It has a rocky crest about its small eyes. It has four arms, each with a three-fingered hand. It was shown in Pokemon Snap that, despite having legs, it can revert to a legless form. This grants it the ability to float. Its preferred locomotion is rolling, specifically because it is a slow walker. It often rolls down mountain paths at high speeds, crushing objects in the way and stopping by running into huge rocks. If it breaks or shatters, it has the ability to restore itself overtime. Graveler climbs a mountain from base to summit, feasting on rocks all the while. Upon reaching the peak, Graveler rolls down to the bottom. Graveler can be often found on mountain trails. ", 
+    "genus": "Rock", 
+    "number": 75, 
+    "types": [
+        "rock", 
+        "ground"
+    ], 
+    "height": 1.0
+}

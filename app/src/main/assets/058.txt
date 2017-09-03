@@ -1,0 +1,17 @@
+{
+    "weight": 19.0, 
+    "name": "Growlithe", 
+    "chain": [
+        {
+            "number": 58, 
+            "name": "Growlithe"
+        }
+    ], 
+    "flavor": "Growlithe is a quadruped, canine Pokemon. It has orange fur with black stripes along its back and legs. The fur on its muzzle, chest, belly, and tail is cream-colored, as well as an additional tuft of fur on top of its head. Growlithe's coat is noticeably longer on its chest and tail. It has gray eyes, a black nose, and large, round ears. Its forepaws have two visible claws, while its hind paws have three toes each. Each paw has a brown pad. Growlithe is a friendly and loyal Pokemon that will fearlessly defend its Trainer and territory from harm, even against larger, stronger enemies. It will fiercely bark at, bite, and chase away any perceived threat, including those who suddenly approach its Trainer. Otherwise, this obedient Pokemon will wait motionlessly until given an order. Growlithe also has a powerful olfactory sense. If it detects an unknown smell in its territory, it roars to flush out the intruder. It is able to smell the emotions of others, and never forgets a scent. However, strong, unpleasant smells can disable its sense of smell for short periods, as seen in the anime. Growlithe can be commonly found in grassy plains. ", 
+    "genus": "Puppy", 
+    "number": 58, 
+    "types": [
+        "fire"
+    ], 
+    "height": 0.7
+}

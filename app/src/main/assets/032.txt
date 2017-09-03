@@ -1,0 +1,17 @@
+{
+    "weight": 9.0, 
+    "name": "Nidoran\u2642", 
+    "chain": [
+        {
+            "number": 32, 
+            "name": "Nidoran\u2642"
+        }
+    ], 
+    "flavor": "Nidoran-m is a small, quadruped rodent-like Pokemon. It is pinkish purple with darker spots, and has large, spiny ears with teal insides, oversized front teeth, and red eyes. Its back is covered with three lines of large spines that can release potent poisons if threatened. The center line of spines is taller than the other two. The size of the long, pointed horn on its forehead is indicative of the strength of its venom. Nidoran-m is an exclusively male Pokemon, Nidoran-f being its female counterpart. Nidoran-m constantly listens for the sounds of approaching enemies with its large ears. Said ears have unique muscles that allow them to be moved in any direction, and even the slightest sound does not escape Nidoran-m's notice. In order to listen to distant locations, it flaps its ears like wings. When angry, it extends its toxic spikes and charges, stabbing with its horn to inject poison. Nidoran-m lives in open spaces, such as savannas and plains. ", 
+    "genus": "Poison Pin", 
+    "number": 32, 
+    "types": [
+        "poison"
+    ], 
+    "height": 0.5
+}

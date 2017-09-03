@@ -1,0 +1,18 @@
+{
+    "weight": 20.0, 
+    "name": "Geodude", 
+    "chain": [
+        {
+            "number": 74, 
+            "name": "Geodude"
+        }
+    ], 
+    "flavor": "Geodude is a gray boulder Pokemon. It has bulging, rocky eyebrows and trapezoidal, brown eyes. Its arms are muscular with five-fingered hands. Geodude uses its arms to climb steadily up steep mountain paths. Geodude is proud of its sturdy body and will bash against others of its kind in a contest of sorts to prove whose body is harder. The longer it lives, the more chipped and worn its body becomes. Geodude can be most often found on mountain trails and fields. It will sit still in these areas, which is why it is often mistaken for a rock. It is often stepped on, and will sometimes swing its arms in anger when this occurs. When Geodude sleeps deeply, it buries itself halfway into the ground. Once buried, it will not awaken even if someone steps on it. In the morning, Geodude rolls downhill in search of food. ", 
+    "genus": "Rock", 
+    "number": 74, 
+    "types": [
+        "rock", 
+        "ground"
+    ], 
+    "height": 0.4
+}

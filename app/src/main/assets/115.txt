@@ -1,0 +1,17 @@
+{
+    "weight": 80.0, 
+    "name": "Kangaskhan", 
+    "chain": [
+        {
+            "number": 115, 
+            "name": "Kangaskhan"
+        }
+    ], 
+    "flavor": "Kangaskhan is a large, bipedal creature with a thick tail. It has a brown hide with several raised patches, and a cream-colored belly. On top of its head is a black patch, and it has large cream-colored ears and red eyes. Its snout is short and rounded with two pointed teeth protruding from its upper jaw. There are epaulette-like growths over its shoulders and a row of spikes down its back. It has three clawed digits on each hand and foot. In the pouch on its belly, it carries a baby Kangaskhan. Unlike its parent, the baby is light purple and has smooth skin. Kangaskhan is a female-only species with no male counterpart. As Mega Kangaskhan, the mother Kangaskhan appears unchanged. However, the baby has grown into a child and gained some new features. There are now raised patches on its knees similar to those seen on its mother. These patches also appear aligned horizontally along its belly. Small, spiked growths appear underneath its ears. The child is feisty, hates to lose and will boldly challenge its opponents to protect its mother.[1] Kangaskhan is a nurturing Pokemon that protects its young at all costs. The baby leaves the pouch only rarely until it is three years old. In order to avoid crushing the baby, Kangaskhan sleeps standing up. If the mother feels the environment is safe, it will allow its young out to play. However, it will violently attack anything that it sees as a threat to its young. Regardless of how badly injured it becomes, the mother will not cease fighting until its young is safe. Although it was nearly hunted to extinction, Kangaskhan can be found in savannahs and other grasslands. ", 
+    "genus": "Parent", 
+    "number": 115, 
+    "types": [
+        "normal"
+    ], 
+    "height": 2.2
+}

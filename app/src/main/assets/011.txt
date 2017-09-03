@@ -1,0 +1,17 @@
+{
+    "weight": 9.9, 
+    "name": "Metapod", 
+    "chain": [
+        {
+            "number": 10, 
+            "name": "Caterpie"
+        }
+    ], 
+    "flavor": "Metapod resembles a green chrysalis. Its body is crescent-shaped with several segments making up the lower point. The front of its shell resembles a face with heavy-lidded eyes and a sharply pointed nose. The back of its shell consists of several geometrically shaped portions and projections. Its soft body is protected by a hard outer shell while it undergoes metamorphosis. While this shell is said to be as hard as steel, a sudden, powerful impact could cause its tender body to pop out, leaving it completely exposed. Metapod generally remains motionless, preparing its soft innards for evolution inside its hard shell. If an enemy discovers Metapod, it is unable to do anything other than harden its outer shell. Metapod lives in forests. ", 
+    "genus": "Cocoon", 
+    "number": 11, 
+    "types": [
+        "bug"
+    ], 
+    "height": 0.7
+}

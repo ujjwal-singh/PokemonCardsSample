@@ -1,0 +1,18 @@
+{
+    "weight": 36.0, 
+    "name": "Slowpoke", 
+    "chain": [
+        {
+            "number": 79, 
+            "name": "Slowpoke"
+        }
+    ], 
+    "flavor": "Slowpoke is a pink creature that resembles a cross between a salamander and a hippopotamus. Its vacant eyes never seem focused, and it has curled ears and a rounded, tan muzzle. It has four legs, each of which ends in a single white claw. Its long, tapering tail has a white tip. This tail drips a sweet, sappy substance that is attractive to many species of fish. Slowpoke uses it as a lure for fishing, and it will grow back if cut off. Slowpoke has notoriously dim intellect, and often forgets what it was doing. It takes a long time to respond to outside stimuli. For example, it can take up to five seconds to process pain and can take an entire day to notice when its tail has been bitten. Slowpoke is commonly found at the water's edge. ", 
+    "genus": "Dopey", 
+    "number": 79, 
+    "types": [
+        "water", 
+        "psychic"
+    ], 
+    "height": 1.2
+}

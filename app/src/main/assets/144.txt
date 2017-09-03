@@ -1,0 +1,18 @@
+{
+    "weight": 55.4, 
+    "name": "Articuno", 
+    "chain": [
+        {
+            "number": 144, 
+            "name": "Articuno"
+        }
+    ], 
+    "flavor": "Articuno is a large avian Pokemon with predominantly blue plumage and large wings said to be made of ice. It has a head crest that consists of three, darker blue rhombus-shaped feathers on its forehead and circular red eyes. Its beak is short and gray, and its long, thin legs are the same color. It has a long, streamer-like tail that is longer than its body and the same shade of blue as its crest. When Articuno flaps its wings, it can chill the moisture in the air around it, making snow fall. It flies from icy mountain to icy mountain. According to legend, it appears before doomed travelers lost in icy regions. As seen in the anime, Articuno sometimes aids travelers and guides them to safety. Articuno lives in cold, isolated locations, such as mountain peaks. ", 
+    "genus": "Freeze", 
+    "number": 144, 
+    "types": [
+        "ice", 
+        "flying"
+    ], 
+    "height": 1.7
+}

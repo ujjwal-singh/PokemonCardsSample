@@ -1,0 +1,17 @@
+{
+    "weight": 2.9, 
+    "name": "Caterpie", 
+    "chain": [
+        {
+            "number": 10, 
+            "name": "Caterpie"
+        }
+    ], 
+    "flavor": "Caterpie is a Pokemon that resembles a green caterpillar. There yellow ring-shaped markings down the sides of its body, which resemble its large yellow eyes. Its most notable characteristic is the bright red antenna (osmeterium) on its head, which releases a stench to repel predators. This structure and the large eye-shaped markings help to startle predators. Its feet are tipped with suction cups, permitting this Pokemon to scale most surfaces with minimal effort. Caterpie will shed its skin many times before finally cocooning itself in thick silk. It can also spit this silk in order to entangle foes as seen in the anime. Its primary diet is vegetation, and its voracious appetite causes it to eat leaves larger than itself. According to Pokemon Adventures, its favorite food is the Vermilion flower. Caterpie lives in forests. ", 
+    "genus": "Worm", 
+    "number": 10, 
+    "types": [
+        "bug"
+    ], 
+    "height": 0.3
+}

@@ -1,0 +1,17 @@
+{
+    "weight": 4.0, 
+    "name": "Ditto", 
+    "chain": [
+        {
+            "number": 132, 
+            "name": "Ditto"
+        }
+    ], 
+    "flavor": "In its natural state, Ditto is a light purple or magenta free-form blob with vestigial facial features. It also appears to have two vestigial, handless 'arms' protruding from its body. It is capable of transforming into an exact replica of any physical object. However, if Ditto tries to transform into something based on memory, it may get some of the details wrong. The anime and the TCG have shown that occasionally a Ditto cannot change its face. Ditto will also be unable to remain in a transformed state if it starts laughing. Ditto cannot mimic the strength of another Pokemon, but it will adapt the form and abilities of its foe. When two Ditto meet in the wild, they will attempt to transform into each other. Ditto will also transform into a rock when sleeping to avoid attack. Ditto is never far from civilization or people. ", 
+    "genus": "Transform", 
+    "number": 132, 
+    "types": [
+        "normal"
+    ], 
+    "height": 0.3
+}

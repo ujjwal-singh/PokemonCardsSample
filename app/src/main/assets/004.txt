@@ -1,0 +1,17 @@
+{
+    "weight": 8.5, 
+    "name": "Charmander", 
+    "chain": [
+        {
+            "number": 4, 
+            "name": "Charmander"
+        }
+    ], 
+    "flavor": "Charmander is a bipedal, reptilian Pok\u00e9mon with a primarily orange body. Its underside from the chest down and soles are cream-colored. It has two small fangs visible in its upper jaw and two smaller fangs in its lower jaw. Charmander has blue eyes. Its arms and legs are short with four fingers and three clawed toes. A fire burns at the tip of this Pok\u00e9mon's slender tail, and has blazed there since Charmander's birth. The flame can be used as an indication of Charmander's health and mood, burning brightly when the Pok\u00e9mon is strong, weakly when it is exhausted, wavering when it is happy, and blazing when it is enraged. It is said that Charmander dies if its flame goes out. However, if the Pok\u00e9mon is healthy, the flame will continue to burn if gets a bit wet and is said to steam in the rain.  Charmander can be found in hot, mountainous areas. However, it is found far more often in the ownership of Trainers. As shown in Pok\u00e9mon Snap, Charmander exhibits pack behavior, calling others of its species if it finds food. Charmander's health can be gauged by the fire on the tip of its tail, which burns intensely when it's in good health. A flame burns on the tip of its tail from birth. It is said that a Charmander dies if its flame ever goes out.It gains more power the more it is attacked. It will continue to fight until its opponent falls. ", 
+    "genus": "Lizard", 
+    "number": 4, 
+    "types": [
+        "fire"
+    ], 
+    "height": 0.6
+}

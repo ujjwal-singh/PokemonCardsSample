@@ -1,0 +1,17 @@
+{
+    "weight": 35.0, 
+    "name": "Tangela", 
+    "chain": [
+        {
+            "number": 114, 
+            "name": "Tangela"
+        }
+    ], 
+    "flavor": "Tangela is covered with thick blue vines that obscure its face so only its eyes can be seen. These vines are covered in fine hair, and they give it a round shape. It is unknown what it looks like without them. The vines are always growing, and can be replaced if lost or damaged. It has a pair of red boot-like feet, but no visible arms. Tangela can ensnare and entangle anything that moves too close to it with its vines. The vines constantly jiggle and sway, unnerving enemies and deterring herbivores that might mistake Tangela for a shrub. Tangela's vines will snap off easily and painlessly if the target pulls on them, suggesting that the ensnaring is intended to scare off potential predators. Tangela can usually be found in grassy plains. ", 
+    "genus": "Vine", 
+    "number": 114, 
+    "types": [
+        "grass"
+    ], 
+    "height": 1.0
+}

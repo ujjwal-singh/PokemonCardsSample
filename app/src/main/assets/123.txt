@@ -1,0 +1,18 @@
+{
+    "weight": 56.0, 
+    "name": "Scyther", 
+    "chain": [
+        {
+            "number": 123, 
+            "name": "Scyther"
+        }
+    ], 
+    "flavor": "Scyther is a bipedal, insectoid creature. It is primarily green with cream accents between its three body segments. On the back of its somewhat reptilian head are three points, and it has narrow eyes. Its forearms consist of large, white scythes, which it uses for hunting as well as fighting. On its thighs are spikes of fur, and it has three clawed toes on its large feet. Two pairs of cream-colored wings extend from its back. While these wings do allow Scyther to fly, it is rarely seen doing so. The abdomen of a female will be slightly larger than that of the male. Scyther's blade-like forearms are capable of slicing through logs, and become sharper by cutting through hard materials. Using swift movements, it camouflages itself and enhances the effectiveness of its scythes. The anime has shown that wild Scyther form groups. If a challenger Scyther wins a battle against the leader of the Scyther swarm, the original Scyther leader will depart and the challenger will take place as the new leader. It has also been shown that some Scyther despise the color red, and become aggressive when confronted with this color. Although it is rare, Scyther can be found in grasslands. ", 
+    "genus": "Mantis", 
+    "number": 123, 
+    "types": [
+        "bug", 
+        "flying"
+    ], 
+    "height": 1.5
+}

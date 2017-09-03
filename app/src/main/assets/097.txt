@@ -1,0 +1,17 @@
+{
+    "weight": 75.6, 
+    "name": "Hypno", 
+    "chain": [
+        {
+            "number": 96, 
+            "name": "Drowzee"
+        }
+    ], 
+    "flavor": "Hypno is a bipedal, humanoid Pokemon that has yellow skin. It has two triangular, ears on the top of its head and two sleepy looking eyes with a large nose underneath. On its neck, it has a ruff of white fur, which is longer on the female. Hypno has five fingers on each hand and holds a pendulum in its left. The pendulum is used for hypnotism, and Hypno is never seen without it. There are three toes on each of its feet, which have a pink pad on the undersides. Hypno is able to put people to sleep. It can then sense the dreams the victim is having, so it knows what kind of dream it would be eating. It is known to reside away from humans and on less traveled roads. If anyone comes by, Hypno will hypnotize them and eat their dreams. While it awaits its prey, it polishes its pendulum. ", 
+    "genus": "Hypnosis", 
+    "number": 97, 
+    "types": [
+        "psychic"
+    ], 
+    "height": 1.6
+}

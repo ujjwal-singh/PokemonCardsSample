@@ -1,0 +1,18 @@
+{
+    "weight": 300.0, 
+    "name": "Golem", 
+    "chain": [
+        {
+            "number": 74, 
+            "name": "Geodude"
+        }
+    ], 
+    "flavor": "Golem is a turtle-like bipedal Pokemon with plated, green rocks as its shell. Golem grows bigger by shedding its skin once a year. The discarded shell immediately hardens when exposed to air, crumbling away and returning to the soil. Golem has a head protruding out of the center of the shell, short arms that have three claws, and two legs with five-clawed feet that have four claws in front and one in back. It has red eyes and a flat snout with two pointed teeth in its lower jaw. As shown in the Pocket Monsters Carddass Trading Cards, Golem's shell is hollow. The anime has shown that Golem is able to withdraw its head, arms, and legs into its shell and roll at high speeds. Golem is dangerous when doing this, as it is unable to see and may crash into or run over anything in its path. To prevent it from rolling into the homes of people downhill, grooves are dug into the sides of the mountains to divert the rolling Golem's course. Golem's body is so hard that even dynamite cannot scratch it. Golem is seldom seen in the wild. However, it can be found living in mountainous regions. ", 
+    "genus": "Megaton", 
+    "number": 76, 
+    "types": [
+        "rock", 
+        "ground"
+    ], 
+    "height": 1.4
+}

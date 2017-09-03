@@ -1,0 +1,17 @@
+{
+    "weight": 7.5, 
+    "name": "Clefairy", 
+    "chain": [
+        {
+            "number": 173, 
+            "name": "Cleffa"
+        }
+    ], 
+    "flavor": "Clefairy is a bipedal, pink Pokemon with a chubby, vaguely star-shaped body. A small, pointed tooth protrudes from the upper left corner of its mouth. It has wrinkles beside its black, oval eyes, dark pink, oval markings on its cheeks, two small wings, and large, pointed ears with brown tips. A tuft of fur curls over its forehead, much like its large, upward-curling tail. Each stocky arm has two small claws and a thumb on each hand, and each of its feet has a single toenail. Clefairy is very shy and rarely shows itself to humans. On the rare occasions it does come down from its mountain home, it can be seen dancing under the light of the full moon. Once the sun starts to rise, it returns home where it sleeps nestled with other Clefairy. Though incapable of flight, Clefairy's wings can store moonlight and allow it to float. The anime has shown that Clefairy is actually an extraterrestrial Pokemon. ", 
+    "genus": "Fairy", 
+    "number": 35, 
+    "types": [
+        "fairy"
+    ], 
+    "height": 0.6
+}

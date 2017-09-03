@@ -1,0 +1,17 @@
+{
+    "weight": 28.0, 
+    "name": "Mankey", 
+    "chain": [
+        {
+            "number": 56, 
+            "name": "Mankey"
+        }
+    ], 
+    "flavor": "Mankey is a primate Pokemon, similar to a New World monkey. It is a bipedal Pokemon with a round body covered in whitish, shaggy fur. Its nose is similar to a pigs snout, and it has red eyes and triangular ears with brown insides. Mankey's hands, two-toed feet, and the tip of its curved, prehensile tail are brown. Along with Stufful, it is the smallest Fighting-type Pokemon. Mankey specializes in physical fighting, and is very aggressive and short-tempered. When angry, Mankey begins shaking and its breathing turns rough. Its rage peaks quickly, preventing its victim from being able to flee. If Mankey loses sight of its colony, its loneliness causes it to become infuriated. Mankey can be found in the mountains. Mankey lives in treetop colonies, and if one becomes enraged, the whole colony rampages for no reason. According to the Pokemon Mystery Dungeon: Red Rescue Team and Blue Rescue Team games, Mankey's preferred food is chestnuts, although Mankey usually lacks the dexterity to peel them. Mankey will get agitated and rage after attempting to peel a chestnut's spiky shell. Additionally, it also appears to be fond of bananas in the anime. ", 
+    "genus": "Pig Monkey", 
+    "number": 56, 
+    "types": [
+        "fighting"
+    ], 
+    "height": 0.5
+}
