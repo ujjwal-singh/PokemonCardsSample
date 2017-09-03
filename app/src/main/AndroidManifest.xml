@@ -17,10 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomePage"></activity>
-        
+        <activity android:name=".HomePage" />
+
         <service android:name=".services.ExitService" />
 
+        <activity android:name=".PreGame"></activity>
     </application>
 
 </manifest>
