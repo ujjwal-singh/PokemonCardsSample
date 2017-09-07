@@ -28,6 +28,13 @@ public enum JsonKey {
     RESPONSE("response"),
 
     /**
+     *  This acts as key for the initial list
+     *  of Pokemon IDs sent by the controller user
+     *  to the other user.
+     */
+    INIT_POKEMON_LIST("InitPokemonList"),
+
+    /**
      *  This key identifies the name of the
      *  Pokemon in the JSON file containing info
      *  about the Pokemon.

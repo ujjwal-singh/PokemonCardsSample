@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 import com.example.ujjwal.pokemoncardssample.Constants;
+import com.example.ujjwal.pokemoncardssample.R;
 import com.example.ujjwal.pokemoncardssample.utils.JsonKey;
 
 import org.json.JSONArray;
@@ -174,5 +175,18 @@ public class Pokemon {
          *  3 : to set width to 3
          */
         return String.format("%03d", this.number);
+    }
+
+    /**
+     *  Overriding toString method.
+     *  @return String containing Pokemon's
+     *          id and name.
+     */
+    @Override
+    public String toString() {
+
+        return (String.format(context.getResources().
+                getString(R.string.pokemonIdAndName),
+                String.valueOf(this.number), this.name));
     }
 }

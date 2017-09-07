@@ -21,7 +21,16 @@ public enum JsonValue {
      *  Header for every message. e.g.,
      *  "MessageType" : "GameStartResponse"
      */
-    GAME_START_RESPONSE("GameStartResponse");
+    GAME_START_RESPONSE("GameStartResponse"),
+
+    /** One of the values for MESSAGE_TYPE
+     *  key. Sent when initializing the game,
+     *  wherein the controller user sends the
+     *  PokemonIds of the other user to the other
+     *  user. e.g.,
+     *  "MessageType" : "PokemonCardsInitMessage"
+     */
+    POKEMON_CARDS_INIT_MESSAGE("PokemonCardsInitMessage");
 
     /** String to store the value of a JSON
      *  key-value pair. */

@@ -8,12 +8,16 @@ import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.sqs.model.Message;
 import com.example.ujjwal.pokemoncardssample.Constants;
 import com.example.ujjwal.pokemoncardssample.HomePage;
+import com.example.ujjwal.pokemoncardssample.PreGame;
+import com.example.ujjwal.pokemoncardssample.R;
 import com.example.ujjwal.pokemoncardssample.utils.JsonKey;
 import com.example.ujjwal.pokemoncardssample.utils.JsonValue;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -90,9 +94,11 @@ public class SQSListener {
 
                             Message receivedMessage = messages.get(
                                     messages.size() - 1);
-                            processMessage(receivedMessage.getBody());
+                            String messageBody = receivedMessage.getBody();
                             sqsClient.deleteMessage(queueUrl,
                                     receivedMessage.getReceiptHandle());
+                            processMessage(messageBody);
+
                             break;
                         } else {
                             try {
@@ -109,8 +115,9 @@ public class SQSListener {
                         @Override
                         public void run() {
 
-                            String message = "Connection Problem";
-                            ((HomePage) context).showToast(message,
+                            ((HomePage) context).showToast(context.
+                                    getResources().
+                                    getString(R.string.connectionProblem),
                                     Toast.LENGTH_SHORT);
                         }
                     });
@@ -172,13 +179,15 @@ public class SQSListener {
 
                             String toastMessage = "";
                             if (response) {
-                                toastMessage = "User : "
-                                        + otherUsername + " accepted "
-                                        + "your request !! Lets Play !!";
+                                toastMessage = String.format(context.
+                                        getResources().getString(R.
+                                        string.userAcceptedText),
+                                        otherUsername);
                             } else {
-                                toastMessage = "User : "
-                                        + otherUsername + " declined "
-                                        + "your request.";
+                                toastMessage = String.format(context.
+                                        getResources().getString(R.
+                                        string.userDeclinedText),
+                                        otherUsername);
                             }
 
                             ((HomePage) context).showToast(toastMessage,
@@ -186,12 +195,45 @@ public class SQSListener {
 
                             if (!response) {
                                 ((HomePage) context).startSqsListener();
+                            } else {
+                                ((HomePage) context).gotoPreGame(otherUsername);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 });
+            } else if (messageType.equals(JsonValue.
+                    POKEMON_CARDS_INIT_MESSAGE.getValue())
+                    && context instanceof PreGame) {
+
+                /*
+                 *  Message is for telling about the initial
+                 *  Pokemon IDs for the non-controller user.
+                 */
+
+                JSONArray pokemonIdArray = msg.getJSONArray(JsonKey.
+                        INIT_POKEMON_LIST.getKey());
+
+                ArrayList<Integer> pokemonIds = new ArrayList<>();
+
+                for (int index = 0; index < pokemonIdArray.length(); index++) {
+                    pokemonIds.add(pokemonIdArray.getInt(index));
+                }
+
+                ((PreGame) context).setNonControllerUserCards(pokemonIds);
+            } else {
+                /*
+                 *  The received message is not appropriate
+                 *  for the current activity. Restart the SQS
+                 *  listener.
+                 */
+
+                if (context instanceof HomePage) {
+                    ((HomePage) context).startSqsListener();
+                } else if (context instanceof PreGame) {
+                    ((PreGame) context).startSqsListener();
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -192,11 +192,9 @@ public class HomePage extends AppCompatActivity {
         deleteAccountDialogBuilder.setTitle(
                 R.string.confirmAccountDelete);
 
-        String message = "Are you sure you want to delete user "
-                + sharedPreferencesHelper.getUsername()
-                + " ? The account will be deleted permanently "
-                + "from our databases."
-                + " Enter the password of user to continue.";
+        String message = String.format(getResources().
+                getString(R.string.accountDeletionText),
+                sharedPreferencesHelper.getUsername());
         deleteAccountDialogBuilder.setMessage(message);
 
         /** EditText set up to receive password confirmation. */
@@ -491,9 +489,12 @@ public class HomePage extends AppCompatActivity {
      */
     public void showInvitationDialog(final String otherUsername) {
 
-        String msg = "Received invitation from user : "
-                + otherUsername + "\n" + "Would you like to accept "
-                + "and start the game ?";
+        String msg = String.format(getResources().
+                getString(R.string.invitationReceivedText),
+                otherUsername);
+
+        /* Context variable to be used inside thread. */
+        final Context context = this;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.invitationHeading)
@@ -505,6 +506,24 @@ public class HomePage extends AppCompatActivity {
                                                 final int which) {
 
                                 sendRequestResponse(otherUsername, true);
+
+                                /* De-activate the SQS listener. */
+                                sqsListener = null;
+
+                                /*
+                                 *  Building up the intent to be passed
+                                 *  to the PreGame activity.
+                                 *  ControllerUser determines whether the
+                                 *  current user will control the coming
+                                 *  game or not.
+                                 */
+                                Intent intent = new Intent(context,
+                                        PreGame.class);
+                                intent.putExtra(Constants.
+                                        OTHER_USERNAME_KEY, otherUsername);
+                                intent.putExtra(Constants.
+                                        CONTROLLER_USER, true);
+                                startActivity(intent);
                             }
                         })
                 .setNegativeButton(R.string.cancel,
@@ -602,6 +621,33 @@ public class HomePage extends AppCompatActivity {
     }
 
     /**
+     *  This method builds up an intent to go
+     *  to the PreGame page.
+     *  @param otherUsername String Username of the
+     *                       other user.
+     */
+    public void gotoPreGame(final String otherUsername) {
+
+        /* De-activate the SQS listener. */
+        sqsListener = null;
+
+        /*
+         *  Building up the intent to be passed
+         *  to the PreGame activity.
+         *  ControllerUser determines whether the
+         *  current user will control the coming
+         *  game or not.
+         */
+        Intent intent = new Intent(this,
+                PreGame.class);
+        intent.putExtra(Constants.
+                OTHER_USERNAME_KEY, otherUsername);
+        intent.putExtra(Constants.
+                CONTROLLER_USER, false);
+        startActivity(intent);
+    }
+
+    /**
      *  This method creates a new SQS listener object
      *  and starts it. The older object is automatically
      *  destroyed.
@@ -650,6 +696,7 @@ public class HomePage extends AppCompatActivity {
     /**
      *  Overriding onResume method.
      *  Make user online status true on resume.
+     *  Also sets inGame attribute False for the user.
      *  This takes care of sign-in bypass (through initCheck in MainActivity)
      *  and manual sign-in also.
      */

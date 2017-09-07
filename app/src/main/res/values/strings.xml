@@ -24,6 +24,14 @@
     <string name="searchPlayers">Search Players</string>
     <string name="availableUsers">Available Users</string>
     <string name="invitationHeading">Invitation Received</string>
+    <string name="numberOfCardsDialog">Select number of cards</string>
+    <string name="accountDeletionText">Are you sure you want to delete user %1$s ? The account will be deleted permanently from our databases. Enter the password of user to continue.</string>
+    <string name="invitationReceivedText">Received invitation from user : %1$s \n Would you like to accept and start the game ?</string>
+    <string name="pokemonIdAndName"># %1$s \t %2$s</string>
+    <string name="pokemonHeight">%1$s %2$s</string>
+    <string name="pokemonWeight">%1$s %2$s</string>
+    <string name="userAcceptedText">User : %1$s accepted your request !! Lets play !!</string>
+    <string name="userDeclinedText">User : %1$s declined your request.</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
