@@ -35,6 +35,22 @@ public enum JsonKey {
     INIT_POKEMON_LIST("InitPokemonList"),
 
     /**
+     *  This acts as key for a boolean toss
+     *  decision value, sent by the Controller
+     *  user to the non controller user.
+     */
+    TOSS_DECISION("TossDecision"),
+
+    /**
+     *  This acts as the key for PokemonAttribute,
+     *  which may be "Number", "Height", "Weight", etc.
+     *  e.g., "PokemonAttribute" : "Weight"
+     *  Also serves as the key for JSON messages
+     *  sent for Pokemon moves.
+     */
+    POKEMON_ATTRIBUTE("PokemonAttribute"),
+
+    /**
      *  This key identifies the name of the
      *  Pokemon in the JSON file containing info
      *  about the Pokemon.
@@ -73,6 +89,8 @@ public enum JsonKey {
      *  This key identifies the number of the
      *  base Pokemon in the JSON file containing
      *  info about the Pokemon.
+     *  Also serves as the key for JSON messages
+     *  sent for Pokemon moves.
      */
     POKEMON_NUMBER("number");
 

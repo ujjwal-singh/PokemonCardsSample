@@ -173,8 +173,9 @@ public final class SQSClient {
     }
 
     /**
-     *  This method fetches all the messages in a SQS queue,
+     *  This method fetches messages in a SQS queue,
      *  identified by its URL.
+     *  Currently, one message is fetched per request.
      *  @param queueUrl    URL of the queue.
      *  @return List of Messages.
      *  @throws AmazonClientException Throws this exception in case
@@ -184,7 +185,10 @@ public final class SQSClient {
             throws AmazonClientException {
 
         ReceiveMessageRequest receiveMessageRequest = new
-                ReceiveMessageRequest(queueUrl);
+                ReceiveMessageRequest().withQueueUrl(queueUrl)
+                .withAttributeNames(Constants.SQS_SENT_TIMESTAMP_KEY,
+                        Constants.SQS_FIRST_RECEIVED_TIMESTAMP_KEY)
+                .withMaxNumberOfMessages(1);
 
         return (sqsClient.receiveMessage(receiveMessageRequest).getMessages());
     }

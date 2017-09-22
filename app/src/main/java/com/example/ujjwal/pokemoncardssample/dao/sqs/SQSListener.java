@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.sqs.model.Message;
 import com.example.ujjwal.pokemoncardssample.Constants;
+import com.example.ujjwal.pokemoncardssample.GamePage;
 import com.example.ujjwal.pokemoncardssample.HomePage;
 import com.example.ujjwal.pokemoncardssample.PreGame;
 import com.example.ujjwal.pokemoncardssample.R;
@@ -79,8 +80,6 @@ public class SQSListener {
 
                 /* Getting previous number of messages in the queue. */
                 try {
-                    int previousNumberOfMessages = (sqsClient.
-                            getMessages(queueUrl)).size();
 
                 /* Listen for messages on the queue. */
                     while (true) {
@@ -88,18 +87,33 @@ public class SQSListener {
                         List<Message> messages = sqsClient.
                                 getMessages(queueUrl);
 
+                        long sentTimeStamp = 0L;
+                        long receivedTimeStamp = 0L;
+
                     /* Message is received.
                     *  Process it and then delete it. */
-                        if (messages.size() > previousNumberOfMessages) {
+                        if (messages.size() > 0) {
 
-                            Message receivedMessage = messages.get(
-                                    messages.size() - 1);
-                            String messageBody = receivedMessage.getBody();
+                            Message receivedMessage = messages.get(0);
+
+                            sentTimeStamp = Long.parseLong(receivedMessage.
+                                    getAttributes().get(Constants.
+                                    SQS_SENT_TIMESTAMP_KEY));
+                            receivedTimeStamp = Long.parseLong(receivedMessage.
+                                    getAttributes().get(Constants.
+                                    SQS_FIRST_RECEIVED_TIMESTAMP_KEY));
+
                             sqsClient.deleteMessage(queueUrl,
                                     receivedMessage.getReceiptHandle());
-                            processMessage(messageBody);
 
-                            break;
+                            /* Checking freshness of message. */
+                            if (receivedTimeStamp - sentTimeStamp < Constants.
+                                    SQS_FRESHNESS_INTERVAL) {
+                                String messageBody = receivedMessage.getBody();
+                                processMessage(messageBody);
+
+                                break;
+                            }
                         } else {
                             try {
                                 Thread.sleep(Constants.
@@ -221,7 +235,57 @@ public class SQSListener {
                     pokemonIds.add(pokemonIdArray.getInt(index));
                 }
 
-                ((PreGame) context).setNonControllerUserCards(pokemonIds);
+                String senderUser = msg.getString(JsonKey.USERNAME.getKey());
+
+                ((PreGame) context).setNonControllerUserCards(pokemonIds,
+                        senderUser);
+            } else if (messageType.equals(JsonValue.
+                    TOSS_DECISION_MESSAGE.getValue())
+                    && context instanceof GamePage) {
+
+                /*
+                 *  Message is for conveying the toss decision
+                 *  to the non controller user.
+                 */
+
+                String senderUser = msg.getString(JsonKey.USERNAME.getKey());
+                boolean myTurn = msg.getBoolean(JsonKey.TOSS_DECISION.getKey());
+
+                ((GamePage) context).showNonControllerUserTossDecision(
+                        senderUser, myTurn);
+            } else if (messageType.equals(JsonValue.
+                    POKEMON_MOVE_MESSAGE.getValue())
+                    && context instanceof GamePage) {
+
+                /*
+                 *  Message is for conveying the move played by the user
+                 *  in-charge to the other user.
+                 */
+
+                String senderUser = msg.getString(JsonKey.USERNAME.getKey());
+                int pokemonId = msg.getInt(JsonKey.POKEMON_NUMBER.getKey());
+                String pokemonAttribute = msg.getString(JsonKey.
+                        POKEMON_ATTRIBUTE.getKey());
+
+                ((GamePage) context).handleOpponentMove(senderUser, pokemonId,
+                        pokemonAttribute);
+            } else if (messageType.equals(JsonValue.
+                    POKEMON_MOVE_RESPONSE_MESSAGE.getValue())
+                    && context instanceof GamePage) {
+
+                /*
+                 *  Message is for conveying the response of the
+                 *  other user (who is not in-charge of the current turn)
+                 *  to the user in-charge of the current turn.
+                 */
+
+                String senderUser = msg.getString(JsonKey.USERNAME.getKey());
+                int pokemonId = msg.getInt(JsonKey.POKEMON_NUMBER.getKey());
+                String pokemonAttribute = msg.getString(JsonKey.
+                        POKEMON_ATTRIBUTE.getKey());
+
+                ((GamePage) context).handleMoveResponse(senderUser, pokemonId,
+                        pokemonAttribute);
             } else {
                 /*
                  *  The received message is not appropriate
@@ -233,6 +297,8 @@ public class SQSListener {
                     ((HomePage) context).startSqsListener();
                 } else if (context instanceof PreGame) {
                     ((PreGame) context).startSqsListener();
+                } else if (context instanceof GamePage) {
+                    ((GamePage) context).startSqsListener();
                 }
             }
         } catch (JSONException e) {

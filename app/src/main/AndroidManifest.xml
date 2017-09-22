@@ -21,7 +21,8 @@
 
         <service android:name=".services.ExitService" />
 
-        <activity android:name=".PreGame"></activity>
+        <activity android:name=".PreGame" />
+        <activity android:name=".GamePage"></activity>
     </application>
 
 </manifest>

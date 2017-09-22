@@ -30,7 +30,52 @@ public enum JsonValue {
      *  user. e.g.,
      *  "MessageType" : "PokemonCardsInitMessage"
      */
-    POKEMON_CARDS_INIT_MESSAGE("PokemonCardsInitMessage");
+    POKEMON_CARDS_INIT_MESSAGE("PokemonCardsInitMessage"),
+
+    /** One of the values for MESSAGE_TYPE
+     *  key. Used when the Controller user
+     *  sends toss info to the non-controller
+     *  user.
+     */
+    TOSS_DECISION_MESSAGE("TossDecisionMessage"),
+
+    /**
+     *  One of the values for MESSAGE_TYPE key.
+     *  Sent when the first user (user who won the previous round)
+     *  plays his card.
+     */
+    POKEMON_MOVE_MESSAGE("PokemonMoveMessage"),
+
+    /**
+     *  One of the values for MESSAGE_TYPE key.
+     *  Sent when the non in-charge user responds to the
+     *  in-charge user's move.
+     */
+    POKEMON_MOVE_RESPONSE_MESSAGE("PokemonMoveResponseMessage"),
+
+    /**
+     *  This is one of the values for
+     *  POKEMON_ATTRIBUTE key.
+     */
+    POKEMON_NUMBER("PokemonNumber"),
+
+    /**
+     *  This is one of the values for
+     *  POKEMON_ATTRIBUTE key.
+     */
+    POKEMON_HEIGHT("PokemonHeight"),
+
+    /**
+     *  This is one of the values for
+     *  POKEMON_ATTRIBUTE key.
+     */
+    POKEMON_WEIGHT("PokemonWeight"),
+
+    /**
+     *  This is one of the values for
+     *  POKEMON_ATTRIBUTE key.
+     */
+    POKEMON_TYPE("PokemonType");
 
     /** String to store the value of a JSON
      *  key-value pair. */

@@ -243,6 +243,39 @@ public final class DDBClient {
     }
 
     /**
+     *  This method updates the user history after the result
+     *  of a game.
+     *  @param username String username of the current user.
+     *  @param gameResult   Boolean,    True if the current user
+     *                                  won the game.
+     *                                  False, otherwise.
+     *  @throws AmazonClientException Throws this exception in case
+     *          of network problems.
+     */
+    public static void updateUserHistory(final String username,
+                                         final boolean gameResult)
+            throws AmazonClientException {
+
+        UserHistory userHistory = retrieveUserHistory(username);
+
+        int gamesPlayed = userHistory.getGamesPlayed();
+        int gamesWon = userHistory.getGamesWon();
+        int gamesLost = userHistory.getGamesLost();
+
+        userHistory.setGamesPlayed(gamesPlayed + 1);
+
+        if (gameResult) {
+
+            userHistory.setGamesWon(gamesWon + 1);
+        } else {
+
+            userHistory.setGamesLost(gamesLost + 1);
+        }
+
+        saveItem(userHistory);
+    }
+
+    /**
      *  This method fetches the list of users available for game,
      *  and returns it as a list of strings.
      *  Availability condition is : (a) The user should be online,

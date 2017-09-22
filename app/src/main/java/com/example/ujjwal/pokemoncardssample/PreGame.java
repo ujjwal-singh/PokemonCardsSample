@@ -24,6 +24,7 @@ import com.example.ujjwal.pokemoncardssample.utils.BooleanHolder;
 import com.example.ujjwal.pokemoncardssample.utils.Holder;
 import com.example.ujjwal.pokemoncardssample.utils.JsonKey;
 import com.example.ujjwal.pokemoncardssample.utils.JsonValue;
+import com.example.ujjwal.pokemoncardssample.utils.PokemonIDList;
 import com.example.ujjwal.pokemoncardssample.utils.RandomSequence;
 
 import org.json.JSONArray;
@@ -134,7 +135,7 @@ public class PreGame extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.app_bar, menu);
 
-        /** Hiding unnecessary buttons for MainActivity page. */
+        /** Hiding unnecessary buttons for Pre-Game page. */
         MenuItem signOutButton = menu.findItem(R.id.signOut);
         signOutButton.setVisible(false);
         MenuItem deleteAccountButton = menu.findItem(R.id.deleteAccount);
@@ -264,6 +265,8 @@ public class PreGame extends AppCompatActivity {
         try {
             pokemonCardsMessage.put(JsonKey.MESSAGE_TYPE.getKey(),
                     JsonValue.POKEMON_CARDS_INIT_MESSAGE.getValue());
+            pokemonCardsMessage.put(JsonKey.USERNAME.getKey(),
+                    sharedPreferencesHelper.getUsername());
             pokemonCardsMessage.put(JsonKey.INIT_POKEMON_LIST.getKey(),
                     otherPokemonIdsArray);
 
@@ -327,10 +330,20 @@ public class PreGame extends AppCompatActivity {
      *  This method sets the Pokemons of the non controller
      *  user, after receiving their IDs from the controller
      *  user.
+     *  Also, it first checks if the sender user is the one
+     *  with whom the game is being played.
      *  This method is called by SQS listener.
      *  @param pokemonIds   List of Pokemon IDs.
+     *  @param senderUser   String Username of the sender
+     *                      user.
      */
-    public void setNonControllerUserCards(final List<Integer> pokemonIds) {
+    public void setNonControllerUserCards(final List<Integer> pokemonIds,
+                                          final String senderUser) {
+
+        if (!senderUser.equals(otherUsername)) {
+            startSqsListener();
+            return;
+        }
 
         for (int pokemonId : pokemonIds) {
 
@@ -380,10 +393,12 @@ public class PreGame extends AppCompatActivity {
                     @Override
                     public void onFinish() {
 
+                        gotoGamePage();
                     }
                 }.start();
             }
         });
+
     }
 
     /**
@@ -406,6 +421,35 @@ public class PreGame extends AppCompatActivity {
                 valueOf(pokemon.getWeight()), Constants.
                 POKEMON_WEIGHT_UNIT));
         typeTextView.setText(pokemon.getTypes().toString());
+    }
+
+    /**
+     *  This method transfers the application to
+     *  the Game Page.
+     *  Basically, builds an appropriate intent
+     *  and starts GamePage activity.
+     */
+    private void gotoGamePage() {
+
+        /* De-activate the SQS listener. */
+        sqsListener = null;
+
+        /*
+         *  Building up the intent to be passed
+         *  to the Game activity.
+         *  ControllerUser determines whether the
+         *  current user will control the coming
+         *  game or not.
+         */
+        Intent intent = new Intent(this,
+                GamePage.class);
+        intent.putExtra(Constants.
+                OTHER_USERNAME_KEY, otherUsername);
+        intent.putExtra(Constants.
+                CONTROLLER_USER, controllerUser);
+        intent.putExtra(Constants.POKEMON_ID_LIST_KEY,
+                PokemonIDList.getIDList(myPokemons));
+        startActivity(intent);
     }
 
     /**
