@@ -2,6 +2,7 @@ package com.example.ujjwal.pokemoncardssample;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -618,6 +619,9 @@ public class GamePage extends AppCompatActivity {
 
         Pokemon myCurrentPokemon = myPokemons.get(0);
 
+        /* Pause for two sec.
+        *  Note that the current thread is not the UI thread.
+        *  So, the UI thread does not go to sleep. */
         try {
             Thread.sleep(Constants.POKEMON_CARD_DISPLAY_WAIT_TIME_IN_GAME);
         } catch (InterruptedException e) {
@@ -666,6 +670,9 @@ public class GamePage extends AppCompatActivity {
         sendPokemonMoveResponseMessage(myCurrentPokemon.getNumber(),
                 pokemonAttribute);
 
+        /* Pause for two sec.
+        *  Note that the current thread is not the UI thread.
+        *  So, the UI thread does not go to sleep. */
         try {
             Thread.sleep(Constants.POKEMON_CARD_DISPLAY_WAIT_TIME_IN_GAME);
         } catch (InterruptedException e) {
@@ -938,6 +945,11 @@ public class GamePage extends AppCompatActivity {
                 otherPokemonWeightButton.setText(null);
                 otherPokemonTypeButton.setText(null);
 
+                otherPokemonNumberButton.setVisibility(View.INVISIBLE);
+                otherPokemonHeightButton.setVisibility(View.INVISIBLE);
+                otherPokemonWeightButton.setVisibility(View.INVISIBLE);
+                otherPokemonTypeButton.setVisibility(View.INVISIBLE);
+
                 /* Deprecated method used to support lower API levels. */
                 otherPokemonNumberButton.setBackgroundColor(getResources().
                         getColor(R.color.holoBlueLight));
@@ -1028,6 +1040,11 @@ public class GamePage extends AppCompatActivity {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+                otherPokemonNumberButton.setVisibility(View.VISIBLE);
+                otherPokemonHeightButton.setVisibility(View.VISIBLE);
+                otherPokemonWeightButton.setVisibility(View.VISIBLE);
+                otherPokemonTypeButton.setVisibility(View.VISIBLE);
 
                 otherPokemonNameTextView.setText(pokemon.getName());
                 otherPokemonImageView.setImageDrawable(pokemon.getImage());
@@ -1134,8 +1151,6 @@ public class GamePage extends AppCompatActivity {
      *  Overriding onResume method.
      *  Make user online status true on resume.
      *  Also sets inGame attribute True for the user.
-     *  This takes care of sign-in bypass (through initCheck in MainActivity)
-     *  and manual sign-in also.
      */
     @Override
     protected void onResume() {

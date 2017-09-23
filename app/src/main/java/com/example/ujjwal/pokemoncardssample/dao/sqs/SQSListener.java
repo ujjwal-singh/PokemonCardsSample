@@ -161,18 +161,8 @@ public class SQSListener {
             if (messageType.equals(JsonValue.GAME_START_REQUEST.getValue())
                     && context instanceof HomePage) {
 
-                ((Activity) context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+                handleGameStartRequest(msg);
 
-                        try {
-                            ((HomePage) context).showInvitationDialog(msg.
-                                    getString(JsonKey.USERNAME.getKey()));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
             } else if (messageType.equals(JsonValue.
                     GAME_START_RESPONSE.getValue())
                     && context instanceof HomePage) {
@@ -180,43 +170,9 @@ public class SQSListener {
                 /*
                  *  Message is for Game Start Response.
                  */
-                ((Activity) context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
 
-                        try {
+                handleGameStartResponse(msg);
 
-                            String otherUsername = msg.getString(JsonKey.
-                                    USERNAME.getKey());
-                            boolean response = msg.getBoolean(JsonKey.
-                                    RESPONSE.getKey());
-
-                            String toastMessage = "";
-                            if (response) {
-                                toastMessage = String.format(context.
-                                        getResources().getString(R.
-                                        string.userAcceptedText),
-                                        otherUsername);
-                            } else {
-                                toastMessage = String.format(context.
-                                        getResources().getString(R.
-                                        string.userDeclinedText),
-                                        otherUsername);
-                            }
-
-                            ((HomePage) context).showToast(toastMessage,
-                                    Toast.LENGTH_SHORT);
-
-                            if (!response) {
-                                ((HomePage) context).startSqsListener();
-                            } else {
-                                ((HomePage) context).gotoPreGame(otherUsername);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
             } else if (messageType.equals(JsonValue.
                     POKEMON_CARDS_INIT_MESSAGE.getValue())
                     && context instanceof PreGame) {
@@ -226,19 +182,8 @@ public class SQSListener {
                  *  Pokemon IDs for the non-controller user.
                  */
 
-                JSONArray pokemonIdArray = msg.getJSONArray(JsonKey.
-                        INIT_POKEMON_LIST.getKey());
+                handlePokemonCardsInitMessage(msg);
 
-                ArrayList<Integer> pokemonIds = new ArrayList<>();
-
-                for (int index = 0; index < pokemonIdArray.length(); index++) {
-                    pokemonIds.add(pokemonIdArray.getInt(index));
-                }
-
-                String senderUser = msg.getString(JsonKey.USERNAME.getKey());
-
-                ((PreGame) context).setNonControllerUserCards(pokemonIds,
-                        senderUser);
             } else if (messageType.equals(JsonValue.
                     TOSS_DECISION_MESSAGE.getValue())
                     && context instanceof GamePage) {
@@ -248,11 +193,8 @@ public class SQSListener {
                  *  to the non controller user.
                  */
 
-                String senderUser = msg.getString(JsonKey.USERNAME.getKey());
-                boolean myTurn = msg.getBoolean(JsonKey.TOSS_DECISION.getKey());
+                handleTossDecisionMessage(msg);
 
-                ((GamePage) context).showNonControllerUserTossDecision(
-                        senderUser, myTurn);
             } else if (messageType.equals(JsonValue.
                     POKEMON_MOVE_MESSAGE.getValue())
                     && context instanceof GamePage) {
@@ -262,13 +204,8 @@ public class SQSListener {
                  *  in-charge to the other user.
                  */
 
-                String senderUser = msg.getString(JsonKey.USERNAME.getKey());
-                int pokemonId = msg.getInt(JsonKey.POKEMON_NUMBER.getKey());
-                String pokemonAttribute = msg.getString(JsonKey.
-                        POKEMON_ATTRIBUTE.getKey());
+                handlePokemonMoveMessage(msg);
 
-                ((GamePage) context).handleOpponentMove(senderUser, pokemonId,
-                        pokemonAttribute);
             } else if (messageType.equals(JsonValue.
                     POKEMON_MOVE_RESPONSE_MESSAGE.getValue())
                     && context instanceof GamePage) {
@@ -279,13 +216,8 @@ public class SQSListener {
                  *  to the user in-charge of the current turn.
                  */
 
-                String senderUser = msg.getString(JsonKey.USERNAME.getKey());
-                int pokemonId = msg.getInt(JsonKey.POKEMON_NUMBER.getKey());
-                String pokemonAttribute = msg.getString(JsonKey.
-                        POKEMON_ATTRIBUTE.getKey());
+                handlePokemonMoveResponseMessage(msg);
 
-                ((GamePage) context).handleMoveResponse(senderUser, pokemonId,
-                        pokemonAttribute);
             } else {
                 /*
                  *  The received message is not appropriate
@@ -305,5 +237,153 @@ public class SQSListener {
             e.printStackTrace();
         }
 
+    }
+
+    /**
+     *  This method handles game start request.
+     *  @param msg  JSON object containing details about
+     *              the request.
+     */
+    private void handleGameStartRequest(final JSONObject msg) {
+
+        ((Activity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    ((HomePage) context).showInvitationDialog(msg.
+                            getString(JsonKey.USERNAME.getKey()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     *  This method handles game start response.
+     *  @param msg  JSON object containing details about
+     *              the response.
+     */
+    private void handleGameStartResponse(final JSONObject msg) {
+
+        ((Activity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+
+                    String otherUsername = msg.getString(JsonKey.
+                            USERNAME.getKey());
+                    boolean response = msg.getBoolean(JsonKey.
+                            RESPONSE.getKey());
+
+                    String toastMessage = "";
+                    if (response) {
+                        toastMessage = String.format(context.
+                                        getResources().getString(R.
+                                        string.userAcceptedText),
+                                otherUsername);
+                    } else {
+                        toastMessage = String.format(context.
+                                        getResources().getString(R.
+                                        string.userDeclinedText),
+                                otherUsername);
+                    }
+
+                    ((HomePage) context).showToast(toastMessage,
+                            Toast.LENGTH_SHORT);
+
+                    if (!response) {
+                        ((HomePage) context).startSqsListener();
+                    } else {
+                        ((HomePage) context).gotoPreGame(otherUsername);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     *  This method handles Pokemon Cards Init message,
+     *  i.e., when the controller user sends the cards to
+     *  the non controller user.
+     *  @param msg  JSON object containing details about
+     *              the message.
+     *  @throws JSONException Throws JSON exception.
+     */
+    private void handlePokemonCardsInitMessage(final JSONObject msg)
+            throws JSONException {
+
+        JSONArray pokemonIdArray = msg.getJSONArray(JsonKey.
+                INIT_POKEMON_LIST.getKey());
+
+        ArrayList<Integer> pokemonIds = new ArrayList<>();
+
+        for (int index = 0; index < pokemonIdArray.length(); index++) {
+            pokemonIds.add(pokemonIdArray.getInt(index));
+        }
+
+        String senderUser = msg.getString(JsonKey.USERNAME.getKey());
+
+        ((PreGame) context).setNonControllerUserCards(pokemonIds,
+                senderUser);
+    }
+
+    /**
+     *  This method handles toss decision message sent by
+     *  the controller user to the non controller user.
+     *  @param msg  JSON object containing details about
+     *              the message.
+     *  @throws JSONException Throws JSON exception.
+     */
+    private void handleTossDecisionMessage(final JSONObject msg)
+            throws JSONException {
+
+        String senderUser = msg.getString(JsonKey.USERNAME.getKey());
+        boolean myTurn = msg.getBoolean(JsonKey.TOSS_DECISION.getKey());
+
+        ((GamePage) context).showNonControllerUserTossDecision(
+                senderUser, myTurn);
+    }
+
+    /**
+     *  This method handles the Pokemon move message sent by the
+     *  in-charge user to the other user.
+     *  @param msg  JSON object containing details about
+     *              the message.
+     *  @throws JSONException Throws JSON exception.
+     */
+    private void handlePokemonMoveMessage(final JSONObject msg)
+            throws JSONException {
+
+        String senderUser = msg.getString(JsonKey.USERNAME.getKey());
+        int pokemonId = msg.getInt(JsonKey.POKEMON_NUMBER.getKey());
+        String pokemonAttribute = msg.getString(JsonKey.
+                POKEMON_ATTRIBUTE.getKey());
+
+        ((GamePage) context).handleOpponentMove(senderUser, pokemonId,
+                pokemonAttribute);
+    }
+
+    /**
+     *  This method handles the Pokemon move response message sent
+     *  by the non in-charge user to the in-charge user.
+     *  @param msg  JSON object containing details about
+     *              the message.
+     *  @throws JSONException Throws JSON exception.
+     */
+    private void handlePokemonMoveResponseMessage(final JSONObject msg)
+            throws JSONException {
+
+        String senderUser = msg.getString(JsonKey.USERNAME.getKey());
+        int pokemonId = msg.getInt(JsonKey.POKEMON_NUMBER.getKey());
+        String pokemonAttribute = msg.getString(JsonKey.
+                POKEMON_ATTRIBUTE.getKey());
+
+        ((GamePage) context).handleMoveResponse(senderUser, pokemonId,
+                pokemonAttribute);
     }
 }

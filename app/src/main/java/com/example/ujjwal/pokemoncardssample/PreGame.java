@@ -489,8 +489,6 @@ public class PreGame extends AppCompatActivity {
      *  Overriding onResume method.
      *  Make user online status true on resume.
      *  Also sets inGame attribute True for the user.
-     *  This takes care of sign-in bypass (through initCheck in MainActivity)
-     *  and manual sign-in also.
      */
     @Override
     protected void onResume() {
