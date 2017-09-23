@@ -11,6 +11,7 @@ import com.example.ujjwal.pokemoncardssample.GamePage;
 import com.example.ujjwal.pokemoncardssample.HomePage;
 import com.example.ujjwal.pokemoncardssample.PreGame;
 import com.example.ujjwal.pokemoncardssample.R;
+import com.example.ujjwal.pokemoncardssample.utils.BooleanHolder;
 import com.example.ujjwal.pokemoncardssample.utils.JsonKey;
 import com.example.ujjwal.pokemoncardssample.utils.JsonValue;
 
@@ -38,7 +39,7 @@ public class SQSListener {
     private String queueName;
 
     /** URL of the queue for which the listener is set up. */
-    private String queueUrl;
+    private String queueUrl = null;
 
     /**
      *  Constructor for the class.
@@ -53,19 +54,6 @@ public class SQSListener {
         this.context = passedContext;
         this.sqsClient = passedSqsClient;
         this.queueName = passedQueueName;
-
-        Thread getUrlThread = new Thread() {
-            @Override
-            public void run() {
-                queueUrl = sqsClient.getQueueUrl(queueName);
-            }
-        };
-        getUrlThread.start();
-        try {
-            getUrlThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -80,6 +68,11 @@ public class SQSListener {
 
                 /* Getting previous number of messages in the queue. */
                 try {
+
+                    if (queueUrl == null) {
+
+                        queueUrl = sqsClient.getQueueUrl(queueName);
+                    }
 
                 /* Listen for messages on the queue. */
                     while (true) {

@@ -2,7 +2,6 @@ package com.example.ujjwal.pokemoncardssample;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -116,6 +115,9 @@ public class GamePage extends AppCompatActivity {
 
     /** TextView to display the number of remaining cards. */
     private TextView cardsRemainingTextView;
+
+    /** Toast object for this class. */
+    private Toast myToast = null;
 
     /**
      *  Overriding onCreate method.
@@ -316,8 +318,8 @@ public class GamePage extends AppCompatActivity {
          *  If unsuccessful, then report connection problem
          *  and return. */
         if (!connectionSuccessful.isValue()) {
-            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.connectionProblem),
+                    Toast.LENGTH_SHORT);
 
             /* Connection unsuccessful. Re-try. */
             sendTossMessage();
@@ -328,11 +330,11 @@ public class GamePage extends AppCompatActivity {
         displayNumberOfCardsRemaining(numberOfCards);
 
         if (myTurn) {
-            Toast.makeText(this, R.string.tossWon,
-                    Toast.LENGTH_SHORT).show();
+            showToast(getResources().getString(R.string.tossWon),
+                    Toast.LENGTH_SHORT);
         } else {
-            Toast.makeText(this, R.string.tossLost,
-                    Toast.LENGTH_SHORT).show();
+            showToast(getResources().getString(R.string.tossLost),
+                    Toast.LENGTH_SHORT);
             handleOpponentTurn();
         }
     }
@@ -419,8 +421,8 @@ public class GamePage extends AppCompatActivity {
          *  If unsuccessful, then report connection problem
          *  and return. */
         if (!connectionSuccessful.isValue()) {
-            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.connectionProblem),
+                    Toast.LENGTH_SHORT);
 
             /* Connection unsuccessful. Re-try. */
             sendPokemonMoveMessage(pokemonId, pokemonAttribute);
@@ -508,8 +510,8 @@ public class GamePage extends AppCompatActivity {
          *  If unsuccessful, then report connection problem
          *  and return. */
         if (!connectionSuccessful.isValue()) {
-            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.connectionProblem),
+                    Toast.LENGTH_SHORT);
 
             /* Connection unsuccessful. Re-try. */
             sendPokemonMoveResponseMessage(pokemonId, pokemonAttribute);
@@ -545,11 +547,11 @@ public class GamePage extends AppCompatActivity {
             public void run() {
 
                 if (myTurn) {
-                    Toast.makeText(context, R.string.tossWon,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(getResources().getString(R.string.tossWon),
+                            Toast.LENGTH_SHORT);
                 } else {
-                    Toast.makeText(context, R.string.tossLost,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(getResources().getString(R.string.tossLost),
+                            Toast.LENGTH_SHORT);
                     handleOpponentTurn();
                 }
             }
@@ -720,12 +722,12 @@ public class GamePage extends AppCompatActivity {
 
                 if (myTurn) {
 
-                    Toast.makeText(context, R.string.roundWon,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(getResources().getString(R.string.roundWon),
+                            Toast.LENGTH_SHORT);
                 } else {
 
-                    Toast.makeText(context, R.string.roundLost,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(getResources().getString(R.string.roundLost),
+                            Toast.LENGTH_SHORT);
                 }
             }
         });
@@ -738,8 +740,8 @@ public class GamePage extends AppCompatActivity {
                 @Override
                 public void run() {
 
-                    Toast.makeText(context, R.string.gameLost,
-                            Toast.LENGTH_LONG).show();
+                    showToast(getResources().getString(R.string.gameLost),
+                            Toast.LENGTH_LONG);
                 }
             });
 
@@ -756,8 +758,8 @@ public class GamePage extends AppCompatActivity {
                 @Override
                 public void run() {
 
-                    Toast.makeText(context, R.string.gameWon,
-                            Toast.LENGTH_LONG).show();
+                    showToast(getResources().getString(R.string.gameWon),
+                            Toast.LENGTH_LONG);
                 }
             });
 
@@ -820,8 +822,8 @@ public class GamePage extends AppCompatActivity {
          *  If unsuccessful, then report connection problem
          *  and return. */
         if (!connectionSuccessful.isValue()) {
-            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.connectionProblem),
+                    Toast.LENGTH_SHORT);
 
             /* Connection unsuccessful. Re-try. */
             updateUserHistory(gameResult);
@@ -1112,6 +1114,24 @@ public class GamePage extends AppCompatActivity {
                     getColor(R.color.holoGreenLight));
             handleMyTurn(JsonValue.POKEMON_WEIGHT.getValue());
         }
+    }
+
+    /**
+     *  This method can be used by other class' objects
+     *  to display toasts on the Home Page.
+     *  @param message  String message.
+     *  @param duration int duration,
+     *                  generally Toast.LENGTH_SHORT or
+     *                  Toast.LENGTH_LONG .
+     */
+    public void showToast(final String message, final int duration) {
+
+        if (myToast != null) {
+            myToast.cancel();
+        }
+
+        myToast = Toast.makeText(this, message, duration);
+        myToast.show();
     }
 
     /**

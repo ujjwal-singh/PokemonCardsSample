@@ -86,6 +86,9 @@ public class PreGame extends AppCompatActivity {
     /** Type text view. */
     private TextView typeTextView;
 
+    /** Toast object for this class. */
+    private Toast myToast = null;
+
     /**
      *  Overriding onCreate method.
      *  @param savedInstanceState Bundle savedInstanceState
@@ -318,8 +321,8 @@ public class PreGame extends AppCompatActivity {
          *  If unsuccessful, then report connection problem
          *  and return. */
         if (!connectionSuccessful.isValue()) {
-            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.connectionProblem),
+                    Toast.LENGTH_SHORT);
 
             /* Connection unsuccessful. Re-try. */
             sendPokemonCardsInitMessage(otherPokemonIds);
@@ -450,6 +453,24 @@ public class PreGame extends AppCompatActivity {
         intent.putExtra(Constants.POKEMON_ID_LIST_KEY,
                 PokemonIDList.getIDList(myPokemons));
         startActivity(intent);
+    }
+
+    /**
+     *  This method can be used by other class' objects
+     *  to display toasts on the Home Page.
+     *  @param message  String message.
+     *  @param duration int duration,
+     *                  generally Toast.LENGTH_SHORT or
+     *                  Toast.LENGTH_LONG .
+     */
+    public void showToast(final String message, final int duration) {
+
+        if (myToast != null) {
+            myToast.cancel();
+        }
+
+        myToast = Toast.makeText(this, message, duration);
+        myToast.show();
     }
 
     /**

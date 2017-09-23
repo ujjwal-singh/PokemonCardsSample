@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
     /** Sign-Up button. */
     private Button signUpButton;
 
+    /** Toast object for this class. */
+    private Toast myToast = null;
+
     /**
      *  This is the method which is called upon activity creation.
      *  @param savedInstanceState
@@ -159,23 +162,23 @@ public class MainActivity extends AppCompatActivity {
         /** Empty checks */
         username = signUpUsername.getText().toString();
         if (username.equals(Constants.EMPTY_STRING)) {
-            Toast.makeText(this, R.string.usernameEmpty, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.usernameEmpty),
+                    Toast.LENGTH_SHORT);
             return;
         }
 
         password = signUpPassword.getText().toString();
         if (password.equals(Constants.EMPTY_STRING)) {
-            Toast.makeText(this, R.string.passwordEmpty, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.passwordEmpty),
+                    Toast.LENGTH_SHORT);
             return;
         }
 
         /** Matching password and re-password. */
         rePassword = signUpRePassword.getText().toString();
         if (!(password.equals(rePassword))) {
-            Toast.makeText(this, R.string.rePasswordWrong, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.rePasswordWrong),
+                    Toast.LENGTH_SHORT);
             return;
         }
 
@@ -233,23 +236,21 @@ public class MainActivity extends AppCompatActivity {
         /** Check whether the connection was successful or not.
          *  If unsuccessful, then report connection problem and return. */
         if (!connectionSuccessful.isValue()) {
-            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.connectionProblem),
+                    Toast.LENGTH_SHORT);
             return;
         }
 
         /** If new user creation was successful (username did not clash),
          *  goto HomePage. */
         if (!(userExists.isValue())) {
-            Toast.makeText(this, R.string.userCreationSuccessful,
-                    Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.userCreationSuccessful),
+                    Toast.LENGTH_SHORT);
             Intent intent = new Intent(this, HomePage.class);
             startActivity(intent);
         } else {
-            Toast.makeText(MainActivity.this, R.string.usernameExists,
-                    Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.usernameExists),
+                    Toast.LENGTH_SHORT);
         }
     }
 
@@ -269,15 +270,15 @@ public class MainActivity extends AppCompatActivity {
         /** Empty checks */
         username = signInUsername.getText().toString();
         if (username.equals(Constants.EMPTY_STRING)) {
-            Toast.makeText(this, R.string.usernameEmpty, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.usernameEmpty),
+                    Toast.LENGTH_SHORT);
             return;
         }
 
         password = signInPassword.getText().toString();
         if (password.equals(Constants.EMPTY_STRING)) {
-            Toast.makeText(this, R.string.passwordEmpty, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.passwordEmpty),
+                    Toast.LENGTH_SHORT);
             return;
         }
 
@@ -345,30 +346,48 @@ public class MainActivity extends AppCompatActivity {
         /** Check whether the connection was successful or not.
          *  If unsuccessful, then report connection problem and return. */
         if (!connectionSuccessful.isValue()) {
-            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.connectionProblem),
+                    Toast.LENGTH_SHORT);
             return;
         }
 
         /** Username does not exist. */
         if (!(userExists.isValue())) {
-            Toast.makeText(this, R.string.userDoesNotExist, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.userDoesNotExist),
+                    Toast.LENGTH_SHORT);
             return;
         }
 
         /** Incorrect password for the username provided. */
         if (!(passwordCorrect.isValue())) {
-            Toast.makeText(this, R.string.wrongPassword, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.wrongPassword),
+                    Toast.LENGTH_SHORT);
             return;
         }
 
         /** Successful signIn. */
-        Toast.makeText(this, R.string.signInSuccessful, Toast.LENGTH_SHORT)
-                .show();
+        showToast(getResources().getString(R.string.signInSuccessful),
+                Toast.LENGTH_SHORT);
         Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
+    }
+
+    /**
+     *  This method can be used by other class' objects
+     *  to display toasts on the Home Page.
+     *  @param message  String message.
+     *  @param duration int duration,
+     *                  generally Toast.LENGTH_SHORT or
+     *                  Toast.LENGTH_LONG .
+     */
+    public void showToast(final String message, final int duration) {
+
+        if (myToast != null) {
+            myToast.cancel();
+        }
+
+        myToast = Toast.makeText(this, message, duration);
+        myToast.show();
     }
 
     /**

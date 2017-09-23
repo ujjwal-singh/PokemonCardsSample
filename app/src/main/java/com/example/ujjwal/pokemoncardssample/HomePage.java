@@ -51,6 +51,9 @@ public class HomePage extends AppCompatActivity {
     /** SQSListener object for the user queue. */
     private SQSListener sqsListener;
 
+    /** Toast object for this class. */
+    private Toast myToast = null;
+
     /**
      *  Overriding onCreate method.
      *  @param savedInstanceState Bundle savedInstanceState
@@ -66,9 +69,7 @@ public class HomePage extends AppCompatActivity {
         ddbClient = DDBClient.getInstance();
         sqsClient = SQSClient.getInstance();
 
-        sqsListener = new SQSListener(this, sqsClient,
-                sharedPreferencesHelper.getUsername());
-        sqsListener.run();
+        startSqsListener();
     }
 
     /**
@@ -167,14 +168,13 @@ public class HomePage extends AppCompatActivity {
          *  If unsuccessful, then report connection problem
          *  and return. */
         if (!connectionSuccessful.isValue()) {
-            Toast.makeText(this, R.string.connectionProblem,
-                    Toast.LENGTH_SHORT).show();
+            showToast(getResources().getString(R.string.connectionProblem),
+                    Toast.LENGTH_SHORT);
             return true;
         }
 
-        Toast.makeText(this, R.string.signOutSuccessful,
-                Toast.LENGTH_SHORT)
-                .show();
+        showToast(getResources().getString(R.string.signOutSuccessful),
+                Toast.LENGTH_SHORT);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         return true;
@@ -271,25 +271,26 @@ public class HomePage extends AppCompatActivity {
                          *  If unsuccessful, then report connection problem
                          *  and return. */
                         if (!connectionSuccessful.isValue()) {
-                            Toast.makeText(context, R.string.connectionProblem,
-                                    Toast.LENGTH_SHORT)
-                                    .show();
+                            showToast(getResources().getString(R.string.
+                                    connectionProblem),
+                                    Toast.LENGTH_SHORT);
                             return;
                         }
 
                         /** Check if user deletion was successful.
                          * If successful, go back to MainActivity page. */
                         if (userDeletedSuccessfully.isValue()) {
-                            Toast.makeText(
-                                    context, R.string.userDeletionSuccessful,
-                                    Toast.LENGTH_SHORT)
-                                    .show();
+                            showToast(
+                                    getResources().getString(R.string.
+                                            userDeletionSuccessful),
+                                    Toast.LENGTH_SHORT);
                             Intent intent = new
                                     Intent(context, MainActivity.class);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(context, R.string.wrongPassword,
-                                    Toast.LENGTH_SHORT).show();
+                            showToast(getResources().getString(R.string.
+                                    wrongPassword),
+                                    Toast.LENGTH_SHORT);
                         }
                     }
                 });
@@ -350,8 +351,8 @@ public class HomePage extends AppCompatActivity {
          *  If unsuccessful, then report connection problem
          *  and return. */
         if (!connectionSuccessful.isValue()) {
-            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.connectionProblem),
+                    Toast.LENGTH_SHORT);
             return true;
         }
 
@@ -451,8 +452,8 @@ public class HomePage extends AppCompatActivity {
          *  If unsuccessful, then report connection problem
          *  and return. */
         if (!connectionSuccessful.isValue()) {
-            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.connectionProblem),
+                    Toast.LENGTH_SHORT);
         }
 
     }
@@ -615,8 +616,8 @@ public class HomePage extends AppCompatActivity {
          *  If unsuccessful, then report connection problem
          *  and return. */
         if (!connectionSuccessful.isValue()) {
-            Toast.makeText(this, R.string.connectionProblem, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(getResources().getString(R.string.connectionProblem),
+                    Toast.LENGTH_SHORT);
         }
     }
 
@@ -669,7 +670,12 @@ public class HomePage extends AppCompatActivity {
      */
     public void showToast(final String message, final int duration) {
 
-        Toast.makeText(this, message, duration).show();
+        if (myToast != null) {
+            myToast.cancel();
+        }
+
+        myToast = Toast.makeText(this, message, duration);
+        myToast.show();
     }
 
     /**
