@@ -32,7 +32,7 @@
     <string name="tossLost">You lost the toss :(</string>
     <string name="numberOfCardsDialog">Select number of cards</string>
     <string name="accountDeletionText">Are you sure you want to delete user %1$s ? The account will be deleted permanently from our databases. Enter the password of user to continue.</string>
-    <string name="invitationReceivedText">Received invitation from user : %1$s \n Would you like to accept and start the game ?</string>
+    <string name="invitationReceivedText">Received invitation from user : %1$s \nWould you like to accept and start the game ?</string>
     <string name="pokemonIdAndName"># %1$s \t %2$s</string>
     <string name="pokemonHeight">%1$s %2$s</string>
     <string name="pokemonWeight">%1$s %2$s</string>
@@ -40,6 +40,13 @@
     <string name="userDeclinedText">User : %1$s declined your request.</string>
     <string name="pokemonID"># %1$s</string>
     <string name="cardsRemaining">Cards Remaining : %1$s</string>
+    <string name="cannotEvolveFurther">%1$s cannot evolve any further.</string>
+    <string name="evolutionDialogHeading">Confirm Pokemon evolution</string>
+    <string name="evolutionDialogMessage">Are you sure you want to evolve %1$s into %2$s ?</string>
+    <string name="noEvolutionsLeft">No evolutions left :(</string>
+    <string name="numberOfEvolutionLeft">Number of evolutions left -- %1$s</string>
+    <string name="multipleEvolutionDialogMessage">What do you want %1$s to evolve into ?</string>
+    <string name="typeScoreDisplay">%1$s -> %2$s : %3$s\n%4$s -> %5$s : %6$s</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>

@@ -54,6 +54,12 @@ public class HomePage extends AppCompatActivity {
     /** Toast object for this class. */
     private Toast myToast = null;
 
+    /** Stores the time of last toast message display. */
+    private int lastToastDisplayTime;
+
+    /** Stores the last message displayed by the Toast. */
+    private String lastToastMessage;
+
     /**
      *  Overriding onCreate method.
      *  @param savedInstanceState Bundle savedInstanceState
@@ -68,6 +74,10 @@ public class HomePage extends AppCompatActivity {
         sharedPreferencesHelper = SharedPreferencesHelper.getInstance();
         ddbClient = DDBClient.getInstance();
         sqsClient = SQSClient.getInstance();
+
+        lastToastDisplayTime = 0;
+
+        lastToastMessage = null;
 
         startSqsListener();
     }
@@ -670,12 +680,32 @@ public class HomePage extends AppCompatActivity {
      */
     public void showToast(final String message, final int duration) {
 
-        if (myToast != null) {
-            myToast.cancel();
+        int currentToastDisplayTime = (int) (System.currentTimeMillis());
+
+        if (lastToastMessage != null) {
+            if (message.equals(lastToastMessage)
+                    && (currentToastDisplayTime -
+                    lastToastDisplayTime <= Constants.
+                    TOAST_MESSAGE_SEPARATION_TIME)) {
+
+                return;
+            }
         }
 
-        myToast = Toast.makeText(this, message, duration);
-        myToast.show();
+        lastToastMessage = message;
+        lastToastDisplayTime = currentToastDisplayTime;
+
+        /* Final context object to be used inside the below thread. */
+        final Context context = this;
+
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                myToast = Toast.makeText(context, message, duration);
+                myToast.show();
+            }
+        });
     }
 
     /**

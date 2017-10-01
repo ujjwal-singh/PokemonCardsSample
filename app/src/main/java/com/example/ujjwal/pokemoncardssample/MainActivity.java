@@ -1,5 +1,6 @@
 package com.example.ujjwal.pokemoncardssample;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -58,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
     /** Toast object for this class. */
     private Toast myToast = null;
 
+    /** Stores the time of last toast message display. */
+    private int lastToastDisplayTime;
+
+    /** Stores the last message displayed by the Toast. */
+    private String lastToastMessage;
+
     /**
      *  This is the method which is called upon activity creation.
      *  @param savedInstanceState
@@ -83,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferencesHelper = SharedPreferencesHelper.getInstance(this);
         ddbClient = DDBClient.getInstance(this);
         sqsClient = SQSClient.getInstance(this);
+
+        lastToastDisplayTime = 0;
+
+        lastToastMessage = null;
 
         initCheck();
     }
@@ -374,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      *  This method can be used by other class' objects
-     *  to display toasts on the Home Page.
+     *  to display toasts on the MainActivity Page.
      *  @param message  String message.
      *  @param duration int duration,
      *                  generally Toast.LENGTH_SHORT or
@@ -382,12 +393,32 @@ public class MainActivity extends AppCompatActivity {
      */
     public void showToast(final String message, final int duration) {
 
-        if (myToast != null) {
-            myToast.cancel();
+        int currentToastDisplayTime = (int) (System.currentTimeMillis());
+
+        if (lastToastMessage != null) {
+            if (message.equals(lastToastMessage)
+                    && (currentToastDisplayTime -
+                    lastToastDisplayTime <= Constants.
+                    TOAST_MESSAGE_SEPARATION_TIME)) {
+
+                return;
+            }
         }
 
-        myToast = Toast.makeText(this, message, duration);
-        myToast.show();
+        lastToastMessage = message;
+        lastToastDisplayTime = currentToastDisplayTime;
+
+        /* Final context object to be used inside the below thread. */
+        final Context context = this;
+
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                myToast = Toast.makeText(context, message, duration);
+                myToast.show();
+            }
+        });
     }
 
     /**

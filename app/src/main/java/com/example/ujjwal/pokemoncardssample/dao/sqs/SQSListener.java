@@ -122,10 +122,25 @@ public class SQSListener {
                         @Override
                         public void run() {
 
-                            ((HomePage) context).showToast(context.
-                                    getResources().
-                                    getString(R.string.connectionProblem),
-                                    Toast.LENGTH_SHORT);
+                            if (context instanceof HomePage) {
+
+                                ((HomePage) context).showToast(context.
+                                                getResources().
+                                                getString(R.string.connectionProblem),
+                                        Toast.LENGTH_SHORT);
+                            } else if (context instanceof PreGame) {
+
+                                ((PreGame) context).showToast(context.
+                                                getResources().
+                                                getString(R.string.connectionProblem),
+                                        Toast.LENGTH_SHORT);
+                            } else if (context instanceof GamePage) {
+
+                                ((GamePage) context).showToast(context.
+                                                getResources().
+                                                getString(R.string.connectionProblem),
+                                        Toast.LENGTH_SHORT);
+                            }
                         }
                     });
 

@@ -1,7 +1,9 @@
 package com.example.ujjwal.pokemoncardssample;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,9 +23,11 @@ import com.example.ujjwal.pokemoncardssample.dao.sqs.SQSListener;
 import com.example.ujjwal.pokemoncardssample.pokemon.Pokemon;
 import com.example.ujjwal.pokemoncardssample.services.ExitService;
 import com.example.ujjwal.pokemoncardssample.utils.BooleanHolder;
+import com.example.ujjwal.pokemoncardssample.utils.Holder;
 import com.example.ujjwal.pokemoncardssample.utils.JsonKey;
 import com.example.ujjwal.pokemoncardssample.utils.JsonValue;
 import com.example.ujjwal.pokemoncardssample.utils.PokemonComparator;
+import com.example.ujjwal.pokemoncardssample.utils.PokemonEvolver;
 import com.example.ujjwal.pokemoncardssample.utils.RandomSequence;
 
 import org.json.JSONException;
@@ -119,6 +123,24 @@ public class GamePage extends AppCompatActivity {
     /** Toast object for this class. */
     private Toast myToast = null;
 
+    /** Stores number of evolutions left for the current user. */
+    private int numberOfEvolutionsLeft;
+
+    /** Stores whether evolution option is currently active or not. */
+    private boolean evolutionOptionEnabled;
+
+    /** Stores whether evolution is currently going on.  */
+    private boolean evolutionGoingOn;
+
+    /** Stores the time of last click on the image button. */
+    private int lastClickTime;
+
+    /** Stores the time of last toast message display. */
+    private int lastToastDisplayTime;
+
+    /** Stores the last message displayed by the Toast. */
+    private String lastToastMessage;
+
     /**
      *  Overriding onCreate method.
      *  @param savedInstanceState Bundle savedInstanceState
@@ -143,6 +165,19 @@ public class GamePage extends AppCompatActivity {
                 getIntegerArrayList(Constants.POKEMON_ID_LIST_KEY);
 
         numberOfCards = pokemonIds.size();
+
+        numberOfEvolutionsLeft = (int) (numberOfCards
+                * Constants.EVOLUTION_RATIO);
+
+        evolutionOptionEnabled = true;
+
+        evolutionGoingOn = false;
+
+        lastClickTime = 0;
+
+        lastToastDisplayTime = 0;
+
+        lastToastMessage = null;
 
         myPokemonNameTextView = (TextView) this.findViewById(
                 R.id.myPokemonNameTextView);
@@ -179,6 +214,7 @@ public class GamePage extends AppCompatActivity {
         buildMyPokemons(pokemonIds);
 
         if (controllerUser) {
+
             handleControllerUser();
         } else {
             handleNonControllerUser();
@@ -539,9 +575,6 @@ public class GamePage extends AppCompatActivity {
         removeOtherPokemon();
         displayNumberOfCardsRemaining(numberOfCards);
 
-        /* Context variable to be used inside the below thread. */
-        final Context context = this;
-
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -576,6 +609,8 @@ public class GamePage extends AppCompatActivity {
      *                    e.g., Number, Height, Weight.
      */
     private void handleMyTurn(final String attribute) {
+
+        evolutionOptionEnabled = false;
 
         setMyButtons(false);
 
@@ -636,7 +671,7 @@ public class GamePage extends AppCompatActivity {
 
     /**
      *  This method shows the user in-charge's move to the
-     *  other user, i.e., the other user is the user in-charge
+     *  current user, i.e., the other user is the user in-charge
      *  and current user is the one who will receive his/her
      *  move.
      *  It then sends the Pokemon ID and attribute of the current
@@ -659,6 +694,21 @@ public class GamePage extends AppCompatActivity {
             startSqsListener();
             return;
         }
+
+        /*  Wait if evolution is going on.
+         *  Pause for two sec.
+         *  Note that the current thread is not the UI thread.
+         *  So, the UI thread does not go to sleep. */
+        while (evolutionGoingOn) {
+
+            try {
+                Thread.sleep(Constants.EVOLUTION_GOING_ON_SLEEP_TIME);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        evolutionOptionEnabled = false;
 
         Pokemon otherPokemon = new Pokemon(this, otherPokemonId);
 
@@ -701,7 +751,7 @@ public class GamePage extends AppCompatActivity {
                                  final Pokemon otherPokemon,
                                  final String pokemonAttribute) {
 
-        myTurn = PokemonComparator.comparePokemon(myPokemon,
+        myTurn = PokemonComparator.comparePokemon(this, myPokemon,
                 otherPokemon, pokemonAttribute, myTurn);
 
         if (myTurn) {
@@ -713,8 +763,6 @@ public class GamePage extends AppCompatActivity {
 
             myPokemons.remove(0);
         }
-
-        final Context context = this;
 
         this.runOnUiThread(new Runnable() {
             @Override
@@ -769,6 +817,8 @@ public class GamePage extends AppCompatActivity {
             startActivity(intent);
 
         } else {
+
+            evolutionOptionEnabled = true;
 
             showMyPokemon(myPokemons.get(0));
             removeOtherPokemon();
@@ -846,6 +896,206 @@ public class GamePage extends AppCompatActivity {
                         String.valueOf(cardsRemaining)));
             }
         });
+    }
+
+    /**
+     *  This method handles clicks on the image button of
+     *  current user's Pokemon.
+     *  Double-click means the user wants to evolve the current
+     *  Pokemon.
+     *  @param view View view
+     */
+    public void handleEvolve(final View view) {
+
+        int currentClickTime = (int) (System.currentTimeMillis());
+
+        if (currentClickTime - lastClickTime > Constants.
+                IMAGE_DOUBLE_CLICK_INTERVAL) {
+
+            lastClickTime = currentClickTime;
+            return;
+        }
+
+        lastClickTime = currentClickTime;
+
+        if (!evolutionOptionEnabled) {
+            return;
+        }
+
+        if (numberOfEvolutionsLeft == 0) {
+
+            showToast(getResources().getString(R.string.noEvolutionsLeft),
+                    Toast.LENGTH_SHORT);
+
+            return;
+        }
+
+        evolutionOptionEnabled = false;
+        evolutionGoingOn = true;
+
+        Pokemon currentPokemon = myPokemons.get(0);
+
+        ArrayList<Integer> evolutionList = PokemonEvolver.getEvolveList(this,
+                currentPokemon);
+
+        if (evolutionList.size() == 0) {
+
+            showToast(String.format(getResources().getString(R.
+                    string.cannotEvolveFurther),
+                    currentPokemon.getName()),
+                    Toast.LENGTH_SHORT);
+
+            evolutionGoingOn = false;
+            evolutionOptionEnabled = true;
+
+            return;
+        }
+
+        if (evolutionList.size() == 1) {
+
+            handleSingleEvolveOption(evolutionList.get(0));
+        } else {
+
+            handleMultipleEvolution(evolutionList);
+        }
+    }
+
+    /**
+     *  This method handles the case when there is a single option
+     *  for Pokemon evolution.
+     *  Builds up a dialog and confirms whether the user wants to
+     *  evolve his/her Pokemon or not.
+     *
+     *  @param evolvedPokemonId PokemonID of the Evolved Pokemon,
+     *                          i.e., the Pokemon into which the
+     *                          current Pokemon will evolve.
+     */
+    private void handleSingleEvolveOption(final int evolvedPokemonId) {
+
+        final Pokemon currentPokemon = myPokemons.get(0);
+        final Pokemon evolvedPokemon = new Pokemon(this, evolvedPokemonId);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.evolutionDialogHeading)
+                .setMessage(String.format(getResources().getString(R.string.
+                        evolutionDialogMessage), currentPokemon.getName(),
+                        evolvedPokemon.getName()))
+                .setPositiveButton(R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog,
+                                                final int which) {
+
+                                myPokemons.remove(0);
+                                myPokemons.add(0, evolvedPokemon);
+                                numberOfEvolutionsLeft--;
+                                showToast(String.format(getResources().
+                                        getString(R.string.
+                                                numberOfEvolutionLeft), String.
+                                        valueOf(numberOfEvolutionsLeft)),
+                                        Toast.LENGTH_SHORT);
+
+                                evolutionGoingOn = false;
+                                evolutionOptionEnabled = true;
+
+                                showMyPokemon(myPokemons.get(0));
+                            }
+                        })
+                .setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog,
+                                                final int which) {
+
+                                evolutionGoingOn = false;
+                                evolutionOptionEnabled = true;
+                            }
+                        })
+                .setCancelable(false);
+
+        builder.show();
+    }
+
+    /**
+     *  This method handles the case when there are multiple
+     *  options for Pokemon evolution.
+     *  Builds up a dialog showing the options available for evolution,
+     *  and then asks to select one amongst them.
+     *
+     *  @param pokemonIds   ArrayList of Pokemon IDs into which
+     *                      the current Pokemon can evolve.
+     */
+    private void handleMultipleEvolution(final ArrayList<Integer> pokemonIds) {
+
+        final Pokemon currentPokemon = myPokemons.get(0);
+        final ArrayList<Pokemon> evolvedPokemonForms = new ArrayList<>();
+
+        final String[] evolvedFormsNameArray = new String[pokemonIds.size()];
+
+        for (int index = 0; index < pokemonIds.size(); index++) {
+
+            Pokemon evolvedPokemonForm = new Pokemon(this,
+                    pokemonIds.get(index));
+
+            evolvedPokemonForms.add(evolvedPokemonForm);
+
+            evolvedFormsNameArray[index] = evolvedPokemonForm.getName();
+        }
+
+        /** Integer to store index of selected Pokemon.
+         *  0 indicates that first Pokemon is selected by default. */
+        final Holder whichPokemon = new Holder(0);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.evolutionDialogHeading)
+                /** 0 indicates that first option is selected by default. */
+                .setSingleChoiceItems(evolvedFormsNameArray, 0,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog,
+                                                final int which) {
+
+                                whichPokemon.setValue(which);
+                            }
+                        })
+                .setPositiveButton(R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog,
+                                                final int which) {
+
+                                Pokemon evolvedPokemon = evolvedPokemonForms.
+                                        get((Integer) whichPokemon.getValue());
+
+                                myPokemons.remove(0);
+                                myPokemons.add(0, evolvedPokemon);
+                                numberOfEvolutionsLeft--;
+                                showToast(String.format(getResources().
+                                        getString(
+                                        R.string.numberOfEvolutionLeft),
+                                        String.valueOf(
+                                                numberOfEvolutionsLeft)),
+                                        Toast.LENGTH_SHORT);
+
+                                evolutionGoingOn = false;
+                                evolutionOptionEnabled = true;
+
+                                showMyPokemon(myPokemons.get(0));
+                            }
+                        })
+                .setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog,
+                                                final int which) {
+
+                                evolutionGoingOn = false;
+                                evolutionOptionEnabled = true;
+                            }
+                        })
+                .setCancelable(false);
+
+        builder.show();
     }
 
     /**
@@ -1081,6 +1331,7 @@ public class GamePage extends AppCompatActivity {
     public void handleNumber(final View view) {
 
         if (myTurn) {
+
         /* Using deprecated method to support lower API levels. */
             myPokemonNumberButton.setBackgroundColor(getResources().
                     getColor(R.color.holoGreenLight));
@@ -1095,6 +1346,7 @@ public class GamePage extends AppCompatActivity {
     public void handleHeight(final View view) {
 
         if (myTurn) {
+
         /* Using deprecated method to support lower API levels. */
             myPokemonHeightButton.setBackgroundColor(getResources().
                     getColor(R.color.holoGreenLight));
@@ -1109,6 +1361,7 @@ public class GamePage extends AppCompatActivity {
     public void handleWeight(final View view) {
 
         if (myTurn) {
+
         /* Using deprecated method to support lower API levels. */
             myPokemonWeightButton.setBackgroundColor(getResources().
                     getColor(R.color.holoGreenLight));
@@ -1117,8 +1370,23 @@ public class GamePage extends AppCompatActivity {
     }
 
     /**
+     *  This method is the handler for Type button.
+     * @param view  View view
+     */
+    public void handleType(final View view) {
+
+        if (myTurn) {
+
+        /* Using deprecated method to support lower API levels. */
+            myPokemonTypeButton.setBackgroundColor(getResources().
+                    getColor(R.color.holoGreenLight));
+            handleMyTurn(JsonValue.POKEMON_TYPE.getValue());
+        }
+    }
+
+    /**
      *  This method can be used by other class' objects
-     *  to display toasts on the Home Page.
+     *  to display toasts on the Game Page.
      *  @param message  String message.
      *  @param duration int duration,
      *                  generally Toast.LENGTH_SHORT or
@@ -1126,12 +1394,33 @@ public class GamePage extends AppCompatActivity {
      */
     public void showToast(final String message, final int duration) {
 
-        if (myToast != null) {
-            myToast.cancel();
+        int currentToastDisplayTime = (int) (System.currentTimeMillis());
+
+        if (lastToastMessage != null) {
+            if (message.equals(lastToastMessage)
+                    && (currentToastDisplayTime
+                    - lastToastDisplayTime <= Constants.
+                    TOAST_MESSAGE_SEPARATION_TIME)) {
+
+                return;
+            }
         }
 
-        myToast = Toast.makeText(this, message, duration);
-        myToast.show();
+        lastToastMessage = message;
+        lastToastDisplayTime = currentToastDisplayTime;
+
+        /* Final context object to be used inside the below thread. */
+        final Context context = this;
+
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                myToast = Toast.makeText(context, message, duration);
+                myToast.show();
+            }
+        });
+
     }
 
     /**
