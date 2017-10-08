@@ -1,16 +1,17 @@
 <resources>
     <string name="app_name">PokemonCardsSample</string>
 
-    <string name="signIn">Sign In</string>
+    <string name="googleSignInButtonText">Sign in with Google</string>
     <string name="username">Username</string>
-    <string name="signUp">Sign Up</string>
+    <string name="googleSignUpButtonText">Sign up with Google</string>
     <string name="password">Password</string>
     <string name="repeatPassword">Repeat password</string>
     <string name="usernameEmpty">Username cannot be empty.</string>
-    <string name="passwordEmpty">Password cannot be empty.</string>
     <string name="rePasswordWrong">Password and Re-password do not match.</string>
     <string name="usernameExists">Username already exists. Please try a new one.</string>
+    <string name="emailIdExists">Email ID already registered. Please try a new one.</string>
     <string name="userCreationSuccessful">User Creation Successful !!</string>
+    <string name="emailIdDoesNotExist">Email ID not registered. Please use the Sign Up option.</string>
     <string name="userDoesNotExist">Username not found. The given user does not exist. Please retry or SignUp if not done already.</string>
     <string name="wrongPassword">Incorrect password. Please retry.</string>
     <string name="signInSuccessful">Sign In Successful !!</string>
@@ -31,7 +32,7 @@
     <string name="tossWon">You won the toss. Start it !!</string>
     <string name="tossLost">You lost the toss :(</string>
     <string name="numberOfCardsDialog">Select number of cards</string>
-    <string name="accountDeletionText">Are you sure you want to delete user %1$s ? The account will be deleted permanently from our databases. Enter the password of user to continue.</string>
+    <string name="accountDeletionText">Are you sure you want to delete user %1$s ? The account will be deleted permanently from our databases.</string>
     <string name="invitationReceivedText">Received invitation from user : %1$s \nWould you like to accept and start the game ?</string>
     <string name="pokemonIdAndName"># %1$s \t %2$s</string>
     <string name="pokemonHeight">%1$s %2$s</string>

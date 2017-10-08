@@ -19,8 +19,8 @@ public class UserAuthentication {
     /** Username of the user. */
     private String username;
 
-    /** MD5 hash of the password of the user. */
-    private String password;
+    /** Gmail username of the user. */
+    private String emailId;
 
     /**
      *  This method returns the username of the user.
@@ -34,13 +34,13 @@ public class UserAuthentication {
     }
 
     /**
-     *  This method returns the password of the user.
-     *  @return String  password of the user.
+     *  This method returns the email of the user.
+     *  @return String  email-id of the user.
      */
     @DynamoDBAttribute(attributeName =
-            Constants.DDB_USER_AUTH_TABLE_ATTR_PASSWORD)
-    public String getPassword() {
+            Constants.DDB_USER_AUTH_TABLE_ATTR_EMAIL)
+    public String getEmailId() {
 
-        return password;
+        return emailId;
     }
 }

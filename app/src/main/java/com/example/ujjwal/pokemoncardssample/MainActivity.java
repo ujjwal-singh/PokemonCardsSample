@@ -8,23 +8,31 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.View.OnClickListener;
 
 import com.amazonaws.AmazonClientException;
 import com.example.ujjwal.pokemoncardssample.dao.SharedPreferencesHelper;
 import com.example.ujjwal.pokemoncardssample.dao.dynamodb.DDBClient;
 import com.example.ujjwal.pokemoncardssample.dao.dynamodb.UserAuthentication;
 import com.example.ujjwal.pokemoncardssample.dao.sqs.SQSClient;
-import com.example.ujjwal.pokemoncardssample.utils.HashCalculator;
 import com.example.ujjwal.pokemoncardssample.utils.BooleanHolder;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.common.SignInButton;
 
 /**
  *  The main activity class.
  *  The app starts from here.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements OnConnectionFailedListener, OnClickListener {
 
     /** DDBClient for this class. */
     private DDBClient ddbClient;
@@ -35,26 +43,14 @@ public class MainActivity extends AppCompatActivity {
     /** SharedPreferencesHelper object for this class. */
     private SharedPreferencesHelper sharedPreferencesHelper;
 
-    /** Sign-In username entry text-box. */
-    private TextView signInUsername;
-
-    /** Sign-In password entry text-box. */
-    private TextView signInPassword;
-
     /** Sign-Up username entry text-box. */
     private TextView signUpUsername;
 
-    /** Sign-Up password entry text-box. */
-    private TextView signUpPassword;
-
-    /** Sign-Up password repeat entry text-box. */
-    private TextView signUpRePassword;
-
     /** Sign-In button. */
-    private Button signInButton;
+    private SignInButton signInButton;
 
     /** Sign-Up button. */
-    private Button signUpButton;
+    private SignInButton signUpButton;
 
     /** Toast object for this class. */
     private Toast myToast = null;
@@ -64,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
     /** Stores the last message displayed by the Toast. */
     private String lastToastMessage;
+
+    /** Google API Client for Google sign-in. */
+    private GoogleApiClient mGoogleApiClient;
 
     /**
      *  This is the method which is called upon activity creation.
@@ -77,15 +76,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        signInUsername = (TextView) this.findViewById(R.id.username);
-        signInPassword = (TextView) this.findViewById(R.id.password);
         signUpUsername = (TextView) this.findViewById(R.id.signUpUsername);
-        signUpPassword = (TextView) this.findViewById(R.id.signUpPassword);
-        signUpRePassword = (TextView) this.findViewById(
-                R.id.signUpPasswordRepeat);
 
-        signInButton = (Button) this.findViewById(R.id.signInButton);
-        signUpButton = (Button) this.findViewById(R.id.signUpButton);
+        signInButton = (SignInButton) this.findViewById(R.id.signInButton);
+        signUpButton = (SignInButton) this.findViewById(R.id.signUpButton);
+        initializeGoogleButtons();
 
         sharedPreferencesHelper = SharedPreferencesHelper.getInstance(this);
         ddbClient = DDBClient.getInstance(this);
@@ -94,6 +89,23 @@ public class MainActivity extends AppCompatActivity {
         lastToastDisplayTime = 0;
 
         lastToastMessage = null;
+
+        /* Configure sign-in to request the user's ID, email address, and basic
+         * profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+         */
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(
+                GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        /* Build a GoogleApiClient with access to the Google Sign-In API and the
+         * options specified by gso.
+         */
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */,
+                        this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
         initCheck();
     }
@@ -155,40 +167,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *  This method is handler method for signUp button.
-     *  Handles creation of new user.
-     *  @param view View view.
+     *  This method is used to initialize Google's
+     *  sign-in and sign-up buttons.
      */
-    public void signUp(final View view) {
+    private void initializeGoogleButtons() {
+
+        signInButton.setOnClickListener(this);
+        signUpButton.setOnClickListener(this);
+
+        ((TextView) signInButton.getChildAt(0)).setText(R.string.
+                googleSignInButtonText);
+        ((TextView) signUpButton.getChildAt(0)).setText(R.string.
+                googleSignUpButtonText);
+    }
+
+    /**
+     *  Handles creation of new user.
+     *  @param emailId String, gmail username of the user.
+     */
+    public void signUp(final String emailId) {
 
         /** username entered by the user. */
         final String username;
-
-        /** password entered by the user. */
-        final String password;
-
-        /** rePassword entered by the user. */
-        final String rePassword;
 
         /** Empty checks */
         username = signUpUsername.getText().toString();
         if (username.equals(Constants.EMPTY_STRING)) {
             showToast(getResources().getString(R.string.usernameEmpty),
-                    Toast.LENGTH_SHORT);
-            return;
-        }
-
-        password = signUpPassword.getText().toString();
-        if (password.equals(Constants.EMPTY_STRING)) {
-            showToast(getResources().getString(R.string.passwordEmpty),
-                    Toast.LENGTH_SHORT);
-            return;
-        }
-
-        /** Matching password and re-password. */
-        rePassword = signUpRePassword.getText().toString();
-        if (!(password.equals(rePassword))) {
-            showToast(getResources().getString(R.string.rePasswordWrong),
                     Toast.LENGTH_SHORT);
             return;
         }
@@ -202,7 +207,12 @@ public class MainActivity extends AppCompatActivity {
         /** BooleanHolder object to indicate whether
          *  username already exists or not.
          *  False means does not exist. */
-        final BooleanHolder userExists = new BooleanHolder(false);
+        final BooleanHolder userNameExists = new BooleanHolder(false);
+
+        /** BooleanHolder object to indicate whether
+         *  email-id already exists or not.
+         *  False means does not exist. */
+        final BooleanHolder emailIdExists = new BooleanHolder(false);
 
         /** BooleanHolder object to indicate whether
          *  connection was successful or not.
@@ -218,10 +228,14 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     /** Username already exists. */
                     if (ddbClient.retrieveUser(username) != null) {
-                        userExists.setValue(true);
+
+                        userNameExists.setValue(true);
+                    } else if (ddbClient.
+                            retrieveUserByEmaiId(emailId) != null) {
+
+                        emailIdExists.setValue(true);
                     } else {
-                        ddbClient.createUser(username,
-                                HashCalculator.getMD5Hash(password));
+                        ddbClient.createUser(username, emailId);
                         sqsClient.createQueue(username);
                         sharedPreferencesHelper.writeUsername(username);
                     }
@@ -252,46 +266,32 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        /** If new user creation was successful (username did not clash),
-         *  goto HomePage. */
-        if (!(userExists.isValue())) {
+        if (userNameExists.isValue()) {
+
+            /* Username clashed. */
+            showToast(getResources().getString(R.string.usernameExists),
+                    Toast.LENGTH_SHORT);
+        } else if (emailIdExists.isValue()) {
+
+            /* Email ID clashed. */
+            showToast(getResources().getString(R.string.emailIdExists),
+                    Toast.LENGTH_SHORT);
+        } else {
+
+            /* Input valid. Display user creation successful toast
+             *  and move to new activity. */
             showToast(getResources().getString(R.string.userCreationSuccessful),
                     Toast.LENGTH_SHORT);
             Intent intent = new Intent(this, HomePage.class);
             startActivity(intent);
-        } else {
-            showToast(getResources().getString(R.string.usernameExists),
-                    Toast.LENGTH_SHORT);
         }
     }
 
     /**
-     *  This method is the handler for the signIn button.
      *  Handles signIn request.
-     *  @param view View view.
+     *  @param emailId String, gmail username of the user.
      */
-    public void signIn(final View view) {
-
-        /** username entered by the user. */
-        final String username;
-
-        /** password entered by the user. */
-        final String password;
-
-        /** Empty checks */
-        username = signInUsername.getText().toString();
-        if (username.equals(Constants.EMPTY_STRING)) {
-            showToast(getResources().getString(R.string.usernameEmpty),
-                    Toast.LENGTH_SHORT);
-            return;
-        }
-
-        password = signInPassword.getText().toString();
-        if (password.equals(Constants.EMPTY_STRING)) {
-            showToast(getResources().getString(R.string.passwordEmpty),
-                    Toast.LENGTH_SHORT);
-            return;
-        }
+    private void signIn(final String emailId) {
 
         /** Input is valid. Now going for sign-in. */
 
@@ -302,10 +302,6 @@ public class MainActivity extends AppCompatActivity {
         /** BooleanHolder object to indicate whether username exists or not.
          *  True means exists. */
         final BooleanHolder userExists = new BooleanHolder(true);
-
-        /** BooleanHolder object to indicate whether password is correct or not.
-         * True means correct. */
-        final BooleanHolder passwordCorrect = new BooleanHolder(true);
 
         /** BooleanHolder object to indicate whether
          *  connection was successful or not.
@@ -320,18 +316,13 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     UserAuthentication userAuthentication = ddbClient
-                            .retrieveUser(username);
+                            .retrieveUserByEmaiId(emailId);
 
                     /** Username exists. */
                     if (userAuthentication != null) {
 
-                        /** Password is correct. */
-                        if ((userAuthentication.getPassword())
-                                .equals(HashCalculator.getMD5Hash(password))) {
-                            sharedPreferencesHelper.writeUsername(username);
-                        } else {
-                            passwordCorrect.setValue(false);
-                        }
+                        sharedPreferencesHelper.writeUsername(
+                                userAuthentication.getUsername());
                     } else {
                         userExists.setValue(false);
                     }
@@ -364,14 +355,7 @@ public class MainActivity extends AppCompatActivity {
 
         /** Username does not exist. */
         if (!(userExists.isValue())) {
-            showToast(getResources().getString(R.string.userDoesNotExist),
-                    Toast.LENGTH_SHORT);
-            return;
-        }
-
-        /** Incorrect password for the username provided. */
-        if (!(passwordCorrect.isValue())) {
-            showToast(getResources().getString(R.string.wrongPassword),
+            showToast(getResources().getString(R.string.emailIdDoesNotExist),
                     Toast.LENGTH_SHORT);
             return;
         }
@@ -381,6 +365,88 @@ public class MainActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT);
         Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
+    }
+
+    /**
+     *  This method is the listener method for button clicks.
+     *  @param view View view, determines which button has
+     *              been clicked.
+     */
+    @Override
+    public void onClick(final View view) {
+
+        mGoogleApiClient.clearDefaultAccountAndReconnect();
+        Intent googleAuthIntent = Auth.GoogleSignInApi.getSignInIntent(
+                mGoogleApiClient);
+
+        switch (view.getId()) {
+
+            case R.id.signInButton:
+                startActivityForResult(googleAuthIntent, Constants.
+                        GOOGLE_SIGN_IN_REQUEST_CODE);
+                break;
+
+            case R.id.signUpButton:
+                startActivityForResult(googleAuthIntent, Constants.
+                        GOOGLE_SIGN_UP_REQUEST_CODE);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /**
+     *  Method which handles connection failures for
+     *  Google authentication.
+     *  @param result   ConnectionResult
+     */
+    @Override
+    public void onConnectionFailed(final ConnectionResult result) {
+
+        showToast(getResources().getString(R.string.connectionProblem),
+                Toast.LENGTH_SHORT);
+    }
+
+    /**
+     *  Handles result of google sign-in activity.
+     *  @param requestCode  Request Code
+     *  @param resultCode   Result Code
+     *  @param data Intent data
+     */
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode,
+                                 final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        /* Result returned from launching the Intent from
+         * GoogleSignInApi.getSignInIntent(...);
+         */
+        GoogleSignInResult result = Auth.GoogleSignInApi.
+                getSignInResultFromIntent(data);
+        googleAuthResult(result, requestCode);
+    }
+
+    /**
+     *  This method handles sign-in result.
+     *  @param result GoogleSignInResult
+     *  @param requestCode The request code,
+     *                     which differentiates sign-in and sign-up.
+     */
+    private void googleAuthResult(final GoogleSignInResult result,
+                                  final int requestCode) {
+
+        if (result.isSuccess()) {
+            GoogleSignInAccount acct = result.getSignInAccount();
+
+            if (requestCode == Constants.GOOGLE_SIGN_IN_REQUEST_CODE) {
+
+                signIn(acct.getEmail());
+            } else if (requestCode == Constants.GOOGLE_SIGN_UP_REQUEST_CODE) {
+
+                signUp(acct.getEmail());
+            }
+        }
     }
 
     /**
@@ -397,8 +463,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (lastToastMessage != null) {
             if (message.equals(lastToastMessage)
-                    && (currentToastDisplayTime -
-                    lastToastDisplayTime <= Constants.
+                    && (currentToastDisplayTime
+                    - lastToastDisplayTime <= Constants.
                     TOAST_MESSAGE_SEPARATION_TIME)) {
 
                 return;

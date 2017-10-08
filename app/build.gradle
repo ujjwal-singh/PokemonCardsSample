@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -33,4 +34,6 @@ dependencies {
     provided 'org.projectlombok:lombok:1.16.18'
     provided 'org.glassfish:javax.annotation:10.0-b28'
     compile 'commons-codec:commons-codec:1.10'
+    compile 'com.google.android.gms:play-services-auth:9.0.0'
+    compile 'commons-net:commons-net:3.6'
 }

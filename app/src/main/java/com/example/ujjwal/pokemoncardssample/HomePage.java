@@ -7,21 +7,16 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.amazonaws.AmazonClientException;
 import com.example.ujjwal.pokemoncardssample.dao.SharedPreferencesHelper;
 import com.example.ujjwal.pokemoncardssample.dao.dynamodb.DDBClient;
-import com.example.ujjwal.pokemoncardssample.dao.dynamodb.UserAuthentication;
 import com.example.ujjwal.pokemoncardssample.dao.sqs.SQSClient;
 import com.example.ujjwal.pokemoncardssample.dao.sqs.SQSListener;
-import com.example.ujjwal.pokemoncardssample.services.ExitService;
 import com.example.ujjwal.pokemoncardssample.utils.BooleanHolder;
-import com.example.ujjwal.pokemoncardssample.utils.HashCalculator;
 import com.example.ujjwal.pokemoncardssample.utils.Holder;
 import com.example.ujjwal.pokemoncardssample.utils.JsonKey;
 import com.example.ujjwal.pokemoncardssample.utils.JsonValue;
@@ -78,8 +73,6 @@ public class HomePage extends AppCompatActivity {
         lastToastDisplayTime = 0;
 
         lastToastMessage = null;
-
-        startSqsListener();
     }
 
     /**
@@ -156,7 +149,7 @@ public class HomePage extends AppCompatActivity {
             public void run() {
 
                 try {
-                    ddbClient.setUserAvailability(
+                    ddbClient.setUserStatus(
                             sharedPreferencesHelper.getUsername(),
                             false, false);
                     sharedPreferencesHelper.removeUsername();
@@ -207,13 +200,6 @@ public class HomePage extends AppCompatActivity {
                 sharedPreferencesHelper.getUsername());
         deleteAccountDialogBuilder.setMessage(message);
 
-        /** EditText set up to receive password confirmation. */
-        final EditText passwordEditText = new EditText(this);
-        /** Specifying type of input expected as Password. */
-        passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT
-                | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        deleteAccountDialogBuilder.setView(passwordEditText);
-
         /** context will be needed to display toasts. */
         final Context context = this;
 
@@ -224,12 +210,6 @@ public class HomePage extends AppCompatActivity {
                     @Override
                     public void onClick(final DialogInterface dialog,
                                         final int which) {
-
-                        /** BooleanHolder object to indicate whether
-                         *  user deletion was successful or not.
-                         *  True means user deletion was successful. */
-                        final BooleanHolder userDeletedSuccessfully = new
-                                BooleanHolder(true);
 
                         /** BooleanHolder object to indicate whether
                          *  connection was successful or not.
@@ -246,23 +226,10 @@ public class HomePage extends AppCompatActivity {
                                 try {
                                     String username = sharedPreferencesHelper
                                             .getUsername();
-                                    String password = passwordEditText
-                                            .getText().toString();
 
-                                    UserAuthentication userAuthentication =
-                                            ddbClient.retrieveUser(username);
-
-                                    /** Validate password. */
-                                    if ((userAuthentication.getPassword()).
-                                            equals(HashCalculator
-                                                    .getMD5Hash(password))) {
-                                        ddbClient.deleteUser(username);
-                                        sqsClient.deleteQueue(username);
-                                        sharedPreferencesHelper
-                                                .removeUsername();
-                                    } else {
-                                        userDeletedSuccessfully.setValue(false);
-                                    }
+                                    ddbClient.deleteUser(username);
+                                    sqsClient.deleteQueue(username);
+                                    sharedPreferencesHelper.removeUsername();
                                 } catch (AmazonClientException e) {
                                     connectionSuccessful.setValue(false);
                                 }
@@ -287,21 +254,13 @@ public class HomePage extends AppCompatActivity {
                             return;
                         }
 
-                        /** Check if user deletion was successful.
-                         * If successful, go back to MainActivity page. */
-                        if (userDeletedSuccessfully.isValue()) {
-                            showToast(
-                                    getResources().getString(R.string.
+                        showToast(
+                                getResources().getString(R.string.
                                             userDeletionSuccessful),
-                                    Toast.LENGTH_SHORT);
-                            Intent intent = new
-                                    Intent(context, MainActivity.class);
-                            startActivity(intent);
-                        } else {
-                            showToast(getResources().getString(R.string.
-                                    wrongPassword),
-                                    Toast.LENGTH_SHORT);
-                        }
+                                Toast.LENGTH_SHORT);
+                        Intent intent = new
+                                Intent(context, MainActivity.class);
+                        startActivity(intent);
                     }
                 });
 
@@ -639,8 +598,8 @@ public class HomePage extends AppCompatActivity {
      */
     public void gotoPreGame(final String otherUsername) {
 
-        /* De-activate the SQS listener. */
-        sqsListener = null;
+        /* Stopping SQS Listener is performed by onPause method
+         * below. */
 
         /*
          *  Building up the intent to be passed
@@ -666,7 +625,7 @@ public class HomePage extends AppCompatActivity {
     public void startSqsListener() {
 
         sqsListener = new SQSListener(this, sqsClient,
-                sharedPreferencesHelper.getUsername());
+                sharedPreferencesHelper.getUsername(), ddbClient);
         sqsListener.run();
     }
 
@@ -684,8 +643,8 @@ public class HomePage extends AppCompatActivity {
 
         if (lastToastMessage != null) {
             if (message.equals(lastToastMessage)
-                    && (currentToastDisplayTime -
-                    lastToastDisplayTime <= Constants.
+                    && (currentToastDisplayTime
+                    - lastToastDisplayTime <= Constants.
                     TOAST_MESSAGE_SEPARATION_TIME)) {
 
                 return;
@@ -718,35 +677,42 @@ public class HomePage extends AppCompatActivity {
     }
 
     /**
-     *  Overriding opPause method.
-     *  Make user online status false before exit.
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        Intent intent = new Intent(this, ExitService.class);
-        this.startService(intent);
-    }
-
-    /**
      *  Overriding onResume method.
      *  Make user online status true on resume.
      *  Also sets inGame attribute False for the user.
      *  This takes care of sign-in bypass (through initCheck in MainActivity)
      *  and manual sign-in also.
+     *  Also starts the SQS Listener.
      */
     @Override
     protected void onResume() {
         super.onResume();
 
+        startSqsListener();
+
         new Thread() {
             @Override
             public void run() {
 
-                ddbClient.setUserAvailability(
+                ddbClient.setUserStatus(
                         sharedPreferencesHelper.getUsername(), true, false);
             }
         }.start();
+    }
+
+    /**
+     *  Overriding onPause method to stop SQS Listener
+     *  when HomePage is in background.
+     */
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+
+        if (sqsListener != null) {
+
+        /* De-activate the SQS listener. */
+            sqsListener.stop();
+        }
     }
 }

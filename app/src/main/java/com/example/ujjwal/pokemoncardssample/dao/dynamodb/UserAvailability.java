@@ -18,11 +18,14 @@ public class UserAvailability {
     /** username of the User. */
     private String username;
 
-    /** Stores online presence of user. */
-    private boolean online;
+    /** Stores time of last online activity of user. */
+    private long lastSeen;
 
     /** Stores whether user is currently in a game. */
     private boolean inGame;
+
+    /** Stores whether user is currently sugned in or not. */
+    private boolean signedIn;
 
     /**
      *  This method returns the username of the user.
@@ -41,10 +44,10 @@ public class UserAvailability {
      *  @return boolean   online status of the user.
      */
     @DynamoDBAttribute(attributeName =
-            Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_ONLINE)
-    public boolean isOnline() {
+            Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_LAST_SEEN)
+    public long getLastSeen() {
 
-        return online;
+        return lastSeen;
     }
 
     /**
@@ -57,5 +60,17 @@ public class UserAvailability {
     public boolean isInGame() {
 
         return inGame;
+    }
+
+    /**
+     *  This method returns the signedIn status of the user.
+     *  True if the user is signed in, false otherwise.
+     *  @return boolean   signedIn status of the user.
+     */
+    @DynamoDBAttribute(attributeName =
+            Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_SIGNED_IN)
+    public boolean isSignedIn() {
+
+        return signedIn;
     }
 }

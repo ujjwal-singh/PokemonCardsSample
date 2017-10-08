@@ -11,9 +11,11 @@ import com.example.ujjwal.pokemoncardssample.GamePage;
 import com.example.ujjwal.pokemoncardssample.HomePage;
 import com.example.ujjwal.pokemoncardssample.PreGame;
 import com.example.ujjwal.pokemoncardssample.R;
-import com.example.ujjwal.pokemoncardssample.utils.BooleanHolder;
+import com.example.ujjwal.pokemoncardssample.dao.SharedPreferencesHelper;
+import com.example.ujjwal.pokemoncardssample.dao.dynamodb.DDBClient;
 import com.example.ujjwal.pokemoncardssample.utils.JsonKey;
 import com.example.ujjwal.pokemoncardssample.utils.JsonValue;
+import com.example.ujjwal.pokemoncardssample.utils.UTCTime;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,6 +34,9 @@ public class SQSListener {
     /** Context, passed by the calling activity. */
     private Context context;
 
+    /** Reference to the only object of the DDBClient singleton class. */
+    private DDBClient ddbClient;
+
     /** SQSClient object. */
     private SQSClient sqsClient;
 
@@ -41,19 +46,35 @@ public class SQSListener {
     /** URL of the queue for which the listener is set up. */
     private String queueUrl = null;
 
+    /** Reference to the only object of the
+     * SharedPreferencesHelper singleton class. */
+    private SharedPreferencesHelper sharedPreferencesHelper;
+
+    /** Time of the previous last seen update. */
+    private static long previousLastSeenUpdateTime = 0L;
+
+    /** Boolean variable to indicate whether further message polling
+     *  is required or not. */
+    private boolean pollFurther;
+
     /**
      *  Constructor for the class.
      *  @param passedContext    Context passed by the calling activity.
      *  @param passedSqsClient  SQSClient object.
      *  @param passedQueueName  Queue name for which the listener is set up.
+     *  @param passedDdbClient  DDB Client object.
      */
     public SQSListener(final Context passedContext,
                        final SQSClient passedSqsClient,
-                       final String passedQueueName) {
+                       final String passedQueueName,
+                       final DDBClient passedDdbClient) {
 
         this.context = passedContext;
         this.sqsClient = passedSqsClient;
         this.queueName = passedQueueName;
+        this.ddbClient = passedDdbClient;
+        this.sharedPreferencesHelper = SharedPreferencesHelper.getInstance();
+        this.pollFurther = true;
     }
 
     /**
@@ -75,13 +96,20 @@ public class SQSListener {
                     }
 
                 /* Listen for messages on the queue. */
-                    while (true) {
+                    while (pollFurther) {
 
                         List<Message> messages = sqsClient.
                                 getMessages(queueUrl);
 
                         long sentTimeStamp = 0L;
                         long receivedTimeStamp = 0L;
+
+                        /* Update last seen of the current user,
+                         * if user is at the Home Page. */
+                        if (context instanceof HomePage) {
+
+                            updateLastSeen();
+                        }
 
                     /* Message is received.
                     *  Process it and then delete it. */
@@ -126,19 +154,22 @@ public class SQSListener {
 
                                 ((HomePage) context).showToast(context.
                                                 getResources().
-                                                getString(R.string.connectionProblem),
+                                                getString(R.string.
+                                                        connectionProblem),
                                         Toast.LENGTH_SHORT);
                             } else if (context instanceof PreGame) {
 
                                 ((PreGame) context).showToast(context.
                                                 getResources().
-                                                getString(R.string.connectionProblem),
+                                                getString(R.string.
+                                                        connectionProblem),
                                         Toast.LENGTH_SHORT);
                             } else if (context instanceof GamePage) {
 
                                 ((GamePage) context).showToast(context.
                                                 getResources().
-                                                getString(R.string.connectionProblem),
+                                                getString(R.string.
+                                                        connectionProblem),
                                         Toast.LENGTH_SHORT);
                             }
                         }
@@ -393,5 +424,32 @@ public class SQSListener {
 
         ((GamePage) context).handleMoveResponse(senderUser, pokemonId,
                 pokemonAttribute);
+    }
+
+    /**
+     *  This method updates the last seen time of the current user.
+     */
+    private void updateLastSeen() {
+
+        long currentTime = System.currentTimeMillis();
+
+        if (currentTime - previousLastSeenUpdateTime <= Constants.
+                LAST_SEEN_UPDATE_INTERVAL) {
+
+            return;
+        }
+
+        ddbClient.setUserLastSeen(sharedPreferencesHelper.getUsername(),
+                UTCTime.getUtcTime());
+
+        previousLastSeenUpdateTime = System.currentTimeMillis();
+    }
+
+    /**
+     *  This method stops the message poll.
+     */
+    public void stop() {
+
+        pollFurther = false;
     }
 }

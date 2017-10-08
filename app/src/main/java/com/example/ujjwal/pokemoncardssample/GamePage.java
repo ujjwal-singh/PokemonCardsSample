@@ -21,7 +21,6 @@ import com.example.ujjwal.pokemoncardssample.dao.dynamodb.DDBClient;
 import com.example.ujjwal.pokemoncardssample.dao.sqs.SQSClient;
 import com.example.ujjwal.pokemoncardssample.dao.sqs.SQSListener;
 import com.example.ujjwal.pokemoncardssample.pokemon.Pokemon;
-import com.example.ujjwal.pokemoncardssample.services.ExitService;
 import com.example.ujjwal.pokemoncardssample.utils.BooleanHolder;
 import com.example.ujjwal.pokemoncardssample.utils.Holder;
 import com.example.ujjwal.pokemoncardssample.utils.JsonKey;
@@ -795,8 +794,7 @@ public class GamePage extends AppCompatActivity {
 
             updateUserHistory(false);
 
-            Intent intent = new Intent(this, HomePage.class);
-            startActivity(intent);
+            gotoHomePage();
 
         } else if (myPokemons.size() == 2 * numberOfCards) {
 
@@ -813,8 +811,7 @@ public class GamePage extends AppCompatActivity {
 
             updateUserHistory(true);
 
-            Intent intent = new Intent(this, HomePage.class);
-            startActivity(intent);
+            gotoHomePage();
 
         } else {
 
@@ -829,6 +826,24 @@ public class GamePage extends AppCompatActivity {
                 handleOpponentTurn();
             }
         }
+    }
+
+    /**
+     *  This method transfers the application to
+     *  the Home Page.
+     *  Basically, builds an appropriate intent
+     *  and starts HomePage activity.
+     */
+    private void gotoHomePage() {
+
+        if (sqsListener != null) {
+
+            /* De-activate the SQS listener. */
+            sqsListener.stop();
+        }
+
+        Intent intent = new Intent(this, HomePage.class);
+        startActivity(intent);
     }
 
     /**
@@ -1431,7 +1446,7 @@ public class GamePage extends AppCompatActivity {
     public void startSqsListener() {
 
         sqsListener = new SQSListener(this, sqsClient,
-                sharedPreferencesHelper.getUsername());
+                sharedPreferencesHelper.getUsername(), ddbClient);
         sqsListener.run();
     }
 
@@ -1442,18 +1457,6 @@ public class GamePage extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
-    }
-
-    /**
-     *  Overriding opPause method.
-     *  Make user online status false before exit.
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        Intent intent = new Intent(this, ExitService.class);
-        this.startService(intent);
     }
 
     /**
@@ -1469,7 +1472,7 @@ public class GamePage extends AppCompatActivity {
             @Override
             public void run() {
 
-                ddbClient.setUserAvailability(
+                ddbClient.setUserStatus(
                         sharedPreferencesHelper.getUsername(), true, true);
             }
         }.start();

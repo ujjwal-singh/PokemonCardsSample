@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "175896978865",
+    "project_id": "pokemoncardssample"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175896978865:android:ac1c13dea0a82558",
+        "android_client_info": {
+          "package_name": "com.example.ujjwal.pokemoncardssample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "175896978865-pvsbec93n4h500grnb1ubqv7jkac5sph.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "175896978865-9b4ku5pvl7ncsickd9m1tcti15cjor6o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ujjwal.pokemoncardssample",
+            "certificate_hash": "71b70e5b1782a32b55c5cc1a8fd6b4d664a7452e"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0cEPMUcwlYSUKQbCR2o_VSv8AF-KKC34"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

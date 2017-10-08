@@ -14,6 +14,7 @@ import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.example.ujjwal.pokemoncardssample.Constants;
+import com.example.ujjwal.pokemoncardssample.utils.UTCTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -123,22 +124,22 @@ public final class DDBClient {
      *                                  Creates a new entry in
      *                                  each of the three tables.
      *  @param username String username, username of the new user.
-     *  @param password String password, MD5 hash of the password of new user.
+     *  @param emailId String email-id of the new user.
      *  @throws AmazonClientException Throws this exception in case
      *          of network problems.
      */
     public static void createUser(final String username,
-                                  final String password)
+                                  final String emailId)
                                 throws AmazonClientException {
 
         UserAuthentication newUser = new UserAuthentication();
         newUser.setUsername(username);
-        newUser.setPassword(password);
+        newUser.setEmailId(emailId);
         saveItem(newUser);
 
         UserAvailability newUserAvailability = new UserAvailability();
         newUserAvailability.setUsername(username);
-        newUserAvailability.setOnline(true);
+        newUserAvailability.setLastSeen(0L);
         newUserAvailability.setInGame(false);
         saveItem(newUserAvailability);
 
@@ -219,26 +220,45 @@ public final class DDBClient {
     }
 
     /**
-     *  This method sets user availability status,
+     *  This method sets user status,
      *  as per given username and status.
+     *  The status consists of two parts -- isSignedIn and isInGame.
      *  @param username String username, user whose status is to be set.
-     *  @param isOnline boolean isOnline, whether the user is online or not.
-     *                  True means the user is online.
+     *  @param isSignedIn boolean isSignedIn, whether the user is currently
+     *                    signed in or not.
+     *                    True means the user is signed in.
      *  @param isInGame boolean isInGame, whether the user is currently
      *                  in a game or not.
      *                  True means the user is in a Game currently.
      *  @throws AmazonClientException Throws this exception in case
      *          of network problems.
      */
-    public static void setUserAvailability(final String username,
-                                           final boolean isOnline,
-                                           final boolean isInGame)
+    public static void setUserStatus(final String username,
+                                           final boolean isSignedIn,
+                                     final boolean isInGame)
             throws AmazonClientException {
 
         UserAvailability userAvailability =
                 retrieveUserAvailability(username);
-        userAvailability.setOnline(isOnline);
         userAvailability.setInGame(isInGame);
+        userAvailability.setSignedIn(isSignedIn);
+        saveItem(userAvailability);
+    }
+
+    /**
+     *  This method sets last seen status of user.
+     *  @param username String username, whose lastSeen is to be set.
+     *  @param lastSeen Long lastSeen in UTC time.
+     *  @throws AmazonClientException Throws this exception in case
+     *          of network problems.
+     */
+    public static void setUserLastSeen(final String username,
+                                       final long lastSeen)
+            throws AmazonClientException {
+
+        UserAvailability userAvailability =
+                retrieveUserAvailability(username);
+        userAvailability.setLastSeen(lastSeen);
         saveItem(userAvailability);
     }
 
@@ -279,6 +299,9 @@ public final class DDBClient {
      *  This method fetches the list of users available for game,
      *  and returns it as a list of strings.
      *  Availability condition is : (a) The user should be online,
+     *  meaning than the interval between his previous lastSeen update
+     *  and the current online users query must be less than some
+     *  threshold value,
      *  and (b) The user should not be involved in a game, i.e.,
      *  inGame should be equal to 0.
      *  The current username (user who is executing the query)
@@ -294,21 +317,22 @@ public final class DDBClient {
         HashMap<String, Condition> scanFilter = new
                 HashMap<String, Condition>();
 
-        /** Filtering for Online users.
-         * 1 indicates that the user is online. */
-        Condition onlineAvailabilityCondition = new Condition()
+        /* Filtering for signed in users. 1 indicates that the user is
+         * currently signed in. */
+        Condition signedInCondition = new Condition()
                 .withComparisonOperator(ComparisonOperator.EQ)
                 .withAttributeValueList(new AttributeValue().withN("1"));
 
-        /** Filtering for non-playing users. 0 indicates that the
-         *  user is not involved in any game currently. */
+        /* Filtering for non-playing users. 0 indicates that the
+         * user is not involved in any game currently. */
         Condition nonPlayingCondition = new Condition()
                 .withComparisonOperator(ComparisonOperator.EQ)
                 .withAttributeValueList(new AttributeValue().withN("0"));
 
         scanFilter.put(
-                Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_ONLINE,
-                onlineAvailabilityCondition);
+                Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_SIGNED_IN,
+                signedInCondition);
+
         scanFilter.put(
                 Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_IN_GAME,
                 nonPlayingCondition);
@@ -322,16 +346,69 @@ public final class DDBClient {
 
         List<String> onlineUsernameList = new ArrayList<String>();
 
-        for (Map<String, AttributeValue> currentItem : itemList) {
-            String onlineUsername = (currentItem.get(
-                    Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_USERNAME))
-                    .getS();
+        long currentUtcTime = UTCTime.getUtcTime();
 
-            if (!onlineUsername.equals(username)) {
-                onlineUsernameList.add(onlineUsername);
+        for (Map<String, AttributeValue> currentItem : itemList) {
+
+            if (currentUtcTime - Long.parseLong(currentItem.get(Constants.
+                    DDB_USER_AVAILABILITY_TABLE_ATTR_LAST_SEEN).getN())
+                    <= Constants.LAST_SEEN_AND_ONLINE_GAP) {
+
+                String onlineUsername = (currentItem.get(
+                        Constants.DDB_USER_AVAILABILITY_TABLE_ATTR_USERNAME))
+                        .getS();
+
+                if (!onlineUsername.equals(username)) {
+                    onlineUsernameList.add(onlineUsername);
+                }
             }
         }
 
         return onlineUsernameList;
+    }
+
+    /**
+     *  This method fetches a user from DDB UserAuth table, based
+     *  on the email id of the user.
+     *  Email ID is a unique attribute of the user, just like
+     *  the username of the user.
+     *  @param emailId  String  Email-ID of the user.
+     *  @return userAuthentication object
+     *          Can return null if no such user is found.
+     *  @throws AmazonClientException Throws this exception in case
+     *          of network problems.
+     */
+    public static UserAuthentication retrieveUserByEmaiId(final String emailId)
+            throws AmazonClientException {
+
+        HashMap<String, Condition> scanFilter = new HashMap<>();
+
+        Condition emailMatchCondtion = new Condition()
+                .withComparisonOperator(ComparisonOperator.EQ)
+                .withAttributeValueList(new AttributeValue().withS(emailId));
+
+        scanFilter.put(Constants.DDB_USER_AUTH_TABLE_ATTR_EMAIL,
+                emailMatchCondtion);
+
+        ScanRequest scanRequest = new ScanRequest(Constants.
+                DDB_USER_AUTH_TABLE_NAME).withScanFilter(scanFilter);
+
+        ScanResult scanResult = ddbClient.scan(scanRequest);
+        List<Map<String, AttributeValue>> itemList = scanResult.getItems();
+
+        if (itemList.size() == 0) {
+
+            return null;
+        }
+
+        Map<String, AttributeValue> userAuthenticationItem = itemList.get(0);
+
+        UserAuthentication userAuthentication = new UserAuthentication();
+        userAuthentication.setUsername((userAuthenticationItem.get(Constants.
+                DDB_USER_AUTH_TABLE_ATTR_USERNAME)).getS());
+        userAuthentication.setEmailId((userAuthenticationItem.get(Constants.
+                DDB_USER_AUTH_TABLE_ATTR_EMAIL)).getS());
+
+        return userAuthentication;
     }
 }

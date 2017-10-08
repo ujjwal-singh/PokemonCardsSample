@@ -20,7 +20,6 @@ import com.example.ujjwal.pokemoncardssample.dao.dynamodb.DDBClient;
 import com.example.ujjwal.pokemoncardssample.dao.sqs.SQSClient;
 import com.example.ujjwal.pokemoncardssample.dao.sqs.SQSListener;
 import com.example.ujjwal.pokemoncardssample.pokemon.Pokemon;
-import com.example.ujjwal.pokemoncardssample.services.ExitService;
 import com.example.ujjwal.pokemoncardssample.utils.BooleanHolder;
 import com.example.ujjwal.pokemoncardssample.utils.Holder;
 import com.example.ujjwal.pokemoncardssample.utils.JsonKey;
@@ -445,8 +444,11 @@ public class PreGame extends AppCompatActivity {
      */
     private void gotoGamePage() {
 
-        /* De-activate the SQS listener. */
-        sqsListener = null;
+        if (sqsListener != null) {
+
+            /* De-activate the SQS listener. */
+            sqsListener.stop();
+        }
 
         /*
          *  Building up the intent to be passed
@@ -480,8 +482,8 @@ public class PreGame extends AppCompatActivity {
 
         if (lastToastMessage != null) {
             if (message.equals(lastToastMessage)
-                    && (currentToastDisplayTime -
-                    lastToastDisplayTime <= Constants.
+                    && (currentToastDisplayTime
+                    - lastToastDisplayTime <= Constants.
                     TOAST_MESSAGE_SEPARATION_TIME)) {
 
                 return;
@@ -512,7 +514,7 @@ public class PreGame extends AppCompatActivity {
     public void startSqsListener() {
 
         sqsListener = new SQSListener(this, sqsClient,
-                sharedPreferencesHelper.getUsername());
+                sharedPreferencesHelper.getUsername(), ddbClient);
         sqsListener.run();
     }
 
@@ -523,18 +525,6 @@ public class PreGame extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
-    }
-
-    /**
-     *  Overriding opPause method.
-     *  Make user online status false before exit.
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        Intent intent = new Intent(this, ExitService.class);
-        this.startService(intent);
     }
 
     /**
@@ -550,7 +540,7 @@ public class PreGame extends AppCompatActivity {
             @Override
             public void run() {
 
-                ddbClient.setUserAvailability(
+                ddbClient.setUserStatus(
                         sharedPreferencesHelper.getUsername(), true, true);
             }
         }.start();
