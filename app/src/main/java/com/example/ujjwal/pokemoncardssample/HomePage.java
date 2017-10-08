@@ -55,6 +55,13 @@ public class HomePage extends AppCompatActivity {
     /** Stores the last message displayed by the Toast. */
     private String lastToastMessage;
 
+    /** Stores the username of the user to whom the last request
+     *  was sent to. Here request refers to an active request, i.e.,
+     *  a request whose response is still awaited. If there are multiple
+     *  such requests, then it refers to the latest one.
+     *  This attribute is null when there is no active request. */
+    private String lastRequestRecipient;
+
     /**
      *  Overriding onCreate method.
      *  @param savedInstanceState Bundle savedInstanceState
@@ -73,6 +80,8 @@ public class HomePage extends AppCompatActivity {
         lastToastDisplayTime = 0;
 
         lastToastMessage = null;
+
+        lastRequestRecipient = null;
     }
 
     /**
@@ -423,6 +432,9 @@ public class HomePage extends AppCompatActivity {
         if (!connectionSuccessful.isValue()) {
             showToast(getResources().getString(R.string.connectionProblem),
                     Toast.LENGTH_SHORT);
+        } else {
+
+            lastRequestRecipient = username;
         }
 
     }
@@ -458,6 +470,30 @@ public class HomePage extends AppCompatActivity {
      *                  invitation.
      */
     public void showInvitationDialog(final String otherUsername) {
+
+        /*
+         *  To avoid clash when two users send request to each other
+         *  simultaneously.
+         *  Currently, the user with lexicographically smaller username
+         *  gets to view the invitation of the other user, but not vice-versa.
+         */
+        if (lastRequestRecipient != null) {
+
+            if (lastRequestRecipient.equals(otherUsername)
+                    && (sharedPreferencesHelper.getUsername()).
+                    compareTo(otherUsername) > 0) {
+
+                lastRequestRecipient = null;
+
+                /*  In a way, the user with lexicographically larger username
+                 *  automatically rejects the request of the other user.
+                 *  So, restart SQS Listener to start listening for new
+                 *  requests. */
+                startSqsListener();
+
+                return;
+            }
+        }
 
         String msg = String.format(getResources().
                 getString(R.string.invitationReceivedText),
@@ -615,6 +651,24 @@ public class HomePage extends AppCompatActivity {
         intent.putExtra(Constants.
                 CONTROLLER_USER, false);
         startActivity(intent);
+    }
+
+    /**
+     *  Setter method.
+     *  @param recipient    String recipient.
+     */
+    public void setLastRequestRecipient(final String recipient) {
+
+        this.lastRequestRecipient = recipient;
+    }
+
+    /**
+     *  Getter method.
+     *  @return String Last request recipient.
+     */
+    public String getLastRequestRecipient() {
+
+        return lastRequestRecipient;
     }
 
     /**

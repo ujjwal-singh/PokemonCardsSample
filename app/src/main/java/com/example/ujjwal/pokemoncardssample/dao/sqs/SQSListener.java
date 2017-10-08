@@ -317,6 +317,16 @@ public class SQSListener {
                     boolean response = msg.getBoolean(JsonKey.
                             RESPONSE.getKey());
 
+                    String lastRequestRecipient = ((HomePage) context).
+                            getLastRequestRecipient();
+
+                    if (lastRequestRecipient != null
+                            && lastRequestRecipient.equals(otherUsername)) {
+
+                        ((HomePage) context).setLastRequestRecipient(
+                                null);
+                    }
+
                     String toastMessage = "";
                     if (response) {
                         toastMessage = String.format(context.
