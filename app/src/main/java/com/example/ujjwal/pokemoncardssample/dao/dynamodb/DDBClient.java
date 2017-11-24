@@ -132,11 +132,6 @@ public final class DDBClient {
                                   final String emailId)
                                 throws AmazonClientException {
 
-        UserAuthentication newUser = new UserAuthentication();
-        newUser.setUsername(username);
-        newUser.setEmailId(emailId);
-        saveItem(newUser);
-
         UserAvailability newUserAvailability = new UserAvailability();
         newUserAvailability.setUsername(username);
         newUserAvailability.setLastSeen(0L);
@@ -149,6 +144,15 @@ public final class DDBClient {
         newUserHistory.setGamesWon(0);
         newUserHistory.setGamesLost(0);
         saveItem(newUserHistory);
+
+        /* User authentication table is updated last because
+         * it being filled implies that the user creation was successful.
+         * (This table is checked for user existence whenever required
+         *  later on.) */
+        UserAuthentication newUser = new UserAuthentication();
+        newUser.setUsername(username);
+        newUser.setEmailId(emailId);
+        saveItem(newUser);
     }
 
     /**

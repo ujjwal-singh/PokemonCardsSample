@@ -236,9 +236,9 @@ public class HomePage extends AppCompatActivity {
                                     String username = sharedPreferencesHelper
                                             .getUsername();
 
+                                    sharedPreferencesHelper.removeUsername();
                                     ddbClient.deleteUser(username);
                                     sqsClient.deleteQueue(username);
-                                    sharedPreferencesHelper.removeUsername();
                                 } catch (AmazonClientException e) {
                                     connectionSuccessful.setValue(false);
                                 }

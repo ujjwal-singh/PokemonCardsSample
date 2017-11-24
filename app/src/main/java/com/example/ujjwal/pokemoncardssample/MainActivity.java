@@ -235,8 +235,8 @@ public class MainActivity extends AppCompatActivity
 
                         emailIdExists.setValue(true);
                     } else {
-                        ddbClient.createUser(username, emailId);
                         sqsClient.createQueue(username);
+                        ddbClient.createUser(username, emailId);
                         sharedPreferencesHelper.writeUsername(username);
                     }
                 } catch (AmazonClientException e) {
