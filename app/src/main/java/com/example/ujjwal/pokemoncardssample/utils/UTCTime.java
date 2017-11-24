@@ -2,6 +2,7 @@ package com.example.ujjwal.pokemoncardssample.utils;
 
 import com.example.ujjwal.pokemoncardssample.Constants;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -33,6 +34,14 @@ public final class UTCTime {
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.
                 TIME_ZONE));
 
-        return (Long.parseLong(simpleDateFormat.format(new Date())));
+        Date currentDate = new Date();
+        try {
+            currentDate = simpleDateFormat.parse(simpleDateFormat.
+                    format(new Date()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return (currentDate.getTime());
     }
 }
