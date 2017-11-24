@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
 
+import java.util.regex.Pattern;
+
 import com.amazonaws.AmazonClientException;
 import com.example.ujjwal.pokemoncardssample.dao.SharedPreferencesHelper;
 import com.example.ujjwal.pokemoncardssample.dao.dynamodb.DDBClient;
@@ -190,10 +192,13 @@ public class MainActivity extends AppCompatActivity
         /** username entered by the user. */
         final String username;
 
-        /** Empty checks */
+        /* Username validity checks.
+        *  The username can have only alphanumeric characters
+        *  or underscore, and its length should be between
+        *  4 and 80 (both inclusive). */
         username = signUpUsername.getText().toString();
-        if (username.equals(Constants.EMPTY_STRING)) {
-            showToast(getResources().getString(R.string.usernameEmpty),
+        if (!Pattern.matches(Constants.USERNAME_REGEX, username)) {
+            showToast(getResources().getString(R.string.usernameInvalid),
                     Toast.LENGTH_SHORT);
             return;
         }

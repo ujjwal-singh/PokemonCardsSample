@@ -6,7 +6,7 @@
     <string name="googleSignUpButtonText">Sign up with Google</string>
     <string name="password">Password</string>
     <string name="repeatPassword">Repeat password</string>
-    <string name="usernameEmpty">Username cannot be empty.</string>
+    <string name="usernameInvalid">Invalid username. Please check the specifications required for a valid username.</string>
     <string name="rePasswordWrong">Password and Re-password do not match.</string>
     <string name="usernameExists">Username already exists. Please try a new one.</string>
     <string name="emailIdExists">Email ID already registered. Please try a new one.</string>

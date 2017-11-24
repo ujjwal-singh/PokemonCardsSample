@@ -13,9 +13,6 @@ import com.example.ujjwal.pokemoncardssample.Constants;
 
 public final class SharedPreferencesHelper {
 
-    /** The default username returned when no username is currently in store. */
-    private static final String DEFAULT_USERNAME = "";
-
     /** SharedPreferences object to handle tasks. */
     private static SharedPreferences sharedPreferences;
 
@@ -74,9 +71,11 @@ public final class SharedPreferencesHelper {
     public static boolean checkUsernamePresence() {
 
         String username = sharedPreferences.getString(
-                Constants.PREFERENCE_USERNAME_KEY, DEFAULT_USERNAME);
+                Constants.PREFERENCE_USERNAME_KEY, Constants.
+                        NULL_USERNAME_SHARED_PREFERENCES);
 
-        return (!(username.equals(DEFAULT_USERNAME)));
+        return (!(username.equals(Constants.
+                NULL_USERNAME_SHARED_PREFERENCES)));
     }
 
     /**
@@ -87,7 +86,8 @@ public final class SharedPreferencesHelper {
     public static String getUsername() {
 
         return (sharedPreferences.getString(
-                Constants.PREFERENCE_USERNAME_KEY, DEFAULT_USERNAME));
+                Constants.PREFERENCE_USERNAME_KEY, Constants.
+                        NULL_USERNAME_SHARED_PREFERENCES));
     }
 
     /**

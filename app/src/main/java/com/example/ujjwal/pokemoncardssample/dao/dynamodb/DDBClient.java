@@ -260,10 +260,24 @@ public final class DDBClient {
                                        final long lastSeen)
             throws AmazonClientException {
 
+        /* Handles the case when the user info has just been deleted
+         * from Shared Preferences, but there is an attempt to
+         * update his last seen. */
+        if (username.equals(Constants.
+                NULL_USERNAME_SHARED_PREFERENCES)) {
+            return;
+        }
+
         UserAvailability userAvailability =
                 retrieveUserAvailability(username);
-        userAvailability.setLastSeen(lastSeen);
-        saveItem(userAvailability);
+
+        /* Handles the case when the user info has just been deleted
+         * from UserAuthentication table, but there is an attempt to
+         * update his last seen. */
+        if (userAvailability != null) {
+            userAvailability.setLastSeen(lastSeen);
+            saveItem(userAvailability);
+        }
     }
 
     /**
