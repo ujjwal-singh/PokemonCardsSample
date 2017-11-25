@@ -18,9 +18,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomePage" />
-
         <activity android:name=".PreGame" />
-        <activity android:name=".GamePage"></activity>
+        <activity android:name=".GamePage" />
+        <activity android:name=".UserDetails"></activity>
     </application>
 
 </manifest>

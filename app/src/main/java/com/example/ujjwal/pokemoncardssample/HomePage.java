@@ -96,6 +96,10 @@ public class HomePage extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.app_bar, menu);
 
+        /* Make the user history button visible. */
+        MenuItem userHistoryButton = menu.findItem(R.id.userDetails);
+        userHistoryButton.setVisible(true);
+
         return true;
     }
 
@@ -134,6 +138,16 @@ public class HomePage extends AppCompatActivity {
             case R.id.searchPlayers:
 
                 return (this.searchPlayers());
+
+            /*
+             *  View user details.
+             */
+            case R.id.userDetails:
+
+                Intent intent = new Intent(this, UserDetails.class);
+                startActivity(intent);
+
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);

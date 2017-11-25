@@ -29,4 +29,13 @@
         app:showAsAction="never"
         android:checkable="false" />
 
+    <item
+        android:id="@+id/userDetails"
+        android:title="@string/userDetailsButtonTitle"
+        android:visible="false"
+        android:enabled="true"
+        app:showAsAction="never"
+        android:checkable="false"
+        />
+
 </menu>

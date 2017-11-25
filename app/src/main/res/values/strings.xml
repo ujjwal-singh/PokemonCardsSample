@@ -51,6 +51,7 @@
     <string name="newUserUsernameHint">Your Username</string>
     <string name="usernameHintDialogTitle">Valid Username Checks</string>
     <string name="usernameHintDialogMessage">A valid username can have only alphanumeric characters and underscore. Its length should be between 4 and 80(both inclusive).</string>
+    <string name="userDetailsButtonTitle">User Details</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
