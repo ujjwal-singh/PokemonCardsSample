@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="Your username"
+        android:hint="@string/newUserUsernameHint"
         android:ems="10"
         android:layout_below="@+id/signInButton"
         android:layout_alignParentStart="true"
@@ -48,5 +48,16 @@
         android:textSize="18sp"
         android:layout_alignParentStart="true"
         android:id="@+id/signUpButton" />
+
+    <Button
+        android:text=""
+        android:background="@drawable/info"
+        android:onClick="onClick"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/usernameValidityInfo"
+        android:layout_marginStart="18dp"
+        android:layout_alignBottom="@+id/signUpUsername"
+        android:layout_toEndOf="@+id/signUpUsername" />
 
 </RelativeLayout>

@@ -48,6 +48,9 @@
     <string name="numberOfEvolutionLeft">Number of evolutions left -- %1$s</string>
     <string name="multipleEvolutionDialogMessage">What do you want %1$s to evolve into ?</string>
     <string name="typeScoreDisplay">%1$s -> %2$s : %3$s\n%4$s -> %5$s : %6$s</string>
+    <string name="newUserUsernameHint">Your Username</string>
+    <string name="usernameHintDialogTitle">Valid Username Checks</string>
+    <string name="usernameHintDialogMessage">A valid username can have only alphanumeric characters and underscore. Its length should be between 4 and 80(both inclusive).</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
